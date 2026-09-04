@@ -313,14 +313,60 @@ const listingsData = {
   ],
 };
 
+const bcrypt = require('bcryptjs');
+
+async function seedBase() {
+  console.log('Seeding base data (categories + users)...\n');
+
+  const categories = [
+    { name: 'Electronics', slug: 'electronics', icon: 'Smartphone' },
+    { name: 'Fashion', slug: 'fashion', icon: 'Shirt' },
+    { name: 'Home & Living', slug: 'home-living', icon: 'Home' },
+    { name: 'Vehicles', slug: 'vehicles', icon: 'Car' },
+    { name: 'Beauty', slug: 'beauty', icon: 'Sparkles' },
+    { name: 'Sports', slug: 'sports', icon: 'Dumbbell' },
+    { name: 'Gaming', slug: 'gaming', icon: 'Gamepad2' },
+    { name: 'Collectibles', slug: 'collectibles', icon: 'Gem' },
+    { name: 'Appliances', slug: 'appliances', icon: 'Refrigerator' },
+    { name: 'Tools', slug: 'tools', icon: 'Wrench' },
+    { name: 'Books', slug: 'books', icon: 'BookOpen' },
+    { name: 'Other', slug: 'other', icon: 'Package' },
+  ];
+
+  for (const cat of categories) {
+    await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: {},
+      create: cat,
+    });
+  }
+  console.log('  Categories: seeded');
+
+  const passwordHash = await bcrypt.hash('password123', 10);
+
+  const users = [
+    { email: 'admin@baiandsil.ph', name: 'Bai the Admin', isAdmin: true, bio: 'Platform administrator. Keeping the marketplace safe.' },
+    { email: 'seller@baiandsil.ph', name: 'Sil the Seller', isAdmin: false, bio: 'Pro seller since 2024. Fast shipping, fair prices.' },
+    { email: 'buyer@baiandsil.ph', name: 'Bay the Buyer', isAdmin: false, bio: 'Always looking for great deals!' },
+  ];
+
+  for (const u of users) {
+    await prisma.user.upsert({
+      where: { email: u.email },
+      update: {},
+      create: { ...u, password: passwordHash },
+    });
+  }
+  console.log('  Users: seeded');
+  console.log('  Base data complete!\n');
+}
+
 async function main() {
+  await seedBase();
+
   console.log('Seeding listings with images...\n');
 
   const seller = await prisma.user.findUnique({ where: { email: 'seller@baiandsil.ph' } });
-  if (!seller) {
-    console.error('Seller user not found! Run the main seed first.');
-    process.exit(1);
-  }
 
   const categoryMap = {};
   const categorySlugs = [
