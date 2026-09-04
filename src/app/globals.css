@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @apply bg-surface text-gray-900 font-sans antialiased;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-bai-blue text-white px-6 py-3 rounded-xl font-semibold hover:bg-bai-blue-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-sil-yellow text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-sil-yellow-dark transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sil-yellow focus:ring-offset-2 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-bai-blue hover:text-bai-blue transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply text-gray-600 px-4 py-2 rounded-xl font-medium hover:bg-gray-100 transition-all duration-200;
+  }
+
+  .btn-danger {
+    @apply bg-coral text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-coral focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-bai-blue focus:border-transparent transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card overflow-hidden transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-blue {
+    @apply badge bg-bai-blue-light text-bai-blue;
+  }
+
+  .badge-yellow {
+    @apply badge bg-sil-yellow-light text-sil-yellow-dark;
+  }
+
+  .badge-green {
+    @apply badge bg-green-100 text-green-700;
+  }
+
+  .badge-red {
+    @apply badge bg-red-100 text-red-700;
+  }
+
+  .badge-gray {
+    @apply badge bg-gray-100 text-gray-600;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-gray-900;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Sold ribbon */
+.sold-ribbon {
+  @apply absolute top-3 right-3 bg-coral text-white text-xs font-bold px-3 py-1 rounded-full rotate-12 z-10;
+}
+
+/* Favorite heart animation */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.heart-pop {
+  animation: heartPop 0.3s ease-in-out;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-bai-blue;
+}
