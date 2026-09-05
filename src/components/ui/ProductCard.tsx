@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Badge from "./Badge";
 import Avatar from "./Avatar";
@@ -71,6 +71,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   className = "",
 }) => {
   const isSold = listing.status === "Sold";
+  const [imgError, setImgError] = useState(false);
+  const imgSrc = imgError || !listing.imageUrl ? "/placeholder.svg" : listing.imageUrl;
 
   return (
     <div
@@ -79,8 +81,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <Link href={`/listing/${listing.slug}`} className="block">
         <div className="relative aspect-square overflow-hidden">
           <img
-            src={listing.imageUrl}
+            src={imgSrc}
             alt={listing.title}
+            onError={() => setImgError(true)}
             className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${
               isSold ? "brightness-75" : ""
             }`}

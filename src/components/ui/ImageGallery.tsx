@@ -15,14 +15,26 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
-  if (images.length === 0) {
+  const validImages = images.filter((img) => img && img.length > 0);
+  const displayImages = validImages.length > 0 ? validImages : ["/placeholder.svg"];
+
+  if (displayImages.length === 0) {
     return (
       <div className={`bg-gray-100 rounded-xl aspect-square flex items-center justify-center ${className}`}>
-        <span className="text-gray-400 text-sm">No images available</span>
+        <img src="/placeholder.svg" alt="No image available" className="w-full h-full object-cover" />
       </div>
     );
   }
+
+  const handleImgError = (index: number) => {
+    setImgErrors((prev) => ({ ...prev, [index]: true }));
+  };
+
+  const getSrc = (index: number) => {
+    return imgErrors[index] ? "/placeholder.svg" : displayImages[index];
+  };
 
   return (
     <div className={`space-y-3 ${className}`}>
@@ -31,17 +43,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
         onClick={() => setIsZoomed(!isZoomed)}
       >
         <img
-          src={images[selectedIndex]}
+          src={getSrc(selectedIndex)}
           alt={`${alt} ${selectedIndex + 1}`}
+          onError={() => handleImgError(selectedIndex)}
           className={`w-full h-full object-contain transition-transform duration-300 ${
             isZoomed ? "scale-150 cursor-zoom-out" : "hover:scale-105"
           }`}
         />
       </div>
 
-      {images.length > 1 && (
+      {displayImages.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-1">
-          {images.map((image, index) => (
+          {displayImages.map((image, index) => (
             <button
               key={index}
               onClick={() => setSelectedIndex(index)}
@@ -52,8 +65,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
               }`}
             >
               <img
-                src={image}
+                src={getSrc(index)}
                 alt={`${alt} thumbnail ${index + 1}`}
+                onError={() => handleImgError(index)}
                 className="w-full h-full object-cover"
               />
             </button>
@@ -61,10 +75,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
         </div>
       )}
 
-      {images.length > 1 && (
+      {displayImages.length > 1 && (
         <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
           <span>
-            {selectedIndex + 1} / {images.length}
+            {selectedIndex + 1} / {displayImages.length}
           </span>
         </div>
       )}
