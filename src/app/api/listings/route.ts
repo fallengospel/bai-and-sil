@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const condition = searchParams.get('condition');
     const minPrice = searchParams.get('minPrice');
     const maxPrice = searchParams.get('maxPrice');
-    const q = searchParams.get('q');
+    const q = searchParams.get('q') || searchParams.get('search');
     const sort = searchParams.get('sort') || 'newest';
 
     const where: any = { status: 'Active' };
@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
     }
     if (q) {
       where.OR = [
-        { title: { contains: q } },
-        { description: { contains: q } },
+        { title: { contains: q, mode: 'insensitive' } },
+        { description: { contains: q, mode: 'insensitive' } },
       ];
     }
 
@@ -61,8 +61,13 @@ export async function GET(request: NextRequest) {
       prisma.listing.count({ where }),
     ]);
 
+    const listingsWithImage = listings.map(l => ({
+      ...l,
+      imageUrl: l.images?.[0]?.imageUrl || '',
+    }));
+
     return NextResponse.json({
-      listings,
+      listings: listingsWithImage,
       pagination: {
         page,
         limit,
