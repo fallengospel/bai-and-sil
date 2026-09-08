@@ -193,9 +193,26 @@ export default function ProfilePage() {
 
           <div className="flex items-center gap-2">
             {isOwnProfile ? (
-              <Button variant="outline" onClick={() => setEditModal(true)}>
-                Edit Profile
-              </Button>
+              <>
+                <Button variant="outline" onClick={() => setEditModal(true)}>
+                  Edit Profile
+                </Button>
+                {profile.role === "seller" && (
+                  <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium text-[#f5a623] border border-[#f5a623] rounded-lg hover:bg-yellow-50 transition-colors">
+                    Seller Dashboard
+                  </Link>
+                )}
+                {profile.role === "buyer" && (
+                  <Link href="/buyer/dashboard" className="px-4 py-2 text-sm font-medium text-[#1a56db] border border-[#1a56db] rounded-lg hover:bg-blue-50 transition-colors">
+                    Buyer Dashboard
+                  </Link>
+                )}
+                {(profile.role === "admin") && (
+                  <Link href="/admin" className="px-4 py-2 text-sm font-medium text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                    Admin Dashboard
+                  </Link>
+                )}
+              </>
             ) : (
               <>
                 <Button onClick={handleMessage} leftIcon={<FiMessageSquare className="w-4 h-4" />}>

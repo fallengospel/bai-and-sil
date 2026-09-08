@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { HiOutlineViewGrid, HiOutlineUsers, HiOutlineArchive, HiOutlineExclamation } from 'react-icons/hi';
+import { FiPackage, FiPlusCircle, FiMessageSquare, FiStar, FiDollarSign } from 'react-icons/fi';
 
 const sidebarLinks = [
-  { title: 'Dashboard', href: '/admin', icon: HiOutlineViewGrid },
-  { title: 'Users', href: '/admin/users', icon: HiOutlineUsers },
-  { title: 'Listings', href: '/admin/listings', icon: HiOutlineArchive },
-  { title: 'Reports', href: '/admin/reports', icon: HiOutlineExclamation },
+  { title: 'Dashboard', href: '/seller/dashboard', icon: FiPackage },
+  { title: 'My Listings', href: '/my-listings', icon: FiPackage },
+  { title: 'Create Listing', href: '/sell', icon: FiPlusCircle },
+  { title: 'Messages', href: '/messages', icon: FiMessageSquare },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function SellerLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -22,25 +22,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     fetch('/api/auth/me')
       .then((r) => r.json())
       .then((data) => {
-        if (!data.user?.isAdmin && data.user?.role !== 'admin') { router.push('/'); return; }
+        if (!data.user || (data.user.role !== 'seller' && !data.user.isAdmin)) {
+          router.push('/');
+          return;
+        }
         setAuthorized(true);
       })
       .catch(() => router.push('/'))
       .finally(() => setLoading(false));
   }, [router]);
 
-  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f5a623]" /></div>;
   if (!authorized) return null;
 
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 border-r bg-gray-50 hidden md:block">
-        <div className="p-6"><h2 className="text-lg font-bold">Admin Panel</h2></div>
+        <div className="p-6">
+          <h2 className="text-lg font-bold text-[#f5a623]">Seller Hub</h2>
+          <p className="text-xs text-gray-500 mt-1">Manage your listings</p>
+        </div>
         <nav className="space-y-1 px-3">
           {sidebarLinks.map((link) => (
             <Link key={link.href} href={link.href}
               className={cn('flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                link.href === '/admin' ? 'text-bai-blue font-bold' : 'text-gray-600 hover:bg-gray-100'
+                link.href === '/seller/dashboard' ? 'bg-[#f5a623]/10 text-[#f5a623]' : 'text-gray-600 hover:bg-gray-100'
               )}>
               <link.icon className="h-5 w-5" />{link.title}
             </Link>

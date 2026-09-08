@@ -10,7 +10,7 @@ import Button from "@/components/ui/Button";
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/";
+  const redirectTo = searchParams.get("redirect");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,8 +32,20 @@ export default function LoginPage() {
         return;
       }
 
+      const data = await res.json();
+      const user = data.user;
+
       toast.success("Welcome back!");
-      router.push(redirectTo);
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      } else if (user.isAdmin || user.role === "admin") {
+        router.push("/admin");
+      } else if (user.role === "seller") {
+        router.push("/seller/dashboard");
+      } else {
+        router.push("/buyer/dashboard");
+      }
     } catch {
       toast.error("Something went wrong");
     } finally {

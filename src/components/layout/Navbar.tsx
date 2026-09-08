@@ -161,13 +161,22 @@ const Navbar: React.FC = () => {
                       >
                         My Profile
                       </Link>
-                      {user.role === "seller" && (
+                      {user.role === "buyer" && (
                         <Link
-                          href="/my-listings"
+                          href="/buyer/dashboard"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                           onClick={() => setProfileDropdownOpen(false)}
                         >
-                          My Listings
+                          Buyer Dashboard
+                        </Link>
+                      )}
+                      {user.role === "seller" && (
+                        <Link
+                          href="/seller/dashboard"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          Seller Dashboard
                         </Link>
                       )}
                       {user.role === "admin" && (
@@ -297,13 +306,22 @@ const Navbar: React.FC = () => {
                 >
                   My Profile
                 </Link>
-                {user.role === "seller" && (
+                {user.role === "buyer" && (
                   <Link
-                    href="/my-listings"
+                    href="/buyer/dashboard"
                     className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    My Listings
+                    Buyer Dashboard
+                  </Link>
+                )}
+                {user.role === "seller" && (
+                  <Link
+                    href="/seller/dashboard"
+                    className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Seller Dashboard
                   </Link>
                 )}
                 <button
