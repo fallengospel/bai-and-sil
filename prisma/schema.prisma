@@ -12,10 +12,12 @@ model User {
   name          String
   email         String    @unique
   password      String?
+  role          String    @default("buyer")  // buyer, seller, admin
   authProvider  String    @default("local")
   avatar        String?
   location      String?
   bio           String?
+  phone         String?
   rating        Float     @default(0)
   reviewCount   Int       @default(0)
   emailVerified Boolean   @default(false)

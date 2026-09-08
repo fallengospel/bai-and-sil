@@ -4,10 +4,14 @@ import { hashPassword } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, password, location } = await request.json();
+    const { name, email, password, location, phone, role } = await request.json();
 
     if (!name || !email || !password) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
+    }
+
+    if (role && !['buyer', 'seller'].includes(role)) {
+      return NextResponse.json({ error: 'Invalid role. Must be buyer or seller' }, { status: 400 });
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -23,6 +27,8 @@ export async function POST(request: NextRequest) {
         email,
         password: hashedPassword,
         location: location || null,
+        phone: phone || null,
+        role: role || 'buyer',
       },
       select: {
         id: true,
@@ -30,6 +36,8 @@ export async function POST(request: NextRequest) {
         email: true,
         avatar: true,
         location: true,
+        phone: true,
+        role: true,
         isAdmin: true,
         createdAt: true,
       },

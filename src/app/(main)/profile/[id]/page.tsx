@@ -25,6 +25,8 @@ interface UserProfile {
   avatar: string | null;
   location: string | null;
   bio: string | null;
+  phone: string | null;
+  role: string;
   rating: number;
   reviewCount: number;
   createdAt: string;
@@ -69,6 +71,7 @@ export default function ProfilePage() {
   const [editBio, setEditBio] = useState("");
   const [editLocation, setEditLocation] = useState("");
   const [editAvatar, setEditAvatar] = useState("");
+  const [editPhone, setEditPhone] = useState("");
 
   const isOwnProfile = currentUserId === id;
 
@@ -98,6 +101,7 @@ export default function ProfilePage() {
           setEditBio(userData.user.bio || "");
           setEditLocation(userData.user.location || "");
           setEditAvatar(userData.user.avatar || "");
+          setEditPhone(userData.user.phone || "");
         }
       })
       .catch(() => {})
@@ -115,6 +119,7 @@ export default function ProfilePage() {
           bio: editBio,
           location: editLocation,
           avatar: editAvatar,
+          phone: editPhone,
         }),
       });
       if (res.ok) {
@@ -163,7 +168,17 @@ export default function ProfilePage() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <Avatar src={profile.avatar} name={profile.name} size="xl" />
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
+              <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full capitalize
+                bg-blue-100 text-blue-800
+                data-[role=seller]:bg-yellow-100 data-[role=seller]:text-yellow-800
+                data-[role=admin]:bg-red-100 data-[role=admin]:text-red-800"
+                data-role={profile.role}
+              >
+                {profile.role}
+              </span>
+            </div>
             {profile.location && (
               <p className="text-sm text-gray-500 mt-0.5">{profile.location}</p>
             )}
@@ -203,30 +218,73 @@ export default function ProfilePage() {
         {profile.bio && <p className="text-sm text-gray-600 mt-4">{profile.bio}</p>}
 
         <div className="flex items-center gap-6 mt-4 text-sm text-gray-500">
-          <span>
-            <strong className="text-gray-900">{profile._count.listings}</strong> listings
-          </span>
-          <span>
-            <strong className="text-gray-900">{soldListings.length}</strong> sold
-          </span>
+          {profile.role === "seller" && (
+            <>
+              <span>
+                <strong className="text-gray-900">{profile._count.listings}</strong> listings
+              </span>
+              <span>
+                <strong className="text-gray-900">{soldListings.length}</strong> sold
+              </span>
+            </>
+          )}
+          {profile.role === "buyer" && (
+            <span>
+              <strong className="text-gray-900">Buyer</strong> account
+            </span>
+          )}
         </div>
       </div>
 
       {/* Tabs */}
       <div className="flex gap-4 border-b border-gray-100 mb-6">
-        {(["active", "sold", "saved"] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === tab
-                ? "border-[#1a56db] text-[#1a56db]"
-                : "border-transparent text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            {tab === "active" ? "Listings" : tab === "sold" ? "Sold" : "Saved"}
-          </button>
-        ))}
+        {profile.role === "seller" ? (
+          <>
+            <button
+              onClick={() => setActiveTab("active")}
+              className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "active"
+                  ? "border-[#1a56db] text-[#1a56db]"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Listings
+            </button>
+            <button
+              onClick={() => setActiveTab("sold")}
+              className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "sold"
+                  ? "border-[#1a56db] text-[#1a56db]"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Sold
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => setActiveTab("active")}
+              className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "active"
+                  ? "border-[#1a56db] text-[#1a56db]"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Favorites
+            </button>
+            <button
+              onClick={() => setActiveTab("sold")}
+              className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "sold"
+                  ? "border-[#1a56db] text-[#1a56db]"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Reviews
+            </button>
+          </>
+        )}
       </div>
 
       {/* Listings Grid */}
@@ -277,6 +335,13 @@ export default function ProfilePage() {
             label="Name"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
+          />
+          <Input
+            label="Phone"
+            type="tel"
+            value={editPhone}
+            onChange={(e) => setEditPhone(e.target.value)}
+            placeholder="+63 9XX XXX XXXX"
           />
           <TextArea
             label="Bio"

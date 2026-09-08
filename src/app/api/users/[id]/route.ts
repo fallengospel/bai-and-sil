@@ -12,6 +12,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         avatar: true,
         location: true,
         bio: true,
+        phone: true,
+        role: true,
         rating: true,
         reviewCount: true,
         createdAt: true,
@@ -40,7 +42,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const { name, avatar, location, bio } = body;
+    const { name, avatar, location, bio, phone } = body;
 
     const updated = await prisma.user.update({
       where: { id: params.id },
@@ -49,6 +51,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         ...(avatar !== undefined && { avatar }),
         ...(location !== undefined && { location }),
         ...(bio !== undefined && { bio }),
+        ...(phone !== undefined && { phone }),
       },
       select: {
         id: true,
@@ -57,6 +60,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         avatar: true,
         location: true,
         bio: true,
+        phone: true,
+        role: true,
         isAdmin: true,
       },
     });

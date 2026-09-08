@@ -10,6 +10,7 @@ export interface SessionUser {
   name: string;
   email: string;
   avatar: string | null;
+  role: string;
   isAdmin: boolean;
 }
 
@@ -51,7 +52,7 @@ export async function getSession(): Promise<SessionUser | null> {
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true, avatar: true, isAdmin: true },
+      select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true },
     });
 
     return user;

@@ -12,6 +12,7 @@ interface User {
   name: string;
   email: string;
   avatar?: string | null;
+  role?: string;
 }
 
 const Navbar: React.FC = () => {
@@ -103,13 +104,23 @@ const Navbar: React.FC = () => {
           </form>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/sell"
-              className="hidden md:inline-flex btn-secondary items-center gap-1.5 px-4 py-2 bg-[#f5a623] text-white text-sm font-medium rounded-lg hover:bg-yellow-500 transition-colors"
-            >
-              <IoAddCircle className="w-4 h-4" />
-              Sell
-            </Link>
+            {user?.role === "seller" && (
+              <Link
+                href="/sell"
+                className="hidden md:inline-flex btn-secondary items-center gap-1.5 px-4 py-2 bg-[#f5a623] text-white text-sm font-medium rounded-lg hover:bg-yellow-500 transition-colors"
+              >
+                <IoAddCircle className="w-4 h-4" />
+                Sell
+              </Link>
+            )}
+            {user?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Admin Dashboard
+              </Link>
+            )}
 
             {loading ? (
               <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
@@ -139,6 +150,9 @@ const Navbar: React.FC = () => {
                           {user.name}
                         </p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        <span className="inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600 capitalize">
+                          {user.role || "buyer"}
+                        </span>
                       </div>
                       <Link
                         href="/profile/me"
@@ -147,13 +161,24 @@ const Navbar: React.FC = () => {
                       >
                         My Profile
                       </Link>
-                      <Link
-                        href="/my-listings"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                        onClick={() => setProfileDropdownOpen(false)}
-                      >
-                        My Listings
-                      </Link>
+                      {user.role === "seller" && (
+                        <Link
+                          href="/my-listings"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          My Listings
+                        </Link>
+                      )}
+                      {user.role === "admin" && (
+                        <Link
+                          href="/admin"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          Admin Dashboard
+                        </Link>
+                      )}
                       <button
                         onClick={handleLogout}
                         className="w-full text-left px-4 py-2 text-sm text-[#e8634a] hover:bg-gray-50"
@@ -210,14 +235,25 @@ const Navbar: React.FC = () => {
             </div>
           </form>
           <div className="px-4 pb-4 space-y-2">
-            <Link
-              href="/sell"
-              className="flex items-center justify-center gap-2 w-full py-3 bg-[#f5a623] text-white font-medium rounded-lg"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <IoAddCircle className="w-5 h-5" />
-              Sell Item
-            </Link>
+            {user?.role === "seller" && (
+              <Link
+                href="/sell"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-[#f5a623] text-white font-medium rounded-lg"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <IoAddCircle className="w-5 h-5" />
+                Sell Item
+              </Link>
+            )}
+            {user?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-red-600 text-white font-medium rounded-lg"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Admin Dashboard
+              </Link>
+            )}
             <Link
               href="/categories"
               className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
@@ -225,13 +261,15 @@ const Navbar: React.FC = () => {
             >
               Categories
             </Link>
-            <Link
-              href="/messages"
-              className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Messages
-            </Link>
+            {user && (
+              <Link
+                href="/messages"
+                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Messages
+              </Link>
+            )}
             {!user && (
               <>
                 <Link
@@ -259,6 +297,15 @@ const Navbar: React.FC = () => {
                 >
                   My Profile
                 </Link>
+                {user.role === "seller" && (
+                  <Link
+                    href="/my-listings"
+                    className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Listings
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="block py-2 text-sm text-[#e8634a]"
