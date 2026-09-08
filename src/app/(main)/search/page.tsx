@@ -23,6 +23,13 @@ interface Listing {
   category?: { id: string; name: string; slug: string };
 }
 
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  listingCount: number;
+}
+
 const sortOptions = [
   { value: "newest", label: "Newest First" },
   { value: "price_asc", label: "Price: Low to High" },
@@ -43,6 +50,7 @@ export default function SearchPage() {
   const router = useRouter();
 
   const [listings, setListings] = useState<Listing[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -93,6 +101,18 @@ export default function SearchPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort]);
 
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((data) => setCategories(data.categories || []))
+      .catch(() => {});
+  }, []);
+
+  const categoryOptions = [
+    { value: "", label: "All Categories" },
+    ...categories.map((c) => ({ value: c.slug, label: `${c.name} (${c.listingCount})` })),
+  ];
+
   const handleApplyFilters = () => {
     setPage(1);
     fetchListings(1, true);
@@ -128,7 +148,7 @@ export default function SearchPage() {
 
             <Select
               label="Category"
-              options={[{ value: "", label: "All Categories" }, ...sortOptions]}
+              options={categoryOptions}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />

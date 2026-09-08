@@ -32,7 +32,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) =
 
     setSubmitting(true);
     try {
-      await fetch("/api/reports", {
+      await fetch(`/api/listings/${listingId}/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ listingId, reason, description }),
