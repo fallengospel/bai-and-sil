@@ -18,9 +18,9 @@ export default function BuyerDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/auth/me').then(r => r.json()),
-      fetch('/api/users/me/favorites').then(r => r.json()),
-      fetch('/api/listings?limit=8').then(r => r.json()),
+      fetch('/api/auth/me', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/users/me/favorites', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/listings?limit=8', { credentials: 'include' }).then(r => r.json()),
     ]).then(([userData, favsData, listingsData]) => {
       setUser(userData.user);
       setStats({

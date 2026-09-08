@@ -24,10 +24,10 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/admin/users').then(r => r.json()),
-      fetch('/api/admin/listings').then(r => r.json()),
-      fetch('/api/admin/reports').then(r => r.json()),
-      fetch('/api/categories').then(r => r.json()),
+      fetch('/api/admin/users', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/admin/listings', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/admin/reports', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/categories', { credentials: 'include' }).then(r => r.json()),
     ]).then(([usersData, listingsData, reportsData, catData]) => {
       if (!usersData.users) { router.push('/'); return; }
       const users = usersData.users || [];

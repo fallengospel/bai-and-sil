@@ -20,8 +20,8 @@ export default function SellerDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/auth/me').then(r => r.json()),
-      fetch('/api/listings?limit=50').then(r => r.json()),
+      fetch('/api/auth/me', { credentials: 'include' }).then(r => r.json()),
+      fetch('/api/listings?limit=50', { credentials: 'include' }).then(r => r.json()),
     ]).then(([userData, listingsData]) => {
       setUser(userData.user);
       const myListings = (listingsData.listings || []).filter(

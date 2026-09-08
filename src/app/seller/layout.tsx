@@ -19,7 +19,7 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', { credentials: 'include' })
       .then((r) => r.json())
       .then((data) => {
         if (!data.user || (data.user.role !== 'seller' && !data.user.isAdmin)) {

@@ -76,7 +76,7 @@ export default function ProfilePage() {
   const isOwnProfile = currentUserId === id;
 
   useEffect(() => {
-    fetch("/api/auth/me")
+    fetch("/api/auth/me", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.user) setCurrentUserId(data.user.id);
@@ -87,8 +87,8 @@ export default function ProfilePage() {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch(`/api/users/${id}`).then((r) => r.json()),
-      fetch(`/api/listings?limit=50`).then((r) => r.json()),
+      fetch(`/api/users/${id}`, { credentials: "include" }).then((r) => r.json()),
+      fetch(`/api/listings?limit=50`, { credentials: "include" }).then((r) => r.json()),
     ])
       .then(([userData, listingsData]) => {
         setProfile(userData.user);
@@ -114,6 +114,7 @@ export default function ProfilePage() {
       const res = await fetch(`/api/users/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           name: editName,
           bio: editBio,

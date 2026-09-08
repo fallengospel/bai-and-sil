@@ -19,7 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', { credentials: 'include' })
       .then((r) => r.json())
       .then((data) => {
         if (!data.user?.isAdmin && data.user?.role !== 'admin') { router.push('/'); return; }

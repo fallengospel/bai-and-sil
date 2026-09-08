@@ -13,6 +13,7 @@ interface User {
   email: string;
   avatar?: string | null;
   role?: string;
+  isAdmin?: boolean;
 }
 
 const Navbar: React.FC = () => {
@@ -27,10 +28,12 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("/api/auth/me");
+        const res = await fetch("/api/auth/me", { credentials: "include" });
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
+        } else {
+          setUser(null);
         }
       } catch {
         setUser(null);
@@ -62,12 +65,26 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
       setUser(null);
+      setProfileDropdownOpen(false);
+      setMobileMenuOpen(false);
       router.push("/");
     } catch {
       console.error("Logout failed");
     }
+  };
+
+  const getDashboardLink = () => {
+    if (user?.isAdmin || user?.role === "admin") return "/admin";
+    if (user?.role === "seller") return "/seller/dashboard";
+    return "/buyer/dashboard";
+  };
+
+  const getDashboardLabel = () => {
+    if (user?.isAdmin || user?.role === "admin") return "Admin Dashboard";
+    if (user?.role === "seller") return "Seller Dashboard";
+    return "Buyer Dashboard";
   };
 
   return (
@@ -107,18 +124,18 @@ const Navbar: React.FC = () => {
             {user?.role === "seller" && (
               <Link
                 href="/sell"
-                className="hidden md:inline-flex btn-secondary items-center gap-1.5 px-4 py-2 bg-[#f5a623] text-white text-sm font-medium rounded-lg hover:bg-yellow-500 transition-colors"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-[#f5a623] text-white text-sm font-medium rounded-lg hover:bg-yellow-500 transition-colors"
               >
                 <IoAddCircle className="w-4 h-4" />
                 Sell
               </Link>
             )}
-            {user?.role === "admin" && (
+            {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
                 className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
               >
-                Admin Dashboard
+                Admin
               </Link>
             )}
 
@@ -131,26 +148,26 @@ const Navbar: React.FC = () => {
                   className="relative p-2 text-gray-600 hover:text-[#1a56db] hover:bg-gray-100 rounded-lg transition-colors"
                 >
                   <FiMessageSquare className="w-5 h-5" />
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#e8634a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                    3
-                  </span>
                 </Link>
 
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                    className="flex items-center"
+                    className="flex items-center gap-2"
                   >
                     <Avatar src={user.avatar} name={user.name} size="sm" />
+                    <span className="hidden md:inline text-sm font-medium text-gray-700">{user.name}</span>
                   </button>
                   {profileDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1">
-                      <div className="px-4 py-2 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {user.name}
-                        </p>
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                        <span className="inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600 capitalize">
+                        <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full capitalize ${
+                          user.role === "seller" ? "bg-yellow-100 text-yellow-800" :
+                          user.isAdmin || user.role === "admin" ? "bg-red-100 text-red-800" :
+                          "bg-blue-100 text-blue-800"
+                        }`}>
                           {user.role || "buyer"}
                         </span>
                       </div>
@@ -161,39 +178,37 @@ const Navbar: React.FC = () => {
                       >
                         My Profile
                       </Link>
-                      {user.role === "buyer" && (
-                        <Link
-                          href="/buyer/dashboard"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                          onClick={() => setProfileDropdownOpen(false)}
-                        >
-                          Buyer Dashboard
-                        </Link>
-                      )}
+                      <Link
+                        href={getDashboardLink()}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setProfileDropdownOpen(false)}
+                      >
+                        {getDashboardLabel()}
+                      </Link>
+                      <Link
+                        href="/messages"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setProfileDropdownOpen(false)}
+                      >
+                        Messages
+                      </Link>
                       {user.role === "seller" && (
                         <Link
-                          href="/seller/dashboard"
+                          href="/my-listings"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                           onClick={() => setProfileDropdownOpen(false)}
                         >
-                          Seller Dashboard
+                          My Listings
                         </Link>
                       )}
-                      {user.role === "admin" && (
-                        <Link
-                          href="/admin"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                          onClick={() => setProfileDropdownOpen(false)}
+                      <div className="border-t border-gray-100 mt-1 pt-1">
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 text-sm text-[#e8634a] hover:bg-gray-50"
                         >
-                          Admin Dashboard
-                        </Link>
-                      )}
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-[#e8634a] hover:bg-gray-50"
-                      >
-                        Logout
-                      </button>
+                          Logout
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -202,13 +217,13 @@ const Navbar: React.FC = () => {
               <div className="hidden md:flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="btn-outline px-4 py-2 text-sm font-medium text-[#1a56db] border border-[#1a56db] rounded-lg hover:bg-blue-50 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-[#1a56db] border border-[#1a56db] rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="btn-primary px-4 py-2 text-sm font-medium text-white bg-[#1a56db] rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#1a56db] rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Register
                 </Link>
@@ -219,11 +234,7 @@ const Navbar: React.FC = () => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
             >
-              {mobileMenuOpen ? (
-                <FiX className="w-5 h-5" />
-              ) : (
-                <FiMenu className="w-5 h-5" />
-              )}
+              {mobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -254,7 +265,7 @@ const Navbar: React.FC = () => {
                 Sell Item
               </Link>
             )}
-            {user?.role === "admin" && (
+            {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-red-600 text-white font-medium rounded-lg"
@@ -306,24 +317,13 @@ const Navbar: React.FC = () => {
                 >
                   My Profile
                 </Link>
-                {user.role === "buyer" && (
-                  <Link
-                    href="/buyer/dashboard"
-                    className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Buyer Dashboard
-                  </Link>
-                )}
-                {user.role === "seller" && (
-                  <Link
-                    href="/seller/dashboard"
-                    className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Seller Dashboard
-                  </Link>
-                )}
+                <Link
+                  href={getDashboardLink()}
+                  className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {getDashboardLabel()}
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="block py-2 text-sm text-[#e8634a]"
