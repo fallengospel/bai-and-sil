@@ -19,6 +19,7 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 | Make offers | ✅ Done | Submit price offers |
 | View notifications | ✅ Done | Notification center |
 | Profile page | ✅ Done | Shows favorites, reviews tabs |
+| Buyer Dashboard | ✅ Done | Stats, saved items, recommendations |
 
 ### Seller Account
 | Feature | Status | Notes |
@@ -33,11 +34,12 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 | Accept/decline offers | 🔲 Pending | Offer management |
 | View profile | ✅ Done | Shows listings, sold items, stats |
 | Edit profile | ✅ Done | Name, bio, location, avatar, phone |
+| Seller Dashboard | ✅ Done | Listing stats, performance, quick actions |
 
 ### Admin Account
 | Feature | Status | Notes |
 |---------|--------|-------|
-| Admin dashboard | ✅ Done | Overview stats |
+| Admin dashboard | ✅ Done | User breakdown chart, category distribution |
 | Manage users | ✅ Done | View, edit, ban users |
 | Manage listings | ✅ Done | Review, approve, remove listings |
 | Manage reports | ✅ Done | Handle reported content |
@@ -52,12 +54,14 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 |---------|--------|-------|
 | Email registration | ✅ Done | With role selection (Buyer/Seller) |
 | Login | ✅ Done | Email + password |
+| Role-based redirect | ✅ Done | Admin→/admin, Seller→/seller/dashboard, Buyer→/buyer/dashboard |
 | Session management | ✅ Done | JWT tokens, 7-day expiry |
 | Logout | ✅ Done | Clear session |
 | Password hashing | ✅ Done | bcryptjs, 12 rounds |
 | Email validation | ✅ Done | Format validation |
 | Password confirmation | ✅ Done | Must match on register |
 | Phone number field | ✅ Done | Optional, stored in profile |
+| Forgot password | 🔲 Pending | Password reset flow |
 
 ---
 
@@ -78,6 +82,8 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 | `/favorites` | Yes | Buyer | ✅ Done |
 | `/notifications` | Yes | All | ✅ Done |
 | `/profile/[id]` | No | All | ✅ Done |
+| `/seller/dashboard` | Yes | Seller | ✅ Done |
+| `/buyer/dashboard` | Yes | Buyer | ✅ Done |
 | `/admin` | Yes | Admin | ✅ Done |
 | `/admin/users` | Yes | Admin | ✅ Done |
 | `/admin/listings` | Yes | Admin | ✅ Done |
@@ -163,9 +169,10 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 ### Layout Components
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Navbar | ✅ Done | Role-based navigation |
+| Navbar | ✅ Done | Role-based navigation with session detection |
 | Footer | ✅ Done | Site footer |
 | Sidebar | ✅ Done | Category sidebar |
+| MobileNav | ✅ Done | Bottom navigation for mobile |
 
 ---
 
@@ -198,22 +205,54 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 | Login redirect not working | Medium | ✅ Fixed |
 | My Listings page missing | High | ✅ Fixed |
 | Image fallback not working | Low | ✅ Fixed |
+| Navbar not detecting logged-in user | High | ✅ Fixed |
 | Profile Saved tab shows nothing | Low | 🔄 Partial |
 
 ---
 
-## 📋 Missing Features (Future)
+## 📋 Priority Features
 
-| Feature | Priority | Status |
-|---------|----------|--------|
-| Edit listing mode | High | 🔲 Pending |
-| Offer accept/decline | High | 🔲 Pending |
-| Forgot password | Medium | 🔲 Pending |
-| Image validation | Medium | 🔲 Pending |
-| Real notification count | Medium | 🔲 Pending |
-| Search URL sync | Low | 🔲 Pending |
-| Avatar upload | Low | 🔲 Pending |
-| Reviews from buyers | Medium | 🔲 Pending |
+### 🔴 HIGH PRIORITY (MVP Critical)
+Essential features needed for a functional marketplace.
+
+| # | Feature | Status | Notes |
+|---|---------|--------|-------|
+| 1 | Edit listing mode | 🔲 Pending | Seller needs to edit existing listings |
+| 2 | Offer accept/decline | 🔲 Pending | Sellers must respond to buyer offers |
+| 3 | Forgot password | 🔲 Pending | Password reset via email |
+| 4 | Conversation messaging | 🔲 Pending | Real-time chat between buyer/seller |
+| 5 | Mark listing as sold | 🔲 Pending | Seller marks item as sold |
+| 6 | Leave reviews | 🔲 Pending | Buyers review sellers after purchase |
+| 7 | Search URL sync | 🔲 Pending | Shareable search URLs with filters |
+| 8 | Image upload validation | 🔲 Pending | File size, type, dimension limits |
+
+### 🟡 MEDIUM PRIORITY (UX Enhancement)
+Features that improve user experience but aren't blocking.
+
+| # | Feature | Status | Notes |
+|---|---------|--------|-------|
+| 1 | Real notification count | 🔲 Pending | Badge shows actual unread count |
+| 2 | Offer history | 🔲 Pending | View all past offers made/received |
+| 3 | Seller verification | 🔲 Pending | ID verification badge |
+| 4 | Bulk listing actions | 🔲 Pending | Delete/edit multiple listings |
+| 5 | Advanced search filters | 🔲 Pending | Price range, condition, location |
+| 6 | Recently viewed items | 🔲 Pending | Track browsing history |
+| 7 | Listing share buttons | 🔲 Pending | Share to social media |
+| 8 | Price drop alerts | 🔲 Pending | Notify when saved items drop in price |
+
+### 🟢 LOW PRIORITY (Nice-to-Have)
+Features that add value but can wait.
+
+| # | Feature | Status | Notes |
+|---|---------|--------|-------|
+| 1 | Avatar upload | 🔲 Pending | File upload instead of URL |
+| 2 | Dark mode | 🔲 Pending | Theme toggle |
+| 3 | Multi-language | 🔲 Pending | Filipino/English toggle |
+| 4 | Push notifications | 🔲 Pending | Browser push notifications |
+| 5 | Export listings | 🔲 Pending | Download listings as CSV |
+| 6 | Seller analytics | 🔲 Pending | Views, clicks, conversion stats |
+| 7 | Saved searches | 🔲 Pending | Save and alert on new matches |
+| 8 | Related items | 🔲 Pending | Show similar listings on detail page |
 
 ---
 
@@ -241,13 +280,25 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 6. ✅ Image fallback handling
 7. ✅ Features.md created
 
-### Phase 2 (Current)
+### Phase 2
 1. ✅ Role-based registration (Buyer/Seller)
 2. ✅ User model updated with role field
 3. ✅ Phone number field added
 4. ✅ Profile shows role badge
 5. ✅ Navbar role-based navigation
-6. ✅ Profile tabs role-based (Seller: Listings/Sold, Buyer: Favorites/Reviews)
+6. ✅ Profile tabs role-based
+
+### Phase 3
+1. ✅ Admin dashboard with charts
+2. ✅ Seller dashboard with stats
+3. ✅ Buyer dashboard with recommendations
+4. ✅ Login redirect by role
+5. ✅ Profile edit for all roles
+
+### Phase 4 (Current)
+1. ✅ Navbar session detection fix (credentials: include)
+2. ✅ All fetch calls updated with credentials
+3. ✅ Role-based dashboard links in navbar
 
 ---
 
