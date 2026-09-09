@@ -6,6 +6,7 @@ import Link from "next/link";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Button from "@/components/ui/Button";
+import PushNotificationManager from "@/components/ui/PushNotificationManager";
 import { timeAgo } from "@/lib/helpers";
 import { FiBell, FiMessageSquare, FiHeart, FiDollarSign, FiCheckCircle } from "react-icons/fi";
 
@@ -83,6 +84,10 @@ export default function NotificationsPage() {
             Mark all read
           </Button>
         )}
+      </div>
+
+      <div className="mb-6">
+        <PushNotificationManager />
       </div>
 
       {notifications.length === 0 ? (

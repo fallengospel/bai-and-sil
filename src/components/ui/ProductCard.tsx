@@ -76,50 +76,53 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className={`card card-hover group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${className}`}
+      className={`group relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-gray-200 ${className}`}
     >
       <Link href={`/listing/${listing.slug}`} className="block">
-        <div className="relative aspect-square overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
           <img
             src={imgSrc}
             alt={listing.title}
             onError={() => setImgError(true)}
-            className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${
-              isSold ? "brightness-75" : ""
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+              isSold ? "brightness-75 grayscale" : ""
             }`}
           />
           {isSold && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="absolute inset-0 bg-black/40" />
-              <span className="relative bg-[#e8634a] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+              <span className="relative bg-gradient-to-r from-[#e8634a] to-red-500 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
                 Sold
               </span>
             </div>
           )}
           {listing.category && (
-            <div className="absolute top-2 left-2">
-              <Badge variant="blue" size="sm">
+            <div className="absolute top-3 left-3">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-white/90 backdrop-blur-sm text-[#1a56db] shadow-sm">
                 {listing.category.name}
-              </Badge>
+              </span>
             </div>
           )}
+          
+          {/* Price badge */}
+          <div className="absolute bottom-3 right-3">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-sm font-bold bg-white/95 backdrop-blur-sm text-[#1a56db] shadow-md">
+              {formatPrice(listing.price)}
+            </span>
+          </div>
         </div>
       </Link>
 
-      <div className="p-3">
+      <div className="p-4">
         <Link href={`/listing/${listing.slug}`}>
-          <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1 group-hover:text-[#1a56db] transition-colors">
+          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-[#1a56db] transition-colors leading-relaxed">
             {listing.title}
           </h3>
         </Link>
 
-        <p className="text-lg font-bold text-[#1a56db] mb-2">
-          {formatPrice(listing.price)}
-        </p>
-
-        <div className="flex items-center gap-1 text-xs text-gray-500 mb-2">
+        <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
           <svg
-            className="w-3 h-3"
+            className="w-3.5 h-3.5 text-gray-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -147,7 +150,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               name={listing.seller.name}
               size="sm"
             />
-            <span className="text-xs text-gray-600 truncate">
+            <span className="text-xs text-gray-600 truncate max-w-[100px]">
               {listing.seller.name}
             </span>
           </div>
@@ -162,8 +165,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 e.stopPropagation();
                 onToggleFavorite?.(listing.id);
               }}
-              className={`text-gray-400 hover:text-[#e8634a] transition-colors ${
-                favorited ? "text-[#e8634a]" : ""
+              className={`p-1.5 rounded-lg transition-all duration-200 ${
+                favorited 
+                  ? "text-[#e8634a] bg-[#e8634a]/10" 
+                  : "text-gray-400 hover:text-[#e8634a] hover:bg-[#e8634a]/5"
               }`}
               aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
             >

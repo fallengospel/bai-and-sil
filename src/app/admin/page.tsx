@@ -58,55 +58,57 @@ export default function AdminDashboard() {
   const maxCategoryCount = Math.max(...(stats?.categoryStats.map(c => c.count) || [1]));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 page-transition">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <span className="text-sm text-gray-500">Welcome back, Admin</span>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-gray-500 mt-1">Welcome back, Admin</p>
+        </div>
       </div>
 
       {/* Main Stats */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FiUsers className="w-5 h-5 text-[#1a56db]" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#1a56db] to-[#1a56db]/80 rounded-xl flex items-center justify-center shadow-sm">
+              <FiUsers className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.totalUsers || 0}</p>
+              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.totalUsers || 0}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <FiPackage className="w-5 h-5 text-green-600" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
+              <FiPackage className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Active Listings</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.activeListings || 0}</p>
+              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.activeListings || 0}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-              <FiStar className="w-5 h-5 text-purple-600" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-400 rounded-xl flex items-center justify-center shadow-sm">
+              <FiStar className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Total Sold</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.totalSold || 0}</p>
+              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.totalSold || 0}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <FiAlertTriangle className="w-5 h-5 text-red-600" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#e8634a] to-red-400 rounded-xl flex items-center justify-center shadow-sm">
+              <FiAlertTriangle className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Pending Reports</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.pendingReports || 0}</p>
+              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.pendingReports || 0}</p>
             </div>
           </div>
         </div>
@@ -114,72 +116,72 @@ export default function AdminDashboard() {
 
       {/* User Breakdown Chart */}
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
             <FiUserCheck className="w-5 h-5 text-[#1a56db]" />
             User Breakdown
           </h2>
           <div className="space-y-4">
             <div>
-              <div className="flex justify-between text-sm mb-1">
+              <div className="flex justify-between text-sm mb-2">
                 <span className="text-gray-600">Buyers</span>
-                <span className="font-medium">{stats?.totalBuyers || 0}</span>
+                <span className="font-semibold text-gray-900">{stats?.totalBuyers || 0}</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-3">
+              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-[#1a56db] h-3 rounded-full transition-all"
+                  className="bg-gradient-to-r from-[#1a56db] to-[#1a56db]/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalBuyers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-sm mb-1">
+              <div className="flex justify-between text-sm mb-2">
                 <span className="text-gray-600">Sellers</span>
-                <span className="font-medium">{stats?.totalSellers || 0}</span>
+                <span className="font-semibold text-gray-900">{stats?.totalSellers || 0}</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-3">
+              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-[#f5a623] h-3 rounded-full transition-all"
+                  className="bg-gradient-to-r from-[#f5a623] to-[#f5a623]/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalSellers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-sm mb-1">
+              <div className="flex justify-between text-sm mb-2">
                 <span className="text-gray-600">Admins</span>
-                <span className="font-medium">{(stats?.totalUsers || 0) - (stats?.totalBuyers || 0) - (stats?.totalSellers || 0)}</span>
+                <span className="font-semibold text-gray-900">{(stats?.totalUsers || 0) - (stats?.totalBuyers || 0) - (stats?.totalSellers || 0)}</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-3">
+              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-red-500 h-3 rounded-full transition-all"
+                  className="bg-gradient-to-r from-[#e8634a] to-red-400 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${(((stats?.totalUsers || 0) - (stats?.totalBuyers || 0) - (stats?.totalSellers || 0)) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t flex gap-4 text-sm">
-            <span className="flex items-center gap-1"><span className="w-3 h-3 bg-[#1a56db] rounded-full" /> Buyer</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 bg-[#f5a623] rounded-full" /> Seller</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 bg-red-500 rounded-full" /> Admin</span>
+          <div className="mt-5 pt-4 border-t border-gray-100 flex gap-5 text-sm">
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#1a56db] rounded-full" /> Buyer</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#f5a623] rounded-full" /> Seller</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#e8634a] rounded-full" /> Admin</span>
           </div>
         </div>
 
         {/* Category Distribution */}
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
             <FiTrendingUp className="w-5 h-5 text-green-600" />
             Listings by Category
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {(stats?.categoryStats || []).slice(0, 6).map((cat) => (
               <div key={cat.name}>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-sm mb-2">
                   <span className="text-gray-600 truncate">{cat.name}</span>
-                  <span className="font-medium">{cat.count}</span>
+                  <span className="font-semibold text-gray-900">{cat.count}</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-2">
+                <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#1a56db] to-[#f5a623] h-2 rounded-full transition-all"
+                    className="bg-gradient-to-r from-[#1a56db] to-[#f5a623] h-2.5 rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${(cat.count / maxCategoryCount) * 100}%` }}
                   />
                 </div>
@@ -191,25 +193,25 @@ export default function AdminDashboard() {
 
       {/* Recent Activity */}
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="bg-white rounded-xl border border-gray-100">
-          <div className="p-4 border-b flex items-center justify-between">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Users</h2>
-            <Link href="/admin/users" className="text-sm text-[#1a56db] hover:underline">View all</Link>
+            <Link href="/admin/users" className="text-sm text-[#1a56db] hover:underline font-medium">View all</Link>
           </div>
-          <div className="divide-y">
+          <div className="divide-y divide-gray-50">
             {(stats?.recentUsers || []).map((user: any) => (
-              <div key={user.id} className="p-4 flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-sm font-medium text-gray-600">
+              <div key={user.id} className="p-4 flex items-center gap-3 hover:bg-gray-50/50 transition-colors">
+                <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-sm font-semibold text-gray-600">
                   {user.name?.charAt(0) || '?'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm truncate">{user.name}</p>
+                  <p className="font-medium text-sm truncate text-gray-900">{user.name}</p>
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
-                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                  user.role === 'seller' ? 'bg-yellow-100 text-yellow-800' :
-                  user.role === 'admin' ? 'bg-red-100 text-red-800' :
-                  'bg-blue-100 text-blue-800'
+                <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                  user.role === 'seller' ? 'bg-[#f5a623]/10 text-[#d4901a]' :
+                  user.role === 'admin' ? 'bg-red-100 text-red-700' :
+                  'bg-[#1a56db]/10 text-[#1a56db]'
                 }`}>
                   {user.role || 'buyer'}
                 </span>
@@ -218,23 +220,23 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-100">
-          <div className="p-4 border-b flex items-center justify-between">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Listings</h2>
-            <Link href="/admin/listings" className="text-sm text-[#1a56db] hover:underline">View all</Link>
+            <Link href="/admin/listings" className="text-sm text-[#1a56db] hover:underline font-medium">View all</Link>
           </div>
-          <div className="divide-y">
+          <div className="divide-y divide-gray-50">
             {(stats?.recentListings || []).map((listing: any) => (
-              <div key={listing.id} className="p-4 flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <div key={listing.id} className="p-4 flex items-center gap-3 hover:bg-gray-50/50 transition-colors">
+                <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
                   <FiShoppingBag className="w-5 h-5 text-gray-500" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm truncate">{listing.title}</p>
+                  <p className="font-medium text-sm truncate text-gray-900">{listing.title}</p>
                   <p className="text-xs text-gray-500">by {listing.seller?.name}</p>
                 </div>
-                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                  listing.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                  listing.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
                 }`}>
                   {listing.status}
                 </span>

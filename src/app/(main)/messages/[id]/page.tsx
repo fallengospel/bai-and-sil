@@ -72,7 +72,7 @@ export default function ConversationPage() {
   const fetchData = useCallback(async () => {
     try {
       const [convRes, msgRes, offerRes] = await Promise.all([
-        fetch("/api/conversations"),
+        fetch(`/api/conversations/${id}`, { credentials: "include" }),
         fetch(`/api/conversations/${id}/messages`),
         fetch(`/api/conversations/${id}/offers`),
       ]);
@@ -83,7 +83,7 @@ export default function ConversationPage() {
       }
 
       const convData = await convRes.json();
-      const conv = convData.conversations?.find((c: Conversation) => c.id === id);
+      const conv = convData.conversation;
       if (!conv) {
         router.push("/messages");
         return;
@@ -142,6 +142,30 @@ export default function ConversationPage() {
       toast.error("Failed to send message");
     } finally {
       setSending(false);
+    }
+  };
+
+  const handleOfferAction = async (offerId: string, action: "Accepted" | "Declined") => {
+    try {
+      const offer = offers.find((o) => o.id === offerId);
+      if (!offer) return;
+      const res = await fetch(`/api/listings/${conversation?.listing.id}/offers/${offerId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ status: action }),
+      });
+      if (res.ok) {
+        setOffers((prev) =>
+          prev.map((o) => (o.id === offerId ? { ...o, status: action } : o))
+        );
+        toast.success(`Offer ${action.toLowerCase()}!`);
+      } else {
+        const data = await res.json();
+        toast.error(data.error || "Failed to update offer");
+      }
+    } catch {
+      toast.error("Failed to update offer");
     }
   };
 
@@ -218,29 +242,48 @@ export default function ConversationPage() {
         })}
 
         {/* Inline offers */}
-        {offers.map((offer) => (
-          <div key={offer.id} className="flex justify-center">
-            <div className="bg-white border border-gray-200 rounded-xl p-3 text-center max-w-xs">
-              <FiDollarSign className="w-5 h-5 text-[#f5a623] mx-auto mb-1" />
-              <p className="text-sm font-semibold text-gray-900">
-                {formatPrice(offer.amount)} offer
-              </p>
-              <Badge
-                variant={
-                  offer.status === "Accepted"
-                    ? "green"
-                    : offer.status === "Declined"
-                    ? "red"
-                    : "yellow"
-                }
-                size="sm"
-              >
-                {offer.status}
-              </Badge>
-              <p className="text-[10px] text-gray-400 mt-1">{timeAgo(offer.createdAt)}</p>
+        {offers.map((offer) => {
+          const isSellerViewing = !isBuyer && offer.seller.id === userId;
+          return (
+            <div key={offer.id} className="flex justify-center">
+              <div className="bg-white border border-gray-200 rounded-xl p-3 text-center max-w-xs">
+                <FiDollarSign className="w-5 h-5 text-[#f5a623] mx-auto mb-1" />
+                <p className="text-sm font-semibold text-gray-900">
+                  {formatPrice(offer.amount)} offer
+                </p>
+                <Badge
+                  variant={
+                    offer.status === "Accepted"
+                      ? "green"
+                      : offer.status === "Declined"
+                      ? "red"
+                      : "yellow"
+                  }
+                  size="sm"
+                >
+                  {offer.status}
+                </Badge>
+                {offer.status === "Pending" && isSellerViewing && (
+                  <div className="flex gap-2 mt-2 justify-center">
+                    <button
+                      onClick={() => handleOfferAction(offer.id, "Accepted")}
+                      className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      onClick={() => handleOfferAction(offer.id, "Declined")}
+                      className="px-3 py-1 text-xs font-medium text-white bg-[#e8634a] rounded-lg hover:bg-red-600 transition-colors"
+                    >
+                      Decline
+                    </button>
+                  </div>
+                )}
+                <p className="text-[10px] text-gray-400 mt-1">{timeAgo(offer.createdAt)}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         <div ref={messagesEndRef} />
       </div>

@@ -45,9 +45,23 @@ const locationOptions = PH_LOCATIONS.flatMap((loc) =>
 
 const conditionOptions = CONDITIONS.map((c) => ({ value: c, label: c }));
 
+function readParams(searchParams: { get: (key: string) => string | null }) {
+  return {
+    q: searchParams.get("q") || "",
+    category: searchParams.get("category") || "",
+    location: searchParams.get("location") || "",
+    condition: searchParams.get("condition") || "",
+    minPrice: searchParams.get("minPrice") || "",
+    maxPrice: searchParams.get("maxPrice") || "",
+    sort: searchParams.get("sort") || "newest",
+  };
+}
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const initial = readParams(searchParams);
 
   const [listings, setListings] = useState<Listing[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -55,13 +69,29 @@ export default function SearchPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
 
-  const [q, setQ] = useState(searchParams.get("q") || "");
-  const [category, setCategory] = useState(searchParams.get("category") || "");
-  const [location, setLocation] = useState(searchParams.get("location") || "");
-  const [condition, setCondition] = useState(searchParams.get("condition") || "");
-  const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "");
-  const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
-  const [sort, setSort] = useState(searchParams.get("sort") || "newest");
+  const [q, setQ] = useState(initial.q);
+  const [category, setCategory] = useState(initial.category);
+  const [location, setLocation] = useState(initial.location);
+  const [condition, setCondition] = useState(initial.condition);
+  const [minPrice, setMinPrice] = useState(initial.minPrice);
+  const [maxPrice, setMaxPrice] = useState(initial.maxPrice);
+  const [sort, setSort] = useState(initial.sort);
+
+  const pushParams = useCallback(
+    (overrides: Record<string, string> = {}) => {
+      const params = new URLSearchParams();
+      const values = { q, category, location, condition, minPrice, maxPrice, sort, ...overrides };
+      if (values.q) params.set("q", values.q);
+      if (values.category) params.set("category", values.category);
+      if (values.location) params.set("location", values.location);
+      if (values.condition) params.set("condition", values.condition);
+      if (values.minPrice) params.set("minPrice", values.minPrice);
+      if (values.maxPrice) params.set("maxPrice", values.maxPrice);
+      if (values.sort && values.sort !== "newest") params.set("sort", values.sort);
+      router.push(`/search?${params.toString()}`, { scroll: false });
+    },
+    [q, category, location, condition, minPrice, maxPrice, sort, router]
+  );
 
   const fetchListings = useCallback(
     async (pageNum: number, reset = false) => {
@@ -99,7 +129,7 @@ export default function SearchPage() {
     setPage(1);
     fetchListings(1, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sort]);
+  }, [searchParams]);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -115,6 +145,14 @@ export default function SearchPage() {
 
   const handleApplyFilters = () => {
     setPage(1);
+    pushParams();
+    fetchListings(1, true);
+  };
+
+  const handleSortChange = (newSort: string) => {
+    setSort(newSort);
+    setPage(1);
+    pushParams({ sort: newSort });
     fetchListings(1, true);
   };
 
@@ -140,6 +178,7 @@ export default function SearchPage() {
                   type="text"
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleApplyFilters(); }}
                   placeholder="Search items..."
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20 focus:border-[#1a56db]"
                 />
@@ -193,7 +232,7 @@ export default function SearchPage() {
               label="Sort by"
               options={sortOptions}
               value={sort}
-              onChange={(e) => setSort(e.target.value)}
+              onChange={(e) => handleSortChange(e.target.value)}
             />
 
             <Button onClick={handleApplyFilters} fullWidth>
@@ -211,7 +250,7 @@ export default function SearchPage() {
             <Select
               options={sortOptions}
               value={sort}
-              onChange={(e) => setSort(e.target.value)}
+              onChange={(e) => handleSortChange(e.target.value)}
               className="w-48"
             />
           </div>

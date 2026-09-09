@@ -3,9 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiSearch, FiMenu, FiX, FiMessageSquare } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiGlobe } from "react-icons/fi";
 import { IoAddCircle } from "react-icons/io5";
 import Avatar from "@/components/ui/Avatar";
+import { useTheme } from "@/components/layout/ThemeProvider";
+import { useI18n } from "@/components/layout/I18nProvider";
 
 interface User {
   id: string;
@@ -18,11 +20,14 @@ interface User {
 
 const Navbar: React.FC = () => {
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [notificationCount, setNotificationCount] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,6 +48,22 @@ const Navbar: React.FC = () => {
     };
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchCount = async () => {
+      try {
+        const res = await fetch("/api/notifications/count");
+        const data = await res.json();
+        setNotificationCount(data.count || 0);
+      } catch {
+        setNotificationCount(0);
+      }
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 60000);
+    return () => clearInterval(interval);
+  }, [user]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -88,19 +109,19 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
+    <nav className="sticky top-0 z-40 glass-strong border-b border-white/20 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex-shrink-0">
-              <span className="text-xl font-bold text-[#1a56db]">
+              <span className="text-xl font-bold gradient-text">
                 BAI <span className="text-[#f5a623]">&</span> SIL
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href="/categories"
-                className="text-sm font-medium text-gray-700 hover:text-[#1a56db] transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-[#1a56db] transition-all duration-200 hover:bg-[#1a56db]/5 px-3 py-1.5 rounded-lg"
               >
                 Categories
               </Link>
@@ -108,14 +129,14 @@ const Navbar: React.FC = () => {
           </div>
 
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-lg mx-8">
-            <div className="relative w-full">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <div className="relative w-full group">
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#1a56db] transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20 focus:border-[#1a56db]"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20 focus:border-[#1a56db] focus:bg-white transition-all duration-200 placeholder-gray-400"
               />
             </div>
           </form>
@@ -124,7 +145,7 @@ const Navbar: React.FC = () => {
             {user?.role === "seller" && (
               <Link
                 href="/sell"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-[#f5a623] text-white text-sm font-medium rounded-lg hover:bg-yellow-500 transition-colors"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#f5a623] to-[#f5a623]/90 text-white text-sm font-medium rounded-xl hover:from-[#f5a623]/90 hover:to-[#f5a623] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
               >
                 <IoAddCircle className="w-4 h-4" />
                 Sell
@@ -133,14 +154,14 @@ const Navbar: React.FC = () => {
             {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white text-sm font-medium rounded-xl hover:from-red-500 hover:to-red-600 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
               >
                 Admin
               </Link>
             )}
 
             {loading ? (
-              <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+              <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse" />
             ) : user ? (
               <>
                 <Link
@@ -149,38 +170,70 @@ const Navbar: React.FC = () => {
                 >
                   <FiMessageSquare className="w-5 h-5" />
                 </Link>
+                <Link
+                  href="/notifications"
+                  className="relative p-2 text-gray-600 hover:text-[#1a56db] hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <FiBell className="w-5 h-5" />
+                  {notificationCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-white bg-[#e8634a] rounded-full">
+                      {notificationCount > 99 ? "99+" : notificationCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  href="/notifications"
+                  className="relative p-2.5 text-gray-600 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-xl transition-all duration-200"
+                >
+                  <FiBell className="w-5 h-5" />
+                </Link>
+
+                <button
+                  onClick={toggleTheme}
+                  className="p-2.5 text-gray-600 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-xl transition-all duration-200"
+                  title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+                >
+                  {theme === "light" ? <FiMoon className="w-5 h-5" /> : <FiSun className="w-5 h-5" />}
+                </button>
+                <button
+                  onClick={() => setLanguage(language === "en" ? "fil" : "en")}
+                  className="p-2.5 text-gray-600 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-xl transition-all duration-200 text-xs font-bold"
+                  title={language === "en" ? "Switch to Filipino" : "Switch to English"}
+                >
+                  <FiGlobe className="w-5 h-5" />
+                </button>
 
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-100 transition-all duration-200"
                   >
                     <Avatar src={user.avatar} name={user.name} size="sm" />
                     <span className="hidden md:inline text-sm font-medium text-gray-700">{user.name}</span>
                   </button>
                   {profileDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
+                    <div className="absolute right-0 mt-2 w-60 glass-strong rounded-2xl shadow-xl border border-gray-100 py-1 z-50 animate-in slide-in-from-top-2 duration-200">
                       <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+                        <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                        <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full capitalize ${
-                          user.role === "seller" ? "bg-yellow-100 text-yellow-800" :
-                          user.isAdmin || user.role === "admin" ? "bg-red-100 text-red-800" :
-                          "bg-blue-100 text-blue-800"
+                        <span className={`inline-block mt-1.5 px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${
+                          user.role === "seller" ? "bg-[#f5a623]/10 text-[#d4901a]" :
+                          user.isAdmin || user.role === "admin" ? "bg-red-100 text-red-700" :
+                          "bg-[#1a56db]/10 text-[#1a56db]"
                         }`}>
                           {user.role || "buyer"}
                         </span>
                       </div>
                       <Link
                         href="/profile/me"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
                         My Profile
                       </Link>
                       <Link
                         href={getDashboardLink()}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
                         {getDashboardLabel()}
@@ -192,10 +245,17 @@ const Navbar: React.FC = () => {
                       >
                         Messages
                       </Link>
+                      <Link
+                        href="/offers"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setProfileDropdownOpen(false)}
+                      >
+                        My Offers
+                      </Link>
                       {user.role === "seller" && (
                         <Link
                           href="/my-listings"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           onClick={() => setProfileDropdownOpen(false)}
                         >
                           My Listings
@@ -204,7 +264,7 @@ const Navbar: React.FC = () => {
                       <div className="border-t border-gray-100 mt-1 pt-1">
                         <button
                           onClick={handleLogout}
-                          className="w-full text-left px-4 py-2 text-sm text-[#e8634a] hover:bg-gray-50"
+                          className="w-full text-left px-4 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 transition-colors"
                         >
                           Logout
                         </button>
@@ -217,13 +277,13 @@ const Navbar: React.FC = () => {
               <div className="hidden md:flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-sm font-medium text-[#1a56db] border border-[#1a56db] rounded-lg hover:bg-blue-50 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-[#1a56db] border border-[#1a56db]/30 rounded-xl hover:bg-[#1a56db]/5 transition-all duration-200"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#1a56db] rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#1a56db] to-[#1a56db]/90 rounded-xl hover:from-[#1a56db]/90 hover:to-[#1a56db] transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   Register
                 </Link>
@@ -232,7 +292,7 @@ const Navbar: React.FC = () => {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+              className="md:hidden p-2.5 text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200"
             >
               {mobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
             </button>
@@ -241,16 +301,16 @@ const Navbar: React.FC = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
           <form onSubmit={handleSearch} className="p-4">
-            <div className="relative">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <div className="relative group">
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#1a56db] transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20 focus:border-[#1a56db]"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20 focus:border-[#1a56db] focus:bg-white transition-all duration-200"
               />
             </div>
           </form>
@@ -258,7 +318,7 @@ const Navbar: React.FC = () => {
             {user?.role === "seller" && (
               <Link
                 href="/sell"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-[#f5a623] text-white font-medium rounded-lg"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-[#f5a623] to-[#f5a623]/90 text-white font-medium rounded-xl shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <IoAddCircle className="w-5 h-5" />
@@ -268,7 +328,7 @@ const Navbar: React.FC = () => {
             {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-red-600 text-white font-medium rounded-lg"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-red-600 to-red-500 text-white font-medium rounded-xl shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Admin Dashboard
@@ -276,7 +336,7 @@ const Navbar: React.FC = () => {
             )}
             <Link
               href="/categories"
-              className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+              className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Categories
@@ -290,18 +350,36 @@ const Navbar: React.FC = () => {
                 Messages
               </Link>
             )}
+            {user && (
+              <Link
+                href="/offers"
+                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                My Offers
+              </Link>
+            )}
+            {user && (
+              <Link
+                href="/notifications"
+                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Notifications {notificationCount > 0 && `(${notificationCount})`}
+              </Link>
+            )}
             {!user && (
               <>
                 <Link
                   href="/login"
-                  className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Register
@@ -312,21 +390,21 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/profile/me"
-                  className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   My Profile
                 </Link>
                 <Link
                   href={getDashboardLink()}
-                  className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {getDashboardLabel()}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block py-2 text-sm text-[#e8634a]"
+                  className="block py-2.5 text-sm text-[#e8634a] hover:bg-red-50 rounded-lg px-3 transition-all duration-200 w-full text-left"
                 >
                   Logout
                 </button>

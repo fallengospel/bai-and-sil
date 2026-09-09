@@ -16,6 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         role: true,
         rating: true,
         reviewCount: true,
+        verified: true,
         createdAt: true,
         _count: {
           select: { listings: true },

@@ -35,7 +35,7 @@ export default function BuyerDashboard() {
   if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a56db]" /></div>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 page-transition">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Buyer Dashboard</h1>
@@ -43,7 +43,7 @@ export default function BuyerDashboard() {
         </div>
         <Link
           href="/categories"
-          className="flex items-center gap-2 px-4 py-2 bg-[#1a56db] text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#1a56db] to-[#1a56db]/90 text-white font-medium rounded-xl hover:from-[#1a56db]/90 hover:to-[#1a56db] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
         >
           <FiSearch className="w-4 h-4" />
           Browse Items
@@ -52,32 +52,32 @@ export default function BuyerDashboard() {
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <FiHeart className="w-5 h-5 text-red-500" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#e8634a] to-red-400 rounded-xl flex items-center justify-center shadow-sm">
+              <FiHeart className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Saved Items</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.totalFavorites || 0}</p>
+              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.totalFavorites || 0}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FiSearch className="w-5 h-5 text-[#1a56db]" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#1a56db] to-[#1a56db]/80 rounded-xl flex items-center justify-center shadow-sm">
+              <FiSearch className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Browsing</p>
-              <p className="text-2xl font-bold text-gray-900">Active</p>
+              <p className="text-2xl font-bold text-green-600">Active</p>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl border border-gray-100 p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <FiStar className="w-5 h-5 text-green-600" />
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
+              <FiStar className="w-6 h-6 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-500">Member Since</p>
@@ -91,32 +91,38 @@ export default function BuyerDashboard() {
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/categories" className="bg-white rounded-xl border border-gray-100 p-6 hover:border-[#1a56db] transition-colors">
-          <FiSearch className="w-8 h-8 text-[#1a56db] mb-3" />
-          <h3 className="font-bold text-gray-900">Browse Categories</h3>
-          <p className="text-sm text-gray-500 mt-1">Explore all available items</p>
+        <Link href="/categories" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#1a56db]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#1a56db]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#1a56db]/20 transition-colors">
+            <FiSearch className="w-6 h-6 text-[#1a56db]" />
+          </div>
+          <h3 className="font-bold text-gray-900 mb-1">Browse Categories</h3>
+          <p className="text-sm text-gray-500">Explore all available items</p>
         </Link>
-        <Link href="/favorites" className="bg-white rounded-xl border border-gray-100 p-6 hover:border-red-500 transition-colors">
-          <FiHeart className="w-8 h-8 text-red-500 mb-3" />
-          <h3 className="font-bold text-gray-900">My Favorites</h3>
-          <p className="text-sm text-gray-500 mt-1">View saved items</p>
+        <Link href="/favorites" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#e8634a]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#e8634a]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#e8634a]/20 transition-colors">
+            <FiHeart className="w-6 h-6 text-[#e8634a]" />
+          </div>
+          <h3 className="font-bold text-gray-900 mb-1">My Favorites</h3>
+          <p className="text-sm text-gray-500">View saved items</p>
         </Link>
-        <Link href="/messages" className="bg-white rounded-xl border border-gray-100 p-6 hover:border-green-500 transition-colors">
-          <FiMessageSquare className="w-8 h-8 text-green-500 mb-3" />
-          <h3 className="font-bold text-gray-900">Messages</h3>
-          <p className="text-sm text-gray-500 mt-1">Chat with sellers</p>
+        <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
+            <FiMessageSquare className="w-6 h-6 text-green-500" />
+          </div>
+          <h3 className="font-bold text-gray-900 mb-1">Messages</h3>
+          <p className="text-sm text-gray-500">Chat with sellers</p>
         </Link>
       </div>
 
       {/* Recent Favorites */}
       {(stats?.recentFavorites || []).length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-100">
-          <div className="p-4 border-b flex items-center justify-between">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Your Saved Items</h2>
-            <Link href="/favorites" className="text-sm text-[#1a56db] hover:underline">View all</Link>
+            <Link href="/favorites" className="text-sm text-[#1a56db] hover:underline font-medium">View all</Link>
           </div>
-          <div className="p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="p-5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {stats?.recentFavorites.map((fav: any) => (
                 <ProductCard key={fav.id} listing={fav.listing || fav} />
               ))}
@@ -126,13 +132,13 @@ export default function BuyerDashboard() {
       )}
 
       {/* Recommended For You */}
-      <div className="bg-white rounded-xl border border-gray-100">
-        <div className="p-4 border-b flex items-center justify-between">
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+        <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Recommended For You</h2>
-          <Link href="/search" className="text-sm text-[#1a56db] hover:underline">View more</Link>
+          <Link href="/search" className="text-sm text-[#1a56db] hover:underline font-medium">View more</Link>
         </div>
-        <div className="p-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="p-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {(stats?.recommendedListings || []).map((listing: any) => (
               <ProductCard key={listing.id} listing={listing} />
             ))}

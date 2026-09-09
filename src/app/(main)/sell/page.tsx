@@ -54,8 +54,34 @@ export default function SellPage() {
     if (!files) return;
     setUploading(true);
 
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
     for (const file of Array.from(files)) {
       if (images.length >= 8) break;
+
+      if (!allowedTypes.includes(file.type)) {
+        toast.error(`"${file.name}" is not a supported format. Use JPG, PNG, or WebP.`);
+        continue;
+      }
+
+      if (file.size > maxSize) {
+        toast.error(`"${file.name}" exceeds 5MB limit (${(file.size / 1024 / 1024).toFixed(1)}MB)`);
+        continue;
+      }
+
+      const dimensions = await new Promise<{ width: number; height: number }>((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve({ width: img.width, height: img.height });
+        img.onerror = () => resolve({ width: 0, height: 0 });
+        img.src = URL.createObjectURL(file);
+      });
+
+      if (dimensions.width < 200 || dimensions.height < 200) {
+        toast.error(`"${file.name}" must be at least 200x200 pixels`);
+        continue;
+      }
+
       const formData = new FormData();
       formData.append("file", file);
 
@@ -181,7 +207,7 @@ export default function SellPage() {
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp"
               multiple
               className="hidden"
               onChange={(e) => handleUpload(e.target.files)}

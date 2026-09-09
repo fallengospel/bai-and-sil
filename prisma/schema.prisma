@@ -22,6 +22,7 @@ model User {
   reviewCount   Int       @default(0)
   emailVerified Boolean   @default(false)
   phoneVerified Boolean   @default(false)
+  verified      Boolean   @default(false)
   isAdmin       Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -38,6 +39,8 @@ model User {
   reports          Report[]
   notifications    Notification[]
   actionLogs       ActionLog[]
+  savedSearches    SavedSearch[]
+  priceAlerts      PriceAlert[]
 }
 
 model Listing {
@@ -63,6 +66,7 @@ model Listing {
   offers     Offer[]
   reviews    Review[]
   reports    Report[]
+  priceAlerts PriceAlert[]
 }
 
 model ListingImage {
@@ -187,4 +191,35 @@ model ActionLog {
   createdAt DateTime @default(now())
 
   user User? @relation(fields: [userId], references: [id])
+}
+
+model SavedSearch {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  query     String
+  category  String?
+  location  String?
+  condition String?
+  minPrice  Float?
+  maxPrice  Float?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, name])
+}
+
+model PriceAlert {
+  id        String   @id @default(uuid())
+  userId    String
+  listingId String
+  targetPrice Float
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+
+  @@unique([userId, listingId])
 }

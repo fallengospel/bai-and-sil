@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -12,9 +12,14 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import ReportModal from "@/components/ui/ReportModal";
+import ListingShareButtons from "@/components/ui/ListingShareButtons";
+import VerificationBadge from "@/components/ui/VerificationBadge";
 import { formatPrice, timeAgo } from "@/lib/helpers";
-import { FiMessageSquare, FiHeart, FiShare2, FiFlag, FiShield } from "react-icons/fi";
+import { trackRecentlyViewed } from "@/lib/recently-viewed";
+import { FiMessageSquare, FiHeart, FiShare2, FiFlag, FiShield, FiBell, FiBellOff } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import ReviewForm from "@/components/ReviewForm";
+import ProductCard from "@/components/ui/ProductCard";
 
 interface ListingData {
   id: string;
@@ -34,6 +39,7 @@ interface ListingData {
     rating: number;
     reviewCount: number;
     createdAt: string;
+    verified?: boolean;
   };
   category: { id: string; name: string; slug: string } | null;
   images: { imageUrl: string }[];
@@ -46,6 +52,8 @@ interface ListingClientProps {
   isFavorited: boolean;
   currentUser: { id: string; name: string } | null;
   sellerListingCount: number;
+  priceAlerted?: boolean;
+  relatedListings?: any[];
 }
 
 export default function ListingClient({
@@ -54,6 +62,8 @@ export default function ListingClient({
   isFavorited: initialFavorited,
   currentUser,
   sellerListingCount,
+  priceAlerted: initialPriceAlerted = false,
+  relatedListings = [],
 }: ListingClientProps) {
   const router = useRouter();
   const [favorited, setFavorited] = useState(initialFavorited);
@@ -61,6 +71,21 @@ export default function ListingClient({
   const [offerAmount, setOfferAmount] = useState("");
   const [reportModal, setReportModal] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [priceAlerted, setPriceAlerted] = useState(initialPriceAlerted);
+  const [alertProcessing, setAlertProcessing] = useState(false);
+
+  useEffect(() => {
+    if (listing.images.length > 0) {
+      trackRecentlyViewed({
+        id: listing.id,
+        slug: listing.slug,
+        title: listing.title,
+        price: listing.price,
+        imageUrl: listing.images[0]?.imageUrl || "",
+        condition: listing.condition,
+      });
+    }
+  }, [listing]);
 
   const images = listing.images.map((img) => img.imageUrl);
   const isSold = listing.status === "Sold";
@@ -130,9 +155,10 @@ export default function ListingClient({
   const handleUpdateStatus = async (status: string) => {
     setUpdating(true);
     try {
-      await fetch(`/api/listings/${listing.id}`, {
+      await fetch(`/api/listings/${listing.id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ status }),
       });
       toast.success(`Listing marked as ${status.toLowerCase()}`);
@@ -161,6 +187,28 @@ export default function ListingClient({
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Link copied!");
+  };
+
+  const handlePriceAlert = async () => {
+    if (!currentUser) {
+      toast.error("Please log in to set price alerts");
+      return;
+    }
+    setAlertProcessing(true);
+    try {
+      const res = await fetch("/api/price-alerts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ listingId: listing.id }),
+      });
+      const data = await res.json();
+      setPriceAlerted(data.subscribed);
+      toast.success(data.message);
+    } catch {
+      toast.error("Failed to update price alert");
+    } finally {
+      setAlertProcessing(false);
+    }
   };
 
   const memberSince = new Date(listing.seller.createdAt).toLocaleDateString("en-PH", {
@@ -195,22 +243,11 @@ export default function ListingClient({
           <div>
             <div className="flex items-start justify-between gap-4">
               <h1 className="text-2xl font-bold text-gray-900">{listing.title}</h1>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleShare}
-                  className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <FiShare2 className="w-5 h-5" />
-                </button>
-                {!isOwner && currentUser && (
-                  <button
-                    onClick={() => setReportModal(true)}
-                    className="p-2 text-gray-400 hover:text-[#e8634a] rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <FiFlag className="w-5 h-5" />
-                  </button>
-                )}
-              </div>
+            </div>
+
+            {/* Share buttons */}
+            <div className="mt-3">
+              <ListingShareButtons title={listing.title} url={window.location.href} />
             </div>
 
             <div className="flex items-center gap-3 mt-3">
@@ -255,6 +292,14 @@ export default function ListingClient({
               <Button variant="outline" onClick={() => setOfferModal(true)}>
                 Make an Offer
               </Button>
+              <Button
+                variant={priceAlerted ? "secondary" : "ghost"}
+                onClick={handlePriceAlert}
+                loading={alertProcessing}
+                leftIcon={priceAlerted ? <FiBellOff className="w-4 h-4" /> : <FiBell className="w-4 h-4" />}
+              >
+                {priceAlerted ? "Alert Set" : "Notify me"}
+              </Button>
               <button
                 onClick={handleFavorite}
                 className={`p-3 rounded-lg border transition-colors ${
@@ -271,7 +316,7 @@ export default function ListingClient({
           {/* Owner management */}
           {isOwner && (
             <div className="flex flex-wrap gap-3">
-              <Link href={`/sell?edit=${listing.id}`}>
+              <Link href={`/listing/${listing.slug}/edit`}>
                 <Button variant="outline">Edit</Button>
               </Link>
               {listing.status === "Active" && (
@@ -313,12 +358,15 @@ export default function ListingClient({
             <div className="flex items-center gap-3 mb-3">
               <Avatar src={listing.seller.avatar} name={listing.seller.name} size="lg" />
               <div>
-                <Link
-                  href={`/profile/${listing.seller.id}`}
-                  className="font-semibold text-gray-900 hover:text-[#1a56db]"
-                >
-                  {listing.seller.name}
-                </Link>
+                <div className="flex items-center gap-1.5">
+                  <Link
+                    href={`/profile/${listing.seller.id}`}
+                    className="font-semibold text-gray-900 hover:text-[#1a56db]"
+                  >
+                    {listing.seller.name}
+                  </Link>
+                  {listing.seller.verified && <VerificationBadge size="sm" />}
+                </div>
                 <StarRating rating={listing.seller.rating} size="sm" />
               </div>
             </div>
@@ -347,6 +395,14 @@ export default function ListingClient({
               <li>• If a deal seems too good to be true, it probably is</li>
             </ul>
           </div>
+
+          {/* Review Form for sold listings */}
+          {isSold && !isOwner && currentUser && (
+            <ReviewForm
+              listingId={listing.id}
+              revieweeId={listing.seller.id}
+            />
+          )}
         </div>
       </div>
 
@@ -384,6 +440,18 @@ export default function ListingClient({
         onClose={() => setReportModal(false)}
         listingId={listing.id}
       />
+
+      {/* Related Items */}
+      {relatedListings.length > 0 && (
+        <div className="mt-12">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Related Items</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {relatedListings.map((item: any) => (
+              <ProductCard key={item.id} listing={item} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

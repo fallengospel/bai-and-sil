@@ -20,6 +20,7 @@ export default async function ListingPage({ params }: PageProps) {
           rating: true,
           reviewCount: true,
           createdAt: true,
+          verified: true,
         },
       },
       category: true,
@@ -34,13 +35,22 @@ export default async function ListingPage({ params }: PageProps) {
   const isOwner = session?.id === listing.sellerId;
 
   let isFavorited = false;
+  let priceAlerted = false;
   if (session) {
-    const fav = await prisma.favorite.findUnique({
-      where: {
-        userId_listingId: { userId: session.id, listingId: listing.id },
-      },
-    });
+    const [fav, alert] = await Promise.all([
+      prisma.favorite.findUnique({
+        where: {
+          userId_listingId: { userId: session.id, listingId: listing.id },
+        },
+      }),
+      prisma.priceAlert.findUnique({
+        where: {
+          userId_listingId: { userId: session.id, listingId: listing.id },
+        },
+      }),
+    ]);
     isFavorited = !!fav;
+    priceAlerted = !!alert && alert.active;
   }
 
   const sellerListingCount = await prisma.listing.count({
@@ -54,6 +64,7 @@ export default async function ListingPage({ params }: PageProps) {
       isFavorited={isFavorited}
       currentUser={session ? JSON.parse(JSON.stringify(session)) : null}
       sellerListingCount={sellerListingCount}
+      priceAlerted={priceAlerted}
     />
   );
 }
