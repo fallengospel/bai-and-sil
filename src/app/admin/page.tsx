@@ -47,7 +47,7 @@ export default function AdminDashboard() {
         pendingReports: reports.filter((r: any) => r.status === 'Pending').length,
         recentUsers: users.slice(0, 5),
         recentListings: listings.slice(0, 5),
-        categoryStats: categories.map((c: any) => ({ name: c.name, count: c._count?.listings || 0 })),
+        categoryStats: categories.map((c: any) => ({ name: c.name, count: c.listingCount || c._count?.listings || 0 })),
       });
     }).catch(() => router.push('/'))
       .finally(() => setLoading(false));

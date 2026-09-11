@@ -52,7 +52,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     if (categoryId) updateData.categoryId = categoryId;
     if (condition) updateData.condition = condition;
     if (location) updateData.location = location;
-    if (status) updateData.status = status;
+    if (status) {
+      const allowedStatuses = ['Active', 'Sold', 'Reserved'];
+      if (!allowedStatuses.includes(status)) {
+        return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
+      }
+      updateData.status = status;
+    }
 
     if (images) {
       await prisma.listingImage.deleteMany({ where: { listingId: params.id } });

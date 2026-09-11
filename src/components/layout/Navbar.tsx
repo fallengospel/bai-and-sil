@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiGlobe } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiGlobe, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
 import { IoAddCircle } from "react-icons/io5";
 import Avatar from "@/components/ui/Avatar";
 import { useTheme } from "@/components/layout/ThemeProvider";
@@ -30,30 +30,45 @@ const Navbar: React.FC = () => {
   const [notificationCount, setNotificationCount] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/me", { credentials: "include" });
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch {
+  const fetchUser = useCallback(async () => {
+    try {
+      const res = await fetch("/api/auth/me", { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+      } else {
         setUser(null);
-      } finally {
-        setLoading(false);
       }
-    };
-    fetchUser();
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchUser();
+
+    const handleStorage = () => fetchUser();
+    const handleFocus = () => fetchUser();
+    const handleAuthChange = () => fetchUser();
+
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("auth-change", handleAuthChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("auth-change", handleAuthChange);
+    };
+  }, [fetchUser]);
 
   useEffect(() => {
     if (!user) return;
     const fetchCount = async () => {
       try {
-        const res = await fetch("/api/notifications/count");
+        const res = await fetch("/api/notifications/count", { credentials: "include" });
         const data = await res.json();
         setNotificationCount(data.count || 0);
       } catch {
@@ -90,6 +105,7 @@ const Navbar: React.FC = () => {
       setUser(null);
       setProfileDropdownOpen(false);
       setMobileMenuOpen(false);
+      window.dispatchEvent(new Event("auth-change"));
       router.push("/");
     } catch {
       console.error("Logout failed");
@@ -103,9 +119,15 @@ const Navbar: React.FC = () => {
   };
 
   const getDashboardLabel = () => {
-    if (user?.isAdmin || user?.role === "admin") return "Admin Dashboard";
+    if (user?.isAdmin || user?.role === "admin") return "Admin Panel";
     if (user?.role === "seller") return "Seller Dashboard";
-    return "Buyer Dashboard";
+    return "Buyer Hub";
+  };
+
+  const getRoleColor = () => {
+    if (user?.role === "seller") return "bg-[#f5a623]/10 text-[#d4901a]";
+    if (user?.isAdmin || user?.role === "admin") return "bg-red-100 text-red-700";
+    return "bg-[#1a56db]/10 text-[#1a56db]";
   };
 
   return (
@@ -113,9 +135,10 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="flex-shrink-0 flex items-center gap-2">
+              <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
               <span className="text-xl font-bold gradient-text">
-                BAI <span className="text-[#f5a623]">&</span> SIL
+                BAI <span className="text-[#f5a623]">&amp;</span> SIL
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-4">
@@ -206,60 +229,62 @@ const Navbar: React.FC = () => {
                     <span className="hidden md:inline text-sm font-medium text-gray-700">{user.name}</span>
                   </button>
                   {profileDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-60 glass-strong rounded-2xl shadow-xl border border-gray-100 py-1 z-50 animate-in slide-in-from-top-2 duration-200">
+                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1 z-50 animate-in slide-in-from-top-2 duration-200">
                       <div className="px-4 py-3 border-b border-gray-100">
                         <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                        <span className={`inline-block mt-1.5 px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${
-                          user.role === "seller" ? "bg-[#f5a623]/10 text-[#d4901a]" :
-                          user.isAdmin || user.role === "admin" ? "bg-red-100 text-red-700" :
-                          "bg-[#1a56db]/10 text-[#1a56db]"
-                        }`}>
+                        <span className={`inline-block mt-1.5 px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${getRoleColor()}`}>
                           {user.role || "buyer"}
                         </span>
                       </div>
                       <Link
                         href="/profile/me"
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
+                        <FiUser className="w-4 h-4 text-gray-400" />
                         My Profile
                       </Link>
                       <Link
                         href={getDashboardLink()}
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
+                        <FiSettings className="w-4 h-4 text-gray-400" />
                         {getDashboardLabel()}
                       </Link>
                       <Link
                         href="/messages"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
+                        <FiMessageSquare className="w-4 h-4 text-gray-400" />
                         Messages
                       </Link>
                       <Link
                         href="/offers"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
+                        <FiPackage className="w-4 h-4 text-gray-400" />
                         My Offers
                       </Link>
                       {user.role === "seller" && (
                         <Link
                           href="/my-listings"
-                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           onClick={() => setProfileDropdownOpen(false)}
                         >
+                          <FiPackage className="w-4 h-4 text-gray-400" />
                           My Listings
                         </Link>
                       )}
                       <div className="border-t border-gray-100 mt-1 pt-1">
                         <button
                           onClick={handleLogout}
-                          className="w-full text-left px-4 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 transition-colors"
+                          className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 transition-colors"
                         >
+                          <FiLogOut className="w-4 h-4" />
                           Logout
                         </button>
                       </div>
@@ -325,7 +350,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-red-600 to-red-500 text-white font-medium rounded-xl shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Admin Dashboard
+                Admin Panel
               </Link>
             )}
             <Link
@@ -335,34 +360,51 @@ const Navbar: React.FC = () => {
             >
               Categories
             </Link>
-            {user && (
-              <Link
-                href="/messages"
-                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Messages
-              </Link>
-            )}
-            {user && (
-              <Link
-                href="/offers"
-                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                My Offers
-              </Link>
-            )}
-            {user && (
-              <Link
-                href="/notifications"
-                className="block py-2 text-sm text-gray-700 hover:text-[#1a56db]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Notifications {notificationCount > 0 && `(${notificationCount})`}
-              </Link>
-            )}
-            {!user && (
+            {user ? (
+              <>
+                <Link
+                  href="/messages"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FiMessageSquare className="w-4 h-4" /> Messages
+                </Link>
+                <Link
+                  href="/offers"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FiPackage className="w-4 h-4" /> My Offers
+                </Link>
+                <Link
+                  href="/notifications"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FiBell className="w-4 h-4" /> Notifications {notificationCount > 0 && `(${notificationCount})`}
+                </Link>
+                <Link
+                  href="/profile/me"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FiUser className="w-4 h-4" /> My Profile
+                </Link>
+                <Link
+                  href={getDashboardLink()}
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <FiSettings className="w-4 h-4" /> {getDashboardLabel()}
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 rounded-lg px-3 transition-all duration-200 w-full text-left"
+                >
+                  <FiLogOut className="w-4 h-4" /> Logout
+                </button>
+              </>
+            ) : (
               <>
                 <Link
                   href="/login"
@@ -378,30 +420,6 @@ const Navbar: React.FC = () => {
                 >
                   Register
                 </Link>
-              </>
-            )}
-            {user && (
-              <>
-                <Link
-                  href="/profile/me"
-                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  My Profile
-                </Link>
-                <Link
-                  href={getDashboardLink()}
-                  className="block py-2.5 text-sm text-gray-700 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-lg px-3 transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {getDashboardLabel()}
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="block py-2.5 text-sm text-[#e8634a] hover:bg-red-50 rounded-lg px-3 transition-all duration-200 w-full text-left"
-                >
-                  Logout
-                </button>
               </>
             )}
           </div>

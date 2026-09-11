@@ -16,6 +16,13 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
     }
 
+    const existingReport = await prisma.report.findFirst({
+      where: { reporterId: user.id, listingId: params.id },
+    });
+    if (existingReport) {
+      return NextResponse.json({ error: 'You already reported this listing' }, { status: 409 });
+    }
+
     const report = await prisma.report.create({
       data: {
         reporterId: user.id,

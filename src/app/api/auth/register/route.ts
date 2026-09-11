@@ -10,6 +10,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
     }
 
+    if (password.length < 6) {
+      return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
+    }
+
     if (role && !['buyer', 'seller'].includes(role)) {
       return NextResponse.json({ error: 'Invalid role. Must be buyer or seller' }, { status: 400 });
     }

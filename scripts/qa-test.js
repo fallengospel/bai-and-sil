@@ -91,12 +91,12 @@ async function testPublicPages() {
   await test('Home page loads with hero', async () => {
     const r = await get('/');
     assert(r.status === 200, `Got ${r.status}`);
-    assert(r.body.includes('Find stuff'), 'Missing hero text');
+    assert(r.body.includes('Hanap') || r.body.includes('Find stuff'), 'Missing hero text');
   });
 
   await test('Home page shows listings', async () => {
     const r = await get('/');
-    assert(r.body.includes('Fresh Drops'), 'Missing Fresh Drops section');
+    assert(r.body.includes('Bagong Items') || r.body.includes('Fresh Drops'), 'Missing listings section');
   });
 
   await test('Home page has product images', async () => {

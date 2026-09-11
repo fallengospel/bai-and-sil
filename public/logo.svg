@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Hand holding peso sign -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a56db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5a623;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4901a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Hand palm -->
+  <path d="M30 75 C25 70, 22 60, 25 50 C28 40, 35 35, 40 38 C42 30, 48 25, 55 28 C58 22, 65 20, 70 25 C75 20, 82 22, 85 28 C90 25, 95 30, 93 38 C98 42, 100 50, 97 58 C95 65, 88 72, 80 75 Z" fill="url(#grad1)" opacity="0.9"/>
+  
+  <!-- Fingers wrapping -->
+  <path d="M40 38 C38 32, 42 26, 48 28" stroke="url(#grad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M55 28 C53 22, 58 18, 63 22" stroke="url(#grad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 25 C70 18, 76 15, 80 20" stroke="url(#grad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M85 28 C88 22, 93 25, 93 32" stroke="url(#grad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Peso sign -->
+  <text x="60" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="url(#grad2)">₱</text>
+  
+  <!-- Sparkle effects -->
+  <circle cx="25" cy="35" r="2" fill="#f5a623" opacity="0.8"/>
+  <circle cx="95" cy="30" r="1.5" fill="#f5a623" opacity="0.6"/>
+  <circle cx="20" cy="55" r="1.5" fill="#1a56db" opacity="0.5"/>
+</svg>

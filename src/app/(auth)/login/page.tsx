@@ -37,6 +37,7 @@ export default function LoginPage() {
       const user = data.user;
 
       toast.success("Welcome back!");
+      window.dispatchEvent(new Event("auth-change"));
 
       if (redirectTo) {
         router.push(redirectTo);
