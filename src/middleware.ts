@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { prisma } from './lib/prisma';
 
-const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback-secret');
+const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET);
 
 async function verifyToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, SECRET);
-    return payload as { userId: string };
+    return payload as { userId: string; role: string };
   } catch {
     return null;
   }
@@ -35,6 +36,10 @@ export async function middleware(request: NextRequest) {
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(loginUrl);
+    }
+
+    if (isAdmin && payload.role !== 'admin') {
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 

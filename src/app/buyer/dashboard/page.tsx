@@ -24,8 +24,8 @@ export default function BuyerDashboard() {
     ]).then(([userData, favsData, listingsData]) => {
       setUser(userData.user);
       setStats({
-        totalFavorites: (favsData.favorites || []).length,
-        recentFavorites: (favsData.favorites || []).slice(0, 4),
+        totalFavorites: (favsData.listings || favsData.favorites || []).length,
+        recentFavorites: (favsData.listings || favsData.favorites || []).slice(0, 4),
         recommendedListings: (listingsData.listings || []).slice(0, 8),
       });
     }).catch(() => {})

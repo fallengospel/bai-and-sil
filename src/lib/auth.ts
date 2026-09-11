@@ -3,7 +3,7 @@ import { prisma } from './prisma';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 
-const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback-secret');
+const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET);
 
 export interface SessionUser {
   id: string;
@@ -23,7 +23,8 @@ export async function verifyPassword(password: string, hash: string) {
 }
 
 export async function createSession(userId: string) {
-  const token = await new SignJWT({ userId })
+  const user = await prisma.user.findUnique({ where: { id: userId }, select: { role: true } });
+  const token = await new SignJWT({ userId, role: user?.role || 'buyer' })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('7d')
     .sign(SECRET);

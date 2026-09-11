@@ -53,16 +53,21 @@ testing → staging → main
 ## Features
 
 ### Browse & Search
-- **Home Page** — Fresh Drops section with latest listings
+- **Home Page** — Hero section with gradient, Fresh Drops, categories
 - **Categories** — 12 categories: Electronics, Fashion, Home & Living, Vehicles, Beauty, Sports, Gaming, Collectibles, Appliances, Tools, Books, Other
 - **Search** — Search by title and description (case-insensitive)
 - **Filters** — Filter by category, price range, condition, and location
 - **Sort** — Sort by newest, price low-to-high, or price high-to-low
+- **Recently Viewed** — Track and display recently viewed items
+- **Saved Searches** — Save and load search presets
 
 ### Product Listings
 - **Product Cards** — Image, title, price, location, seller info, condition badge
 - **Product Detail** — Full description, image gallery, seller profile, similar items
 - **Favorites** — Save listings to your favorites (heart icon)
+- **Share** — Share listings to Facebook, Twitter, or copy link
+- **Price Alerts** — Subscribe to price drop notifications
+- **Related Items** — Show similar items from same category
 
 ### Seller Features
 - **Sell Page** — 3-step listing creation wizard
@@ -71,12 +76,18 @@ testing → staging → main
   - Step 3: Upload images, review, publish
 - **Edit Listing** — Update your listings anytime
 - **Delete Listing** — Remove your listings
+- **Mark as Sold** — Toggle listing status
+- **Bulk Actions** — Select multiple listings for bulk operations
 - **Daily Limit** — 20 listings per day
+- **Seller Dashboard** — Stats, performance metrics, quick actions
+- **Export Listings** — Download listings as CSV
 
 ### Buyer Features
 - **Message Seller** — Start a conversation from any listing
 - **Make Offer** — Send price offers to sellers
 - **Favorites** — Save and manage your favorite items
+- **Buyer Dashboard** — Stats, saved items, recommendations
+- **Leave Reviews** — Rate sellers after purchase
 
 ### Messaging
 - **Conversations** — Real-time messaging between buyers and sellers
@@ -84,16 +95,54 @@ testing → staging → main
 - **Message History** — Full conversation threads
 
 ### User Accounts
-- **Registration** — Create account with email/password
-- **Login** — JWT-based authentication
-- **Profile** — View user profiles, ratings, and listings
-- **Avatar** — Upload profile picture
+- **Registration** — Create account with email/password, choose role (Buyer/Seller)
+- **Login** — JWT-based authentication with role-based redirect
+- **Profile** — View user profiles with role-specific layouts
+- **Avatar** — Upload profile picture (DiceBear animated avatars)
+- **Edit Profile** — Update name, bio, location, phone
+- **Forgot Password** — Password reset flow
 
-### Admin Dashboard
+### Role-Based Dashboards
+
+#### Seller Dashboard
+- Total listings, active, sold, total views
+- Listing performance chart
+- Quick actions (Create, Manage, Messages)
+- Recent listings list
+
+#### Buyer Dashboard
+- Saved items count
+- Quick actions (Browse, Favorites, Messages)
+- Recommended items
+- Saved items grid
+
+#### Admin Dashboard
+- User breakdown chart (Buyers/Sellers/Admins)
+- Category distribution graph
+- Recent users and listings tables
+- Platform statistics
+
+### Profile Pages
+- **Cover Banner** — Role-colored gradient (Red=Yellow=Blue)
+- **Animated Avatar** — DiceBear cartoon-like avatars with role styling
+- **Verification Badge** — Verified seller indicator
+- **Stats Cards** — Role-specific statistics
+- **Tabbed Content** — Overview, Listings, Reviews, Favorites
+- **About Section** — Bio, contact info, statistics
+- **Activity Feed** — Recent listings and actions
+
+### Admin Features
 - **Dashboard** — Platform stats and overview
 - **User Management** — View, ban/unban users
 - **Listing Management** — Review, delete listings
 - **Reports** — Handle reported content
+
+### Additional Features
+- **Dark Mode** — Toggle between light and dark themes
+- **Multi-language** — Filipino/English language toggle
+- **Push Notifications** — Browser push notification support
+- **Image Validation** — File size, type, and dimension limits
+- **Glass Morphism UI** — Modern glass-effect design elements
 
 ### Legal & Safety
 - **Terms of Service** — Platform terms
@@ -107,7 +156,7 @@ testing → staging → main
 | Layer | Technology |
 |-------|-----------|
 | Frontend | Next.js 13 (App Router), React 18, TypeScript |
-| Styling | Tailwind CSS, react-icons |
+| Styling | Tailwind CSS, react-icons, DiceBear Avatars |
 | Backend | Next.js API Routes, Prisma ORM |
 | Database | Neon PostgreSQL (serverless) |
 | Auth | JWT cookies (jose), bcryptjs |
@@ -157,7 +206,6 @@ Create a `.env` file in the root directory:
 DATABASE_URL="postgresql://neondb_owner:YOUR_PASSWORD@ep-YOUR-ENDPOINT.neon.tech/neondb?sslmode=require"
 NEXTAUTH_SECRET="your-secret-key-here"
 NEXTAUTH_URL="http://localhost:3000"
-UPLOAD_DIR="./public/uploads"
 ```
 
 ### 5. Push database schema
@@ -187,29 +235,35 @@ Visit [http://localhost:3000](http://localhost:3000)
 ```
 bai-and-sil/
 ├── prisma/
-│   ├── schema.prisma        # Database schema (12 models)
+│   ├── schema.prisma        # Database schema (13 models)
 │   └── seed.js               # Seed data (240+ listings)
 ├── public/
-│   └── images/products/      # Product images
+│   └── sw.js                 # Service worker for push notifications
+├── scripts/
+│   ├── qa-test.js            # Automated QA tests (50 tests)
+│   └── update-roles.sql      # Database role updates
 ├── src/
 │   ├── app/
 │   │   ├── (auth)/           # Login, Register, Forgot Password
 │   │   ├── (main)/           # Categories, Search, Sell, Messages, etc.
 │   │   ├── (legal)/          # Terms, Privacy, Safety
 │   │   ├── admin/            # Admin dashboard
-│   │   ├── api/              # API routes (8 route groups)
+│   │   ├── seller/           # Seller dashboard
+│   │   ├── buyer/            # Buyer dashboard
+│   │   ├── api/              # API routes (20+ endpoints)
 │   │   ├── page.tsx          # Home page
-│   │   ├── layout.tsx        # Root layout
+│   │   ├── layout.tsx        # Root layout with ThemeProvider
 │   │   ├── not-found.tsx     # 404 page
 │   │   ├── sitemap.ts        # Dynamic sitemap
 │   │   └── robots.ts         # Robots.txt
 │   ├── components/
-│   │   ├── layout/           # Navbar, Footer, MobileNav
-│   │   └── ui/               # 16 reusable UI components
+│   │   ├── layout/           # Navbar, Footer, MobileNav, ThemeProvider, I18nProvider
+│   │   └── ui/               # 20+ reusable UI components
 │   └── lib/
 │       ├── prisma.ts         # Prisma client singleton
 │       ├── auth.ts           # JWT authentication
-│       └── helpers.ts        # Utilities (formatPrice, slugify, etc.)
+│       ├── helpers.ts        # Utilities (formatPrice, slugify, etc.)
+│       └── recently-viewed.ts # Recently viewed items tracking
 ├── vercel.json               # Vercel deployment config
 └── package.json
 ```
@@ -225,6 +279,7 @@ bai-and-sil/
 | POST | `/api/auth/logout` | Logout (clear session) |
 | POST | `/api/auth/register` | Create new account |
 | GET | `/api/auth/me` | Get current user |
+| POST | `/api/auth/forgot-password` | Request password reset |
 
 ### Listings
 | Method | Endpoint | Description |
@@ -235,6 +290,9 @@ bai-and-sil/
 | GET | `/api/listings?minPrice=1000&maxPrice=50000` | Filter by price |
 | GET | `/api/listings?sort=price_asc` | Sort by price |
 | POST | `/api/listings` | Create new listing (auth required) |
+| PUT | `/api/listings/[id]` | Update listing |
+| DELETE | `/api/listings/[id]` | Delete listing |
+| PUT | `/api/listings/[id]/status` | Toggle listing status |
 
 ### Categories
 | Method | Endpoint | Description |
@@ -245,17 +303,64 @@ bai-and-sil/
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/users/[id]` | Get user profile |
+| PUT | `/api/users/[id]` | Update user profile |
+| GET | `/api/users/me/favorites` | Get user favorites |
+| GET | `/api/users/me/offers` | Get user offers |
 
 ### Conversations & Messages
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/conversations` | List user conversations |
-| POST | `/api/conversations` | Start new conversation |
+| GET | `/api/conversations/[id]` | Get single conversation |
+| POST | `/api/messages` | Send message |
 
 ### Favorites
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/listings/[id]/favorite` | Toggle favorite |
+
+### Offers
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/listings/[id]/offers` | Get listing offers |
+| POST | `/api/listings/[id]/offers` | Make an offer |
+| PUT | `/api/listings/[id]/offers/[offerId]` | Accept/decline offer |
+
+### Reviews
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/reviews?userId=[id]` | Get user reviews |
+| POST | `/api/reviews` | Create review |
+
+### Reports
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/listings/[id]/report` | Report listing |
+
+### Notifications
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/notifications/count` | Get unread count |
+| POST | `/api/notifications/subscribe` | Subscribe to push |
+
+### Price Alerts
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/price-alerts` | Subscribe to price drop |
+
+### Saved Searches
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/searches` | Get saved searches |
+| POST | `/api/searches` | Save search |
+| DELETE | `/api/searches/[id]` | Delete saved search |
+
+### Admin
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/users` | List all users |
+| GET | `/api/admin/listings` | List all listings |
+| GET | `/api/admin/reports` | List all reports |
 
 ---
 
@@ -335,6 +440,9 @@ npx prisma db seed
 
 # Check listing counts
 node scripts/check-counts.js
+
+# Update user roles
+npx prisma db execute --file scripts/update-roles.sql
 ```
 
 ---
@@ -350,6 +458,8 @@ node scripts/check-counts.js
 | `npm run db:push` | Push schema to database |
 | `npm run db:seed` | Seed database |
 | `npm run db:studio` | Open Prisma Studio |
+| `node scripts/qa-test.js` | Run QA tests |
+| `node scripts/check-counts.js` | Check listing counts |
 
 ---
 

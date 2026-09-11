@@ -10,6 +10,7 @@ interface ListingData {
   price: number;
   status: string;
   views: number;
+  viewCount?: number;
   condition: string;
   location: string;
   createdAt: string;
@@ -64,7 +65,7 @@ export default function SellerDashboard() {
         const myListings = (listingsData.listings || []).filter(
           (l: any) => l.seller?.id === userData.user?.id
         );
-        const totalViews = myListings.reduce((sum: number, l: any) => sum + (l.views || 0), 0);
+        const totalViews = myListings.reduce((sum: number, l: any) => sum + (l.viewCount || l.views || 0), 0);
         const activeCount = myListings.filter((l: any) => l.status === "Active").length;
         const soldCount = myListings.filter((l: any) => l.status === "Sold").length;
         setStats({

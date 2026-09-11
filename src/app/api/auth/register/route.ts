@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { hashPassword } from '@/lib/auth';
+import { hashPassword, createSession } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,6 +42,8 @@ export async function POST(request: NextRequest) {
         createdAt: true,
       },
     });
+
+    await createSession(user.id);
 
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
