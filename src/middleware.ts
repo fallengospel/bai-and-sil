@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   const session = request.cookies.get('session')?.value;
   const { pathname } = request.nextUrl;
 
-  const protectedPaths = ['/sell', '/messages', '/favorites', '/notifications', '/profile/me'];
+  const protectedPaths = ['/sell', '/messages', '/favorites', '/notifications', '/profile/me', '/my-listings', '/offers', '/seller/dashboard', '/buyer/dashboard'];
   const adminPaths = ['/admin'];
 
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
@@ -36,22 +36,11 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(loginUrl);
     }
-
-    if (isAdmin) {
-      const { prisma } = await import('@/lib/prisma');
-      const user = await prisma.user.findUnique({
-        where: { id: payload.userId },
-        select: { isAdmin: true },
-      });
-      if (!user?.isAdmin) {
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/sell/:path*', '/messages/:path*', '/favorites', '/notifications', '/profile/me', '/admin/:path*'],
+  matcher: ['/sell/:path*', '/messages/:path*', '/favorites', '/notifications', '/profile/me', '/my-listings', '/offers', '/seller/dashboard', '/buyer/dashboard', '/admin/:path*'],
 };

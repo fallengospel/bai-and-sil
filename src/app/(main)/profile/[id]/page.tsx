@@ -83,7 +83,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string>("");
   const [currentUserRole, setCurrentUserRole] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<"overview" | "listings" | "reviews" | "favorites" | "activity">("overview");
+  const [activeTab, setActiveTab] = useState<string>("overview");
   const [editModal, setEditModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -190,24 +190,24 @@ export default function ProfilePage() {
   const memberDays = Math.floor((Date.now() - new Date(profile.createdAt).getTime()) / (1000 * 60 * 60 * 24));
 
   const getTabs = () => {
-    const baseTabs = [
-      { id: "overview" as const, label: "Overview", icon: FiEye },
+    const baseTabs: { id: string; label: string; icon: any }[] = [
+      { id: "overview", label: "Overview", icon: FiEye },
     ];
 
     if (profile.role === "seller") {
       baseTabs.push(
-        { id: "listings" as const, label: `Listings (${activeListings.length})`, icon: FiPackage },
-        { id: "reviews" as const, label: `Reviews (${reviews.length})`, icon: FiStar }
+        { id: "listings", label: `Listings (${activeListings.length})`, icon: FiPackage },
+        { id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar }
       );
     } else if (profile.role === "buyer") {
       baseTabs.push(
-        { id: "favorites" as const, label: `Favorites (${favorites.length})`, icon: FiHeart },
-        { id: "reviews" as const, label: `Reviews (${reviews.length})`, icon: FiStar }
+        { id: "favorites", label: `Favorites (${favorites.length})`, icon: FiHeart },
+        { id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar }
       );
     } else {
       baseTabs.push(
-        { id: "listings" as const, label: `All Listings (${listings.length})`, icon: FiPackage },
-        { id: "reviews" as const, label: `Reviews (${reviews.length})`, icon: FiStar }
+        { id: "listings", label: `All Listings (${listings.length})`, icon: FiPackage },
+        { id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar }
       );
     }
 
@@ -244,7 +244,7 @@ export default function ProfilePage() {
               />
               {profile.verified && (
                 <div className="absolute -bottom-1 -right-1">
-                  <VerificationBadge size="lg" />
+                  <VerificationBadge size="md" />
                 </div>
               )}
             </div>

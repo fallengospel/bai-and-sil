@@ -6,8 +6,10 @@ type UserRole = "buyer" | "seller" | "admin";
 
 interface AnimatedAvatarProps {
   name: string;
+  src?: string | null;
   size?: AvatarSize;
   role?: UserRole;
+  showStatus?: boolean;
   online?: boolean;
   className?: string;
 }
@@ -53,13 +55,15 @@ const roleStyles: Record<UserRole, { ring: string; animation: string; glow: stri
 
 const AnimatedAvatar: React.FC<AnimatedAvatarProps> = ({
   name,
+  src,
   size = "md",
   role = "buyer",
+  showStatus = false,
   online = false,
   className = "",
 }) => {
   const seed = encodeURIComponent(name);
-  const avatarUrl = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}`;
+  const avatarUrl = src || `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}`;
   const styles = roleStyles[role];
 
   return (
@@ -74,14 +78,22 @@ const AnimatedAvatar: React.FC<AnimatedAvatarProps> = ({
           transition-all duration-300
         `}
       >
-        <img
-          src={avatarUrl}
-          alt={`${name}'s avatar`}
-          className="w-full h-full object-cover"
-        />
+        {src ? (
+          <img
+            src={src}
+            alt={`${name}'s avatar`}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src={avatarUrl}
+            alt={`${name}'s avatar`}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
 
-      {online && (
+      {(showStatus || online) && (
         <span
           className={`
             absolute bottom-0 right-0

@@ -172,7 +172,7 @@ const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   href="/notifications"
-                  className="relative p-2 text-gray-600 hover:text-[#1a56db] hover:bg-gray-100 rounded-lg transition-colors"
+                  className="relative p-2.5 text-gray-600 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-xl transition-all duration-200"
                 >
                   <FiBell className="w-5 h-5" />
                   {notificationCount > 0 && (
@@ -180,12 +180,6 @@ const Navbar: React.FC = () => {
                       {notificationCount > 99 ? "99+" : notificationCount}
                     </span>
                   )}
-                </Link>
-                <Link
-                  href="/notifications"
-                  className="relative p-2.5 text-gray-600 hover:text-[#1a56db] hover:bg-[#1a56db]/5 rounded-xl transition-all duration-200"
-                >
-                  <FiBell className="w-5 h-5" />
                 </Link>
 
                 <button
