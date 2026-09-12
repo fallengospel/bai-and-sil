@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { sendEmail, resetPasswordEmailHtml } from '@/lib/email';
+import { sendEmail, verificationEmailHtml } from '@/lib/email';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
@@ -15,18 +15,24 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json({
-        message: 'If an account exists with that email, a reset link has been sent.',
+        message: 'If an account exists with that email, a verification link has been sent.',
       });
     }
 
-    await prisma.resetToken.deleteMany({
-      where: { userId: user.id, used: false },
+    if (user.emailVerified) {
+      return NextResponse.json({
+        message: 'If an account exists with that email, a verification link has been sent.',
+      });
+    }
+
+    await prisma.verificationToken.deleteMany({
+      where: { userId: user.id },
     });
 
     const token = uuidv4();
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
-    await prisma.resetToken.create({
+    await prisma.verificationToken.create({
       data: {
         userId: user.id,
         token,
@@ -34,18 +40,18 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const html = resetPasswordEmailHtml(user.name, token);
+    const html = verificationEmailHtml(user.name, token);
     await sendEmail({
       to: user.email,
-      subject: 'Reset your BAI & SIL password',
+      subject: 'Verify your BAI & SIL email',
       html,
     });
 
     return NextResponse.json({
-      message: 'If an account exists with that email, a reset link has been sent.',
+      message: 'If an account exists with that email, a verification link has been sent.',
     });
   } catch (error) {
-    console.error('[Forgot Password]', error);
+    console.error('[Resend Verification]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

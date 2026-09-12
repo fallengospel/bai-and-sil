@@ -83,6 +83,18 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const user = await requireAuth();
+
+    const fullUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { emailVerified: true },
+    });
+    if (!fullUser?.emailVerified) {
+      return NextResponse.json(
+        { error: 'Please verify your email before creating listings' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const { title, description, price, categoryId, condition, location, images } = body;
 

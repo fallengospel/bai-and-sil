@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, createSession } from '@/lib/auth';
+import { sendEmail, verificationEmailHtml } from '@/lib/email';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,10 +49,29 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    const token = uuidv4();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    await prisma.verificationToken.create({
+      data: {
+        userId: user.id,
+        token,
+        expiresAt,
+      },
+    });
+
+    const html = verificationEmailHtml(name, token);
+    await sendEmail({
+      to: email,
+      subject: 'Verify your BAI & SIL email',
+      html,
+    });
+
     await createSession(user.id);
 
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
+    console.error('[Register]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
