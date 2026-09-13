@@ -4,13 +4,22 @@ interface SendEmailOptions {
   html: string;
 }
 
+interface EmailResult {
+  success: boolean;
+  error?: string;
+  statusCode?: number;
+}
+
 export async function sendEmail({ to, subject, html }: SendEmailOptions): Promise<boolean> {
+  const result = await sendEmailDetailed({ to, subject, html });
+  return result.success;
+}
+
+export async function sendEmailDetailed({ to, subject, html }: SendEmailOptions): Promise<EmailResult> {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.error('[Email] RESEND_API_KEY not configured. Set it in Vercel environment variables.');
-    console.log(`[Email] Would send to ${to}: ${subject}`);
-    return false;
+    return { success: false, error: 'RESEND_API_KEY not configured' };
   }
 
   try {
@@ -21,25 +30,26 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions): Promis
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'BAI & SIL <onboarding@resend.dev>',
+        from: 'onboarding@resend.dev',
         to: [to],
         subject,
         html,
       }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const error = await res.text();
-      console.error('[Email] Resend API error:', res.status, error);
-      return false;
+      const errorMsg = data?.message || data?.error?.message || JSON.stringify(data);
+      console.error(`[Email] Resend API error ${res.status}:`, errorMsg);
+      return { success: false, error: errorMsg, statusCode: res.status };
     }
 
-    const data = await res.json();
     console.log(`[Email] Sent to ${to}: ${subject} (id: ${data.id})`);
-    return true;
-  } catch (error) {
-    console.error('[Email] Failed to send:', error);
-    return false;
+    return { success: true };
+  } catch (error: any) {
+    console.error('[Email] Failed to send:', error?.message || error);
+    return { success: false, error: error?.message || 'Unknown error' };
   }
 }
 
