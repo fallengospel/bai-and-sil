@@ -142,7 +142,7 @@ export default function VerifyEmailPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Email Verified!</h1>
           <p className="text-gray-500">Your email has been verified. You can now use all features.</p>
-          <Button onClick={() => router.push("/login")} fullWidth>
+          <Button onClick={() => router.push("/login")} fullWidth className="shadow-cartoon">
             Log In to Your Account
           </Button>
         </div>
@@ -186,7 +186,7 @@ export default function VerifyEmailPage() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-3 text-center">
             <p className="text-sm text-red-600">{error}</p>
           </div>
         )}
@@ -203,7 +203,7 @@ export default function VerifyEmailPage() {
               onChange={(e) => handleOtpChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               onPaste={i === 0 ? handlePaste : undefined}
-              className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#7BA8D0] focus:ring-2 focus:ring-[#7BA8D0] outline-none transition-colors"
+              className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-200 rounded-2xl focus:border-[#023E8A] focus:ring-2 focus:ring-[#023E8A] outline-none transition-colors"
               disabled={loading}
             />
           ))}
@@ -222,7 +222,7 @@ export default function VerifyEmailPage() {
             <button
               onClick={handleResend}
               disabled={resending}
-              className="text-sm text-[#7BA8D0] font-medium hover:underline disabled:opacity-50"
+              className="text-sm text-[#023E8A] font-medium hover:underline disabled:opacity-50"
             >
               {resending ? "Sending..." : "Resend code"}
             </button>
@@ -230,7 +230,7 @@ export default function VerifyEmailPage() {
         </div>
 
         <p className="text-center text-sm text-gray-500">
-          <Link href="/login" className="text-[#7BA8D0] font-medium hover:underline">
+          <Link href="/login" className="text-[#023E8A] font-medium hover:underline">
             Back to login
           </Link>
         </p>

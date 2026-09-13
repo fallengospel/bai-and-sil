@@ -78,7 +78,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute -top-1 -right-1 w-6 h-6 bg-[#e8634a] text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+            className="absolute -top-1 -right-1 w-6 h-6 bg-coral text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors shadow-cartoon-sm"
           >
             <FiX className="w-3 h-3" />
           </button>
@@ -86,14 +86,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
       ) : (
         <label
           htmlFor="file-upload"
-          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-[#7BA8D0] hover:bg-blue-50 transition-colors"
+          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-bai-blue hover:bg-bai-blue-light transition-colors"
         >
           <FiUploadCloud className="w-8 h-8 text-gray-400 mb-2" />
           <span className="text-sm text-gray-500">Click to upload image</span>
           <span className="text-xs text-gray-400 mt-1">Max {Math.round(maxSize / 1024 / 1024)}MB</span>
         </label>
       )}
-      {error && <p className="mt-1 text-xs text-[#e8634a]">{error}</p>}
+      {error && <p className="mt-1 text-xs text-coral font-medium">{error}</p>}
     </div>
   );
 };

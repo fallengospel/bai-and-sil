@@ -60,7 +60,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
               onClick={() => setSelectedIndex(index)}
               className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
                 selectedIndex === index
-                  ? "border-[#7BA8D0]"
+                  ? "border-bai-blue"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >

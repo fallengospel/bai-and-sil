@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         <head><meta charset="utf-8"></head>
         <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; padding: 30px 0;">
-            <h1 style="color: #7BA8D0; margin: 0;">BAI & SIL</h1>
+            <h1 style="color: #023E8A; margin: 0;">BAI & SIL</h1>
             <p style="color: #6b7280; margin-top: 4px;">Filipino Marketplace</p>
           </div>
           <div style="background: #f9fafb; border-radius: 12px; padding: 30px; margin: 20px 0;">

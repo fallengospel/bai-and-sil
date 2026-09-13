@@ -172,7 +172,7 @@ export default function EditListingPage() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-gray-200 rounded w-48" />
-          <div className="h-64 bg-gray-200 rounded-xl" />
+          <div className="h-64 bg-gray-200 rounded-2xl" />
           <div className="space-y-3">
             <div className="h-10 bg-gray-200 rounded" />
             <div className="h-10 bg-gray-200 rounded" />
@@ -187,7 +187,7 @@ export default function EditListingPage() {
       <div className="mb-6">
         <Link
           href={`/listing/${slug}`}
-          className="text-sm text-[#7BA8D0] hover:underline flex items-center gap-1"
+          className="text-sm text-[#023E8A] hover:underline flex items-center gap-1"
         >
           <FiChevronLeft className="w-4 h-4" /> Back to listing
         </Link>
@@ -197,14 +197,14 @@ export default function EditListingPage() {
       <div className="space-y-6">
         {/* Photos */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Photos</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Photos</h2>
           <div
             onDrop={handleDrop}
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors ${
-              dragOver ? "border-[#7BA8D0] bg-blue-50" : "border-gray-300 hover:border-gray-400"
+            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors ${
+              dragOver ? "border-[#023E8A] bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
             <FiUploadCloud className="w-8 h-8 text-gray-400 mx-auto mb-2" />
@@ -224,7 +224,7 @@ export default function EditListingPage() {
           {images.length > 0 && (
             <div className="grid grid-cols-4 gap-3 mt-3">
               {images.map((img, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden group">
+                <div key={i} className="relative aspect-square rounded-2xl overflow-hidden group">
                   <img src={img} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeImage(i)}
@@ -233,7 +233,7 @@ export default function EditListingPage() {
                     <FiX className="w-3 h-3" />
                   </button>
                   {i === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-[#7BA8D0] text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 bg-[#023E8A] text-white text-[10px] px-1.5 py-0.5 rounded">
                       Cover
                     </span>
                   )}
@@ -245,7 +245,7 @@ export default function EditListingPage() {
 
         {/* Details */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Details</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Details</h2>
           <div className="space-y-4">
             <Input
               label="Title"

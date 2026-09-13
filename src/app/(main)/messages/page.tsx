@@ -68,7 +68,7 @@ export default function MessagesPage() {
               <Link
                 key={conv.id}
                 href={`/messages/${conv.id}`}
-                className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:shadow-sm transition-all"
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card transition-all"
               >
                 <Avatar
                   src={otherUser.avatar}
@@ -94,7 +94,7 @@ export default function MessagesPage() {
                   )}
                 </div>
                 {conv.unreadCount > 0 && (
-                  <span className="flex-shrink-0 w-5 h-5 bg-[#e8634a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="flex-shrink-0 w-5 h-5 bg-[#FF6B6B] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {conv.unreadCount}
                   </span>
                 )}

@@ -224,14 +224,14 @@ export default function ListingClient({
           <ImageGallery images={images} alt={listing.title} />
           {isSold && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-[#e8634a] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
+              <span className="bg-[#FF6B6B] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
                 SOLD
               </span>
             </div>
           )}
           {isReserved && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-[#F5D36B] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
+              <span className="bg-[#FFD581] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
                 RESERVED
               </span>
             </div>
@@ -251,7 +251,7 @@ export default function ListingClient({
             </div>
 
             <div className="flex items-center gap-3 mt-3">
-              <span className="text-3xl font-bold text-[#7BA8D0]">
+              <span className="text-3xl font-bold text-[#023E8A]">
                 {formatPrice(listing.price)}
               </span>
               {listing.category && (
@@ -302,10 +302,10 @@ export default function ListingClient({
               </Button>
               <button
                 onClick={handleFavorite}
-                className={`p-3 rounded-lg border transition-colors ${
+                className={`p-3 rounded-2xl border transition-colors ${
                   favorited
-                    ? "bg-[#e8634a]/10 border-[#e8634a] text-[#e8634a]"
-                    : "border-gray-200 text-gray-400 hover:text-[#e8634a]"
+                    ? "bg-[#FF6B6B]/10 border-[#FF6B6B] text-[#FF6B6B]"
+                    : "border-gray-200 text-gray-400 hover:text-[#FF6B6B]"
                 }`}
               >
                 {favorited ? <FaHeart className="w-5 h-5" /> : <FiHeart className="w-5 h-5" />}
@@ -345,7 +345,7 @@ export default function ListingClient({
 
           {/* Description */}
           <div>
-            <h3 className="font-semibold text-gray-900 mb-2">Description</h3>
+            <h3 className="font-bold text-gray-900 mb-2">Description</h3>
             <p className="text-gray-600 whitespace-pre-wrap text-sm leading-relaxed">
               {listing.description}
             </p>
@@ -354,14 +354,14 @@ export default function ListingClient({
           <p className="text-xs text-gray-400">Posted {timeAgo(listing.createdAt)}</p>
 
           {/* Seller Card */}
-          <div className="bg-gray-50 rounded-xl p-5">
+          <div className="bg-gray-50 rounded-2xl p-5">
             <div className="flex items-center gap-3 mb-3">
               <Avatar src={listing.seller.avatar} name={listing.seller.name} size="lg" />
               <div>
                 <div className="flex items-center gap-1.5">
                   <Link
                     href={`/profile/${listing.seller.id}`}
-                    className="font-semibold text-gray-900 hover:text-[#7BA8D0]"
+                    className="font-bold text-gray-900 hover:text-[#023E8A]"
                   >
                     {listing.seller.name}
                   </Link>
@@ -376,17 +376,17 @@ export default function ListingClient({
             </div>
             <Link
               href={`/profile/${listing.seller.id}`}
-              className="inline-block mt-3 text-sm font-medium text-[#7BA8D0] hover:underline"
+              className="inline-block mt-3 text-sm font-medium text-[#023E8A] hover:underline"
             >
               View Seller
             </Link>
           </div>
 
           {/* Trust Tips */}
-          <div className="bg-blue-50 rounded-xl p-5">
+          <div className="bg-blue-50 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-2">
-              <FiShield className="w-5 h-5 text-[#7BA8D0]" />
-              <h3 className="font-semibold text-gray-900">Trust Tips</h3>
+              <FiShield className="w-5 h-5 text-[#023E8A]" />
+              <h3 className="font-bold text-gray-900">Trust Tips</h3>
             </div>
             <ul className="text-sm text-gray-600 space-y-1">
               <li>• Meet in a public, well-lit place</li>

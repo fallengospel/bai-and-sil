@@ -32,10 +32,10 @@ export default async function HomePage() {
   return (
     <div className="page-transition">
       {/* Hero Section - Filipino Branded */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#7BA8D0] via-[#7BA8D0] to-[#5E8EB8] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#023E8A] via-[#023E8A] to-[#012A62] text-white">
         {/* Decorative elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5D36B]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FFD581]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
         </div>
@@ -57,7 +57,7 @@ export default async function HomePage() {
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
                 Hanap, Benta,{' '}
-                <span className="text-[#F5D36B]">I-repeat!</span>
+                <span className="text-[#FFD581]">I-repeat!</span>
               </h1>
               <p className="text-blue-100/90 text-lg mb-8 leading-relaxed max-w-lg">
                 Ang marketplace na gawa ng Pinas, para sa Pinas. 
@@ -67,14 +67,14 @@ export default async function HomePage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/search"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#7BA8D0] font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#023E8A] font-bold rounded-2xl shadow-cartoon hover:bg-blue-50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 text-lg"
                 >
                   <FiSearch className="w-5 h-5" />
                   Mag-browse Na
                 </Link>
                 <Link
                   href="/sell"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F5D36B] to-[#E5BD48] text-white font-bold rounded-xl hover:from-[#E5BD48] hover:to-[#F5D36B] transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FFD581] to-[#FFC233] text-white font-bold rounded-2xl shadow-cartoon hover:from-[#FFC233] hover:to-[#FFD581] transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 text-lg"
                 >
                   <IoAddCircle className="w-5 h-5" />
                   Magbenta Na
@@ -107,7 +107,7 @@ export default async function HomePage() {
                 </div>
                 
                 {/* Floating cards */}
-                <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-xl animate-bounce" style={{ animationDuration: "3s" }}>
+                <div className="absolute -top-6 -right-6 bg-white rounded-3xl p-4 shadow-cartoon animate-bounce" style={{ animationDuration: "3s" }}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                       <FiDollarSign className="w-5 h-5 text-green-600" />
@@ -119,10 +119,10 @@ export default async function HomePage() {
                   </div>
                 </div>
                 
-                <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}>
+                <div className="absolute -bottom-6 -left-6 bg-white rounded-3xl p-4 shadow-cartoon animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <FiShield className="w-5 h-5 text-[#7BA8D0]" />
+                      <FiShield className="w-5 h-5 text-[#023E8A]" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Secure na transaksyon</p>
@@ -141,38 +141,38 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#7BA8D0]/10 rounded-xl flex items-center justify-center">
-                <FiShield className="w-5 h-5 text-[#7BA8D0]" />
+              <div className="w-10 h-10 bg-[#023E8A]/10 rounded-2xl flex items-center justify-center">
+                <FiShield className="w-5 h-5 text-[#023E8A]" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900">Secure</p>
+                <p className="text-sm font-bold text-gray-900">Secure</p>
                 <p className="text-xs text-gray-500">Safe transactions</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-100 rounded-2xl flex items-center justify-center">
                 <FiDollarSign className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900">Free Lang</p>
+                <p className="text-sm font-bold text-gray-900">Free Lang</p>
                 <p className="text-xs text-gray-500">Walang patong</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#F5D36B]/10 rounded-xl flex items-center justify-center">
-                <FiTruck className="w-5 h-5 text-[#F5D36B]" />
+              <div className="w-10 h-10 bg-[#FFD581]/10 rounded-2xl flex items-center justify-center">
+                <FiTruck className="w-5 h-5 text-[#FFD581]" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900">Meet-up</p>
+                <p className="text-sm font-bold text-gray-900">Meet-up</p>
                 <p className="text-xs text-gray-500">Face-to-face deal</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-purple-100 rounded-2xl flex items-center justify-center">
                 <FiUsers className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900">Pinoy Made</p>
+                <p className="text-sm font-bold text-gray-900">Pinoy Made</p>
                 <p className="text-xs text-gray-500">Gawa sa Pinas</p>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default async function HomePage() {
           </div>
           <Link 
             href="/search" 
-            className="text-sm font-medium text-[#7BA8D0] hover:text-[#7BA8D0]/80 transition-colors flex items-center gap-1"
+            className="text-sm font-medium text-[#023E8A] hover:text-[#023E8A]/80 transition-colors flex items-center gap-1"
           >
             View all
             <span className="text-lg">→</span>
@@ -208,7 +208,7 @@ export default async function HomePage() {
         </div>
         {listings.length === 0 && (
           <div className="text-center py-16">
-            <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gray-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">📦</span>
             </div>
             <p className="text-gray-500">
@@ -228,7 +228,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/categories"
-              className="text-sm font-medium text-[#7BA8D0] hover:text-[#7BA8D0]/80 transition-colors flex items-center gap-1"
+              className="text-sm font-medium text-[#023E8A] hover:text-[#023E8A]/80 transition-colors flex items-center gap-1"
             >
               Lahat ng categories
               <span className="text-lg">→</span>
@@ -256,21 +256,21 @@ export default async function HomePage() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="w-16 h-16 bg-[#7BA8D0]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <FiSearch className="w-8 h-8 text-[#7BA8D0]" />
+            <div className="w-16 h-16 bg-[#023E8A]/10 rounded-3xl flex items-center justify-center mx-auto mb-4">
+              <FiSearch className="w-8 h-8 text-[#023E8A]" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2">1. Mag-browse</h3>
             <p className="text-sm text-gray-500">Hanapin ang gusto mo sa 240+ items</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 bg-[#F5D36B]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <FiDollarSign className="w-8 h-8 text-[#F5D36B]" />
+            <div className="w-16 h-16 bg-[#FFD581]/10 rounded-3xl flex items-center justify-center mx-auto mb-4">
+              <FiDollarSign className="w-8 h-8 text-[#FFD581]" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2">2. Mag-deal</h3>
             <p className="text-sm text-gray-500">Mag-message o mag-offer sa seller</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
               <FiStar className="w-8 h-8 text-green-600" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2">3. Meet-up!</h3>
@@ -281,9 +281,9 @@ export default async function HomePage() {
 
       {/* Seller CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="relative overflow-hidden bg-gradient-to-r from-[#F5D36B]/10 via-[#F5D36B]/5 to-[#7BA8D0]/10 border border-[#F5D36B]/20 rounded-3xl p-8 md:p-12">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#F5D36B]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#7BA8D0]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#FFD581]/10 via-[#FFD581]/5 to-[#023E8A]/10 border border-[#FFD581]/20 rounded-3xl p-8 md:p-12">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD581]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#023E8A]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
           
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -297,7 +297,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/sell"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F5D36B] to-[#E5BD48] text-white font-bold rounded-xl hover:from-[#E5BD48] hover:to-[#F5D36B] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FFD581] to-[#FFC233] text-white font-bold rounded-2xl shadow-cartoon-lg hover:from-[#FFC233] hover:to-[#FFD581] transition-all duration-300 hover:shadow-cartoon hover:-translate-y-1 whitespace-nowrap"
             >
               <IoAddCircle className="w-5 h-5" />
               Magbenta Na!
@@ -311,17 +311,17 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <FiUsers className="w-8 h-8 text-[#F5D36B] mx-auto mb-3" />
+              <FiUsers className="w-8 h-8 text-[#FFD581] mx-auto mb-3" />
               <p className="text-3xl font-bold">3</p>
               <p className="text-sm text-gray-400">Test Accounts</p>
             </div>
             <div>
-              <FiTrendingUp className="w-8 h-8 text-[#7BA8D0] mx-auto mb-3" />
+              <FiTrendingUp className="w-8 h-8 text-[#023E8A] mx-auto mb-3" />
               <p className="text-3xl font-bold">240+</p>
               <p className="text-sm text-gray-400">Active Listings</p>
             </div>
             <div>
-              <FiStar className="w-8 h-8 text-[#F5D36B] mx-auto mb-3" />
+              <FiStar className="w-8 h-8 text-[#FFD581] mx-auto mb-3" />
               <p className="text-3xl font-bold">12</p>
               <p className="text-sm text-gray-400">Categories</p>
             </div>

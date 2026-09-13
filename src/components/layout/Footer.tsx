@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <Link href="/" className="inline-flex items-center gap-2">
               <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
               <span className="text-2xl font-bold text-white">
-                BAI <span className="text-[#F5D36B]">&amp;</span> SIL
+                BAI <span className="text-[#FFD581]">&amp;</span> SIL
               </span>
             </Link>
             <p className="mt-3 text-sm text-gray-400">
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Marketplace
             </h3>
             <ul className="space-y-2">
@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Support
             </h3>
             <ul className="space-y-2">
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Legal
             </h3>
             <ul className="space-y-2">

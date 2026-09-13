@@ -125,9 +125,9 @@ const Navbar: React.FC = () => {
   };
 
   const getRoleColor = () => {
-    if (user?.role === "seller") return "bg-[#F5D36B]/10 text-[#E5BD48]";
+    if (user?.role === "seller") return "bg-[#FFD581]/10 text-[#FFC233]";
     if (user?.isAdmin || user?.role === "admin") return "bg-red-100 text-red-700";
-    return "bg-[#7BA8D0]/10 text-[#7BA8D0]";
+    return "bg-[#023E8A]/10 text-[#023E8A]";
   };
 
   return (
@@ -138,13 +138,13 @@ const Navbar: React.FC = () => {
             <Link href="/" className="flex-shrink-0 flex items-center gap-2">
               <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
               <span className="text-xl font-bold gradient-text">
-                BAI <span className="text-[#F5D36B]">&amp;</span> SIL
+                BAI <span className="text-[#FFD581]">&amp;</span> SIL
               </span>
             </Link>
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href="/categories"
-                className="text-sm font-medium text-gray-700 hover:text-[#7BA8D0] transition-all duration-200 hover:bg-[#7BA8D0]/5 px-3 py-1.5 rounded-lg"
+                className="text-sm font-bold text-gray-700 hover:text-[#023E8A] transition-all duration-200 hover:bg-[#023E8A]/5 px-3 py-1.5 rounded-2xl"
               >
                 Categories
               </Link>
@@ -153,13 +153,13 @@ const Navbar: React.FC = () => {
 
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-lg mx-8">
             <div className="relative w-full group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#7BA8D0] transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#023E8A] transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0] focus:bg-white transition-all duration-200 placeholder-gray-400"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A] focus:bg-white transition-all duration-200 placeholder-gray-400"
               />
             </div>
           </form>
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
             {user?.role === "seller" && (
               <Link
                 href="/sell"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#F5D36B] to-[#F5D36B]/90 text-white text-sm font-medium rounded-xl hover:from-[#F5D36B]/90 hover:to-[#F5D36B] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#FFD581] to-[#FFD581]/90 text-white text-sm font-bold rounded-2xl hover:from-[#FFD581]/90 hover:to-[#FFD581] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
               >
                 <IoAddCircle className="w-4 h-4" />
                 Sell
@@ -177,7 +177,7 @@ const Navbar: React.FC = () => {
             {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white text-sm font-medium rounded-xl hover:from-red-500 hover:to-red-600 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white text-sm font-bold rounded-2xl hover:from-red-500 hover:to-red-600 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
               >
                 Admin
               </Link>
@@ -189,17 +189,17 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/messages"
-                  className="relative p-2 text-gray-600 hover:text-[#7BA8D0] hover:bg-gray-100 rounded-lg transition-colors"
+                  className="relative p-2 text-gray-600 hover:text-[#023E8A] hover:bg-gray-100 rounded-2xl transition-colors"
                 >
                   <FiMessageSquare className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/notifications"
-                  className="relative p-2.5 text-gray-600 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-xl transition-all duration-200"
+                  className="relative p-2.5 text-gray-600 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl transition-all duration-200"
                 >
                   <FiBell className="w-5 h-5" />
                   {notificationCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-white bg-[#e8634a] rounded-full">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-white bg-[#FF6B6B] rounded-full">
                       {notificationCount > 99 ? "99+" : notificationCount}
                     </span>
                   )}
@@ -207,14 +207,14 @@ const Navbar: React.FC = () => {
 
                 <button
                   onClick={toggleTheme}
-                  className="p-2.5 text-gray-600 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-xl transition-all duration-200"
+                  className="p-2.5 text-gray-600 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl transition-all duration-200"
                   title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
                 >
                   {theme === "light" ? <FiMoon className="w-5 h-5" /> : <FiSun className="w-5 h-5" />}
                 </button>
                 <button
                   onClick={() => setLanguage(language === "en" ? "fil" : "en")}
-                  className="p-2.5 text-gray-600 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-xl transition-all duration-200 text-xs font-bold"
+                  className="p-2.5 text-gray-600 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl transition-all duration-200 text-xs font-bold"
                   title={language === "en" ? "Switch to Filipino" : "Switch to English"}
                 >
                   <FiGlobe className="w-5 h-5" />
@@ -223,10 +223,10 @@ const Navbar: React.FC = () => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                    className="flex items-center gap-2 p-1 rounded-xl hover:bg-gray-100 transition-all duration-200"
+                    className="flex items-center gap-2 p-1 rounded-2xl hover:bg-gray-100 transition-all duration-200"
                   >
                     <Avatar src={user.avatar} name={user.name} size="sm" />
-                    <span className="hidden md:inline text-sm font-medium text-gray-700">{user.name}</span>
+                    <span className="hidden md:inline text-sm font-bold text-gray-700">{user.name}</span>
                   </button>
                   {profileDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-1 z-50 animate-in slide-in-from-top-2 duration-200">
@@ -282,7 +282,7 @@ const Navbar: React.FC = () => {
                       <div className="border-t border-gray-100 mt-1 pt-1">
                         <button
                           onClick={handleLogout}
-                          className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 transition-colors"
+                          className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-sm text-[#FF6B6B] hover:bg-red-50 transition-colors"
                         >
                           <FiLogOut className="w-4 h-4" />
                           Logout
@@ -296,13 +296,13 @@ const Navbar: React.FC = () => {
               <div className="hidden md:flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-sm font-medium text-[#7BA8D0] border border-[#7BA8D0]/30 rounded-xl hover:bg-[#7BA8D0]/5 transition-all duration-200"
+                  className="px-4 py-2 text-sm font-bold text-[#023E8A] border border-[#023E8A]/30 rounded-2xl hover:bg-[#023E8A]/5 transition-all duration-200"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#7BA8D0] to-[#7BA8D0]/90 rounded-xl hover:from-[#7BA8D0]/90 hover:to-[#7BA8D0] transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-[#023E8A] to-[#023E8A]/90 rounded-2xl hover:from-[#023E8A]/90 hover:to-[#023E8A] transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   Register
                 </Link>
@@ -311,7 +311,7 @@ const Navbar: React.FC = () => {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200"
+              className="md:hidden p-2.5 text-gray-600 hover:bg-gray-100 rounded-2xl transition-all duration-200"
             >
               {mobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
             </button>
@@ -323,13 +323,13 @@ const Navbar: React.FC = () => {
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
           <form onSubmit={handleSearch} className="p-4">
             <div className="relative group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#7BA8D0] transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-[#023E8A] transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0] focus:bg-white transition-all duration-200"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A] focus:bg-white transition-all duration-200"
               />
             </div>
           </form>
@@ -337,7 +337,7 @@ const Navbar: React.FC = () => {
             {user?.role === "seller" && (
               <Link
                 href="/sell"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-[#F5D36B] to-[#F5D36B]/90 text-white font-medium rounded-xl shadow-sm"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-[#FFD581] to-[#FFD581]/90 text-white font-bold rounded-2xl shadow-cartoon-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <IoAddCircle className="w-5 h-5" />
@@ -347,7 +347,7 @@ const Navbar: React.FC = () => {
             {user && (user.isAdmin || user.role === "admin") && (
               <Link
                 href="/admin"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-red-600 to-red-500 text-white font-medium rounded-xl shadow-sm"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-2xl shadow-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Admin Panel
@@ -355,7 +355,7 @@ const Navbar: React.FC = () => {
             )}
             <Link
               href="/categories"
-              className="block py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3 transition-all duration-200"
+              className="block py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3 transition-all duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Categories
@@ -364,42 +364,42 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/messages"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiMessageSquare className="w-4 h-4" /> Messages
                 </Link>
                 <Link
                   href="/offers"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiPackage className="w-4 h-4" /> My Offers
                 </Link>
                 <Link
                   href="/notifications"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiBell className="w-4 h-4" /> Notifications {notificationCount > 0 && `(${notificationCount})`}
                 </Link>
                 <Link
                   href="/profile/me"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiUser className="w-4 h-4" /> My Profile
                 </Link>
                 <Link
                   href={getDashboardLink()}
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiSettings className="w-4 h-4" /> {getDashboardLabel()}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 py-2.5 text-sm text-[#e8634a] hover:bg-red-50 rounded-lg px-3 transition-all duration-200 w-full text-left"
+                  className="flex items-center gap-2 py-2.5 text-sm text-[#FF6B6B] hover:bg-red-50 rounded-2xl px-3 transition-all duration-200 w-full text-left"
                 >
                   <FiLogOut className="w-4 h-4" /> Logout
                 </button>
@@ -408,14 +408,14 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/login"
-                  className="block py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3 transition-all duration-200"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="block py-2.5 text-sm text-gray-700 hover:text-[#7BA8D0] hover:bg-[#7BA8D0]/5 rounded-lg px-3 transition-all duration-200"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-[#023E8A] hover:bg-[#023E8A]/5 rounded-2xl px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Register

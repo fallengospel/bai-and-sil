@@ -147,7 +147,7 @@ export default function MyListingsPage() {
             onClick={() => { setActiveTab(tab.key); setSelectedIds(new Set()); }}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.key
-                ? "border-[#7BA8D0] text-[#7BA8D0]"
+                ? "border-[#023E8A] text-[#023E8A]"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -158,13 +158,13 @@ export default function MyListingsPage() {
 
       {/* Bulk actions bar */}
       {filteredListings.length > 0 && (
-        <div className="flex items-center gap-4 mb-4 p-3 bg-gray-50 rounded-lg">
+        <div className="flex items-center gap-4 mb-4 p-3 bg-gray-50 rounded-2xl">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={selectedIds.size === filteredListings.length && filteredListings.length > 0}
               onChange={toggleSelectAll}
-              className="w-4 h-4 rounded border-gray-300 text-[#7BA8D0] focus:ring-[#7BA8D0]"
+              className="w-4 h-4 rounded border-gray-300 text-[#023E8A] focus:ring-[#023E8A]"
             />
             <span className="text-sm text-gray-600">
               {selectedIds.size > 0 ? `${selectedIds.size} selected` : "Select all"}
@@ -176,7 +176,7 @@ export default function MyListingsPage() {
               <select
                 value={bulkAction}
                 onChange={(e) => setBulkAction(e.target.value as any)}
-                className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20"
+                className="px-3 py-1.5 text-sm border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20"
               >
                 <option value="">Bulk action</option>
                 <option value="Active">Mark Active</option>
@@ -223,7 +223,7 @@ export default function MyListingsPage() {
                   type="checkbox"
                   checked={selectedIds.has(listing.id)}
                   onChange={() => toggleSelect(listing.id)}
-                  className="w-4 h-4 rounded border-gray-300 text-[#7BA8D0] focus:ring-[#7BA8D0] bg-white shadow"
+                  className="w-4 h-4 rounded border-gray-300 text-[#023E8A] focus:ring-[#023E8A] bg-white shadow"
                 />
               </label>
               <ProductCard listing={listing} />

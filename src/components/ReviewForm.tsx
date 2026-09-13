@@ -68,7 +68,7 @@ export default function ReviewForm({ listingId, revieweeId, onSuccess }: ReviewF
               className="p-0.5 transition-colors"
             >
               {star <= (hoveredRating || rating) ? (
-                <FaStar className="w-7 h-7 text-[#F5D36B]" />
+                <FaStar className="w-7 h-7 text-sil-yellow" />
               ) : (
                 <FiStar className="w-7 h-7 text-gray-300" />
               )}

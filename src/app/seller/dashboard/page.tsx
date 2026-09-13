@@ -85,7 +85,7 @@ export default function SellerDashboard() {
   if (loading)
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#F5D36B]" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FFD581]" />
       </div>
     );
 
@@ -99,14 +99,14 @@ export default function SellerDashboard() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => stats?.recentListings && exportToCSV(stats.recentListings)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md"
+            className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-2xl hover:bg-gray-50 transition-all duration-200 shadow-card hover:shadow-card-hover"
           >
             <FiDownload className="w-4 h-4" />
             Export CSV
           </button>
           <Link
             href="/sell"
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#F5D36B] to-[#F5D36B]/90 text-white font-medium rounded-xl hover:from-[#F5D36B]/90 hover:to-[#F5D36B] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#FFD581] to-[#FFD581]/90 text-white font-medium rounded-2xl hover:from-[#FFD581]/90 hover:to-[#FFD581] transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
           >
             <FiPlusCircle className="w-4 h-4" />
             New Listing
@@ -116,9 +116,9 @@ export default function SellerDashboard() {
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-[#F5D36B] to-[#F5D36B]/80 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-[#FFD581] to-[#FFD581]/80 rounded-2xl flex items-center justify-center shadow-sm">
               <FiPackage className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -127,9 +127,9 @@ export default function SellerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-green-500 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiTrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -138,9 +138,9 @@ export default function SellerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-purple-500 to-purple-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-purple-500 to-purple-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiDollarSign className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -149,9 +149,9 @@ export default function SellerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-[#7BA8D0] to-[#7BA8D0]/80 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-[#023E8A] to-[#023E8A]/80 rounded-2xl flex items-center justify-center shadow-sm">
               <FiEye className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -160,9 +160,9 @@ export default function SellerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-orange-500 to-orange-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-orange-500 to-orange-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiEye className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -171,9 +171,9 @@ export default function SellerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-teal-500 to-teal-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-11 h-11 bg-gradient-to-br from-teal-500 to-teal-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiTrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -185,18 +185,18 @@ export default function SellerDashboard() {
       </div>
 
       {/* Analytics Bar */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
         <h2 className="text-lg font-bold text-gray-900 mb-5">Analytics Overview</h2>
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-[#7BA8D0]/5 rounded-xl">
-            <div className="text-3xl font-bold text-[#7BA8D0]">{stats?.totalViews || 0}</div>
+          <div className="text-center p-4 bg-[#023E8A]/5 rounded-2xl">
+            <div className="text-3xl font-bold text-[#023E8A]">{stats?.totalViews || 0}</div>
             <div className="text-sm text-gray-500 mt-1">Total Views</div>
           </div>
-          <div className="text-center p-4 bg-[#F5D36B]/5 rounded-xl">
-            <div className="text-3xl font-bold text-[#F5D36B]">{stats?.avgViewsPerListing || 0}</div>
+          <div className="text-center p-4 bg-[#FFD581]/5 rounded-2xl">
+            <div className="text-3xl font-bold text-[#FFD581]">{stats?.avgViewsPerListing || 0}</div>
             <div className="text-sm text-gray-500 mt-1">Avg Views/Listing</div>
           </div>
-          <div className="text-center p-4 bg-green-50 rounded-xl">
+          <div className="text-center p-4 bg-green-50 rounded-2xl">
             <div className="text-3xl font-bold text-green-600">{stats?.conversionRate || 0}%</div>
             <div className="text-sm text-gray-500 mt-1">Sell-Through Rate</div>
           </div>
@@ -204,13 +204,13 @@ export default function SellerDashboard() {
       </div>
 
       {/* Listings Performance */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
         <h2 className="text-lg font-bold text-gray-900 mb-5">Listing Performance</h2>
         <div className="space-y-5">
           <div>
             <div className="flex justify-between text-sm mb-2">
               <span className="text-gray-600">Active Listings</span>
-              <span className="font-semibold text-gray-900">{stats?.activeListings || 0}</span>
+              <span className="font-bold text-gray-900">{stats?.activeListings || 0}</span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
               <div
@@ -222,7 +222,7 @@ export default function SellerDashboard() {
           <div>
             <div className="flex justify-between text-sm mb-2">
               <span className="text-gray-600">Sold Items</span>
-              <span className="font-semibold text-gray-900">{stats?.soldListings || 0}</span>
+              <span className="font-bold text-gray-900">{stats?.soldListings || 0}</span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
               <div
@@ -236,22 +236,22 @@ export default function SellerDashboard() {
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/sell" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#F5D36B]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-[#F5D36B]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#F5D36B]/20 transition-colors">
-            <FiPlusCircle className="w-6 h-6 text-[#F5D36B]" />
+        <Link href="/sell" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#FFD581]/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#FFD581]/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-[#FFD581]/20 transition-colors">
+            <FiPlusCircle className="w-6 h-6 text-[#FFD581]" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Create Listing</h3>
           <p className="text-sm text-gray-500">List a new item for sale</p>
         </Link>
-        <Link href="/my-listings" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#7BA8D0]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-[#7BA8D0]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#7BA8D0]/20 transition-colors">
-            <FiPackage className="w-6 h-6 text-[#7BA8D0]" />
+        <Link href="/my-listings" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#023E8A]/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#023E8A]/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-[#023E8A]/20 transition-colors">
+            <FiPackage className="w-6 h-6 text-[#023E8A]" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Manage Listings</h3>
           <p className="text-sm text-gray-500">View and edit your listings</p>
         </Link>
-        <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
+        <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
             <FiMessageSquare className="w-6 h-6 text-green-500" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Messages</h3>
@@ -260,15 +260,15 @@ export default function SellerDashboard() {
       </div>
 
       {/* Recent Listings */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Your Recent Listings</h2>
-          <Link href="/my-listings" className="text-sm text-[#F5D36B] hover:underline font-medium">View all</Link>
+          <Link href="/my-listings" className="text-sm text-[#FFD581] hover:underline font-medium">View all</Link>
         </div>
         <div className="divide-y divide-gray-50">
           {(stats?.recentListings || []).map((listing: any) => (
             <div key={listing.id} className="p-4 flex items-center gap-4 hover:bg-gray-50/50 transition-colors">
-              <div className="w-12 h-12 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
+              <div className="w-12 h-12 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0">
                 {listing.imageUrl ? (
                   <img src={listing.imageUrl} alt={listing.title} className="w-full h-full object-cover" />
                 ) : (
@@ -299,7 +299,7 @@ export default function SellerDashboard() {
                 <FiPackage className="w-8 h-8 text-gray-400" />
               </div>
               <p className="text-gray-500 mb-2">No listings yet</p>
-              <Link href="/sell" className="text-[#F5D36B] hover:underline font-medium">Create your first listing</Link>
+              <Link href="/sell" className="text-[#FFD581] hover:underline font-medium">Create your first listing</Link>
             </div>
           )}
         </div>

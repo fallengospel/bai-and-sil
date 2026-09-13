@@ -81,18 +81,18 @@ export default function LoginPage() {
             required
           />
           <div className="flex justify-end">
-            <Link href="/forgot-password" className="text-sm text-[#7BA8D0] hover:underline">
+            <Link href="/forgot-password" className="text-sm text-[#023E8A] hover:underline">
               Forgot password?
             </Link>
           </div>
-          <Button type="submit" loading={loading} fullWidth>
+          <Button type="submit" loading={loading} fullWidth className="shadow-cartoon">
             Log In
           </Button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-[#7BA8D0] font-medium hover:underline">
+          <Link href="/register" className="text-[#023E8A] font-medium hover:underline">
             Register
           </Link>
         </p>

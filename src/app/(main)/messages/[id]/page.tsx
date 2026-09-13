@@ -202,7 +202,7 @@ export default function ConversationPage() {
     <div className="max-w-3xl mx-auto px-4 py-6 h-[calc(100vh-4rem)] flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-        <button onClick={() => router.push("/messages")} className="p-1 hover:bg-gray-100 rounded-lg">
+        <button onClick={() => router.push("/messages")} className="p-1 hover:bg-gray-100 rounded-2xl">
           <FiArrowLeft className="w-5 h-5" />
         </button>
         <Avatar src={otherUser.avatar} name={otherUser.name} size="sm" />
@@ -210,7 +210,7 @@ export default function ConversationPage() {
           <p className="font-medium text-gray-900 truncate">{otherUser.name}</p>
           <Link
             href={`/listing/${conversation.listing.slug}`}
-            className="text-xs text-[#7BA8D0] hover:underline truncate block"
+            className="text-xs text-[#023E8A] hover:underline truncate block"
           >
             {conversation.listing.title} · {formatPrice(conversation.listing.price)}
           </Link>
@@ -227,7 +227,7 @@ export default function ConversationPage() {
                 <div
                   className={`px-4 py-2.5 rounded-2xl text-sm ${
                     isOwn
-                      ? "bg-[#7BA8D0] text-white rounded-br-md"
+                      ? "bg-[#023E8A] text-white rounded-br-md"
                       : "bg-gray-100 text-gray-900 rounded-bl-md"
                   }`}
                 >
@@ -246,9 +246,9 @@ export default function ConversationPage() {
           const isSellerViewing = !isBuyer && offer.seller.id === userId;
           return (
             <div key={offer.id} className="flex justify-center">
-              <div className="bg-white border border-gray-200 rounded-xl p-3 text-center max-w-xs">
-                <FiDollarSign className="w-5 h-5 text-[#F5D36B] mx-auto mb-1" />
-                <p className="text-sm font-semibold text-gray-900">
+              <div className="bg-white border border-gray-200 rounded-2xl p-3 text-center max-w-xs">
+                <FiDollarSign className="w-5 h-5 text-[#FFD581] mx-auto mb-1" />
+                <p className="text-sm font-bold text-gray-900">
                   {formatPrice(offer.amount)} offer
                 </p>
                 <Badge
@@ -267,13 +267,13 @@ export default function ConversationPage() {
                   <div className="flex gap-2 mt-2 justify-center">
                     <button
                       onClick={() => handleOfferAction(offer.id, "Accepted")}
-                      className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+                      className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-2xl hover:bg-green-700 transition-colors"
                     >
                       Accept
                     </button>
                     <button
                       onClick={() => handleOfferAction(offer.id, "Declined")}
-                      className="px-3 py-1 text-xs font-medium text-white bg-[#e8634a] rounded-lg hover:bg-red-600 transition-colors"
+                      className="px-3 py-1 text-xs font-medium text-white bg-[#FF6B6B] rounded-2xl hover:bg-red-600 transition-colors"
                     >
                       Decline
                     </button>
@@ -324,7 +324,7 @@ export default function ConversationPage() {
             }
           }}
           placeholder="Ask the seller something..."
-          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
+          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A]"
           disabled={sending}
         />
         <Button

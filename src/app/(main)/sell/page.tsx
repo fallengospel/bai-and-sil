@@ -171,7 +171,7 @@ export default function SellPage() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                 step >= s
-                  ? "bg-[#7BA8D0] text-white"
+                  ? "bg-[#023E8A] text-white"
                   : "bg-gray-200 text-gray-500"
               }`}
             >
@@ -196,8 +196,8 @@ export default function SellPage() {
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
-              dragOver ? "border-[#7BA8D0] bg-blue-50" : "border-gray-300 hover:border-gray-400"
+            className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-colors ${
+              dragOver ? "border-[#023E8A] bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
             <FiUploadCloud className="w-10 h-10 text-gray-400 mx-auto mb-3" />
@@ -217,7 +217,7 @@ export default function SellPage() {
           {images.length > 0 && (
             <div className="grid grid-cols-4 gap-3">
               {images.map((img, i) => (
-                <div key={i} className="relative aspect-square rounded-lg overflow-hidden group">
+                <div key={i} className="relative aspect-square rounded-2xl overflow-hidden group">
                   <img src={img} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeImage(i)}
@@ -226,7 +226,7 @@ export default function SellPage() {
                     <FiX className="w-3 h-3" />
                   </button>
                   {i === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-[#7BA8D0] text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 bg-[#023E8A] text-white text-[10px] px-1.5 py-0.5 rounded">
                       Cover
                     </span>
                   )}
@@ -321,7 +321,7 @@ export default function SellPage() {
             <ProductCard listing={previewListing} />
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+          <div className="bg-gray-50 rounded-2xl p-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Title</span>
               <span className="font-medium">{title}</span>

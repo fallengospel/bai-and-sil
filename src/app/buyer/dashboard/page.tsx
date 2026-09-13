@@ -32,7 +32,7 @@ export default function BuyerDashboard() {
     .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7BA8D0]" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#023E8A]" /></div>;
 
   return (
     <div className="space-y-6 page-transition">
@@ -43,7 +43,7 @@ export default function BuyerDashboard() {
         </div>
         <Link
           href="/categories"
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#7BA8D0] to-[#7BA8D0]/90 text-white font-medium rounded-xl hover:from-[#7BA8D0]/90 hover:to-[#7BA8D0] transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#023E8A] to-[#023E8A]/90 text-white font-medium rounded-2xl hover:from-[#023E8A]/90 hover:to-[#023E8A] transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
         >
           <FiSearch className="w-4 h-4" />
           Browse Items
@@ -52,9 +52,9 @@ export default function BuyerDashboard() {
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#e8634a] to-red-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#FF6B6B] to-red-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiHeart className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -63,9 +63,9 @@ export default function BuyerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#7BA8D0] to-[#7BA8D0]/80 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 bg-gradient-to-br from-[#023E8A] to-[#023E8A]/80 rounded-2xl flex items-center justify-center shadow-sm">
               <FiSearch className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -74,9 +74,9 @@ export default function BuyerDashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-400 rounded-xl flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiStar className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -91,22 +91,22 @@ export default function BuyerDashboard() {
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/categories" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#7BA8D0]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-[#7BA8D0]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#7BA8D0]/20 transition-colors">
-            <FiSearch className="w-6 h-6 text-[#7BA8D0]" />
+        <Link href="/categories" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#023E8A]/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#023E8A]/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-[#023E8A]/20 transition-colors">
+            <FiSearch className="w-6 h-6 text-[#023E8A]" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Browse Categories</h3>
           <p className="text-sm text-gray-500">Explore all available items</p>
         </Link>
-        <Link href="/favorites" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#e8634a]/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-[#e8634a]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#e8634a]/20 transition-colors">
-            <FiHeart className="w-6 h-6 text-[#e8634a]" />
+        <Link href="/favorites" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-[#FF6B6B]/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-[#FF6B6B]/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-[#FF6B6B]/20 transition-colors">
+            <FiHeart className="w-6 h-6 text-[#FF6B6B]" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">My Favorites</h3>
           <p className="text-sm text-gray-500">View saved items</p>
         </Link>
-        <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
+        <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
             <FiMessageSquare className="w-6 h-6 text-green-500" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Messages</h3>
@@ -116,10 +116,10 @@ export default function BuyerDashboard() {
 
       {/* Recent Favorites */}
       {(stats?.recentFavorites || []).length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Your Saved Items</h2>
-            <Link href="/favorites" className="text-sm text-[#7BA8D0] hover:underline font-medium">View all</Link>
+            <Link href="/favorites" className="text-sm text-[#023E8A] hover:underline font-medium">View all</Link>
           </div>
           <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -132,10 +132,10 @@ export default function BuyerDashboard() {
       )}
 
       {/* Recommended For You */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Recommended For You</h2>
-          <Link href="/search" className="text-sm text-[#7BA8D0] hover:underline font-medium">View more</Link>
+          <Link href="/search" className="text-sm text-[#023E8A] hover:underline font-medium">View more</Link>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">

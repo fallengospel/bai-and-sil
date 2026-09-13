@@ -117,13 +117,13 @@ export default function ResetPasswordPage() {
             placeholder="Confirm your password"
             required
           />
-          <Button type="submit" loading={loading} fullWidth>
+          <Button type="submit" loading={loading} fullWidth className="shadow-cartoon">
             Reset Password
           </Button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          <Link href="/login" className="text-[#7BA8D0] font-medium hover:underline">
+            <Link href="/login" className="text-[#023E8A] font-medium hover:underline">
             Back to login
           </Link>
         </p>

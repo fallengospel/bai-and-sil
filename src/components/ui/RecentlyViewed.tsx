@@ -39,7 +39,7 @@ const RecentlyViewed: React.FC = () => {
           <Link
             key={item.id}
             href={`/listing/${item.slug}`}
-            className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-200"
+            className="bg-white rounded-2xl shadow-card border border-gray-100 overflow-hidden hover:-translate-y-1 hover:shadow-card-hover transition-all duration-200"
           >
             <div className="aspect-square overflow-hidden">
               <img
@@ -52,7 +52,7 @@ const RecentlyViewed: React.FC = () => {
               <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
                 {item.title}
               </h3>
-              <p className="text-lg font-bold text-[#7BA8D0] mb-1">
+              <p className="text-lg font-bold text-bai-blue mb-1">
                 ₱{item.price.toLocaleString()}
               </p>
               <Badge variant="gray" size="sm">

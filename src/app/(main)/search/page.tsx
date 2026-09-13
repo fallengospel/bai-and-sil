@@ -167,8 +167,8 @@ export default function SearchPage() {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Filters sidebar */}
         <aside className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-5 sticky top-20">
-            <h2 className="font-semibold text-gray-900">Filters</h2>
+          <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-5 sticky top-20">
+            <h2 className="font-bold text-gray-900">Filters</h2>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
@@ -180,7 +180,7 @@ export default function SearchPage() {
                   onChange={(e) => setQ(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") handleApplyFilters(); }}
                   placeholder="Search items..."
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A]"
                 />
               </div>
             </div>
@@ -216,14 +216,14 @@ export default function SearchPage() {
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A]"
                 />
                 <input
                   type="number"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#023E8A]/20 focus:border-[#023E8A]"
                 />
               </div>
             </div>

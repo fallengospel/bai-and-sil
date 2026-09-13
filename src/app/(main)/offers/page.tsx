@@ -103,7 +103,7 @@ export default function OffersPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.key
-                ? "border-[#7BA8D0] text-[#7BA8D0]"
+                ? "border-[#023E8A] text-[#023E8A]"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -128,9 +128,9 @@ export default function OffersPage() {
             <Link
               key={offer.id}
               href={`/listing/${offer.listing.slug}`}
-              className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:shadow-md transition-shadow"
+              className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card-hover transition-shadow"
             >
-              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+              <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
                 <img
                   src={offer.listing.imageUrl || "/placeholder.svg"}
                   alt={offer.listing.title}
@@ -143,11 +143,11 @@ export default function OffersPage() {
                 </h3>
                 <div className="flex items-center gap-2 mt-1">
                   {offer.role === "buyer" ? (
-                    <FiArrowUpRight className="w-3 h-3 text-[#7BA8D0]" />
+                    <FiArrowUpRight className="w-3 h-3 text-[#023E8A]" />
                   ) : (
-                    <FiArrowDownRight className="w-3 h-3 text-[#F5D36B]" />
+                    <FiArrowDownRight className="w-3 h-3 text-[#FFD581]" />
                   )}
-                  <span className="text-sm font-bold text-[#7BA8D0]">
+                  <span className="text-sm font-bold text-[#023E8A]">
                     {formatPrice(offer.amount)}
                   </span>
                   <span className="text-xs text-gray-400">

@@ -217,12 +217,12 @@ export default function ProfilePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 page-transition">
       {/* Profile Header Card */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden mb-6 shadow-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden mb-6 shadow-card">
         {/* Cover Banner */}
         <div className={`h-32 md:h-40 relative ${
           profile.role === "admin" ? "bg-gradient-to-r from-red-500 to-red-600" :
-          profile.role === "seller" ? "bg-gradient-to-r from-[#F5D36B] to-yellow-500" :
-          "bg-gradient-to-r from-[#7BA8D0] to-blue-500"
+          profile.role === "seller" ? "bg-gradient-to-r from-[#FFD581] to-yellow-500" :
+          "bg-gradient-to-r from-[#023E8A] to-blue-500"
         }`}>
           <div className="absolute inset-0 bg-black/10" />
           <div className="absolute inset-0" style={{
@@ -253,10 +253,10 @@ export default function ProfilePage() {
             <div className="flex-1 md:mb-1">
               <div className="flex items-center gap-3 flex-wrap">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{profile.name}</h1>
-                <span className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full capitalize ${
-                  profile.role === "seller" ? "bg-[#F5D36B]/10 text-[#E5BD48]" :
+                <span className={`inline-flex items-center px-3 py-1 text-xs font-bold rounded-full capitalize ${
+                  profile.role === "seller" ? "bg-[#FFD581]/10 text-[#FFC233]" :
                   profile.role === "admin" ? "bg-red-100 text-red-700" :
-                  "bg-[#7BA8D0]/10 text-[#7BA8D0]"
+                  "bg-[#023E8A]/10 text-[#023E8A]"
                 }`}>
                   {profile.role === "seller" && <FiShoppingBag className="w-3 h-3 mr-1" />}
                   {profile.role === "admin" && <FiUsers className="w-3 h-3 mr-1" />}
@@ -290,17 +290,17 @@ export default function ProfilePage() {
                     Edit Profile
                   </Button>
                   {profile.role === "seller" && (
-                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-[#F5D36B] text-white rounded-xl hover:bg-yellow-500 transition-all">
+                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-[#FFD581] text-white rounded-2xl hover:bg-yellow-500 transition-all">
                       Dashboard
                     </Link>
                   )}
                   {profile.role === "buyer" && (
-                    <Link href="/buyer/dashboard" className="px-4 py-2 text-sm font-medium bg-[#7BA8D0] text-white rounded-xl hover:bg-blue-700 transition-all">
+                    <Link href="/buyer/dashboard" className="px-4 py-2 text-sm font-medium bg-[#023E8A] text-white rounded-2xl hover:bg-blue-700 transition-all">
                       Dashboard
                     </Link>
                   )}
                   {profile.role === "admin" && (
-                    <Link href="/admin" className="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all">
+                    <Link href="/admin" className="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-2xl hover:bg-red-700 transition-all">
                       Admin Panel
                     </Link>
                   )}
@@ -329,30 +329,30 @@ export default function ProfilePage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {profile.role === "seller" && (
           <>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiPackage className="w-5 h-5 text-[#7BA8D0]" />
+                <FiPackage className="w-5 h-5 text-[#023E8A]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{activeListings.length}</p>
               <p className="text-xs text-gray-500">Active Listings</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiDollarSign className="w-5 h-5 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{soldListings.length}</p>
               <p className="text-xs text-gray-500">Items Sold</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiEye className="w-5 h-5 text-purple-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{totalViews}</p>
               <p className="text-xs text-gray-500">Total Views</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiStar className="w-5 h-5 text-[#F5D36B]" />
+                <FiStar className="w-5 h-5 text-[#FFD581]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{profile.rating.toFixed(1)}</p>
               <p className="text-xs text-gray-500">Rating</p>
@@ -361,28 +361,28 @@ export default function ProfilePage() {
         )}
         {profile.role === "buyer" && (
           <>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiHeart className="w-5 h-5 text-red-500" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{favorites.length}</p>
               <p className="text-xs text-gray-500">Saved Items</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiStar className="w-5 h-5 text-[#7BA8D0]" />
+                <FiStar className="w-5 h-5 text-[#023E8A]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{reviews.length}</p>
               <p className="text-xs text-gray-500">Reviews Given</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiCalendar className="w-5 h-5 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{memberDays}</p>
               <p className="text-xs text-gray-500">Days Active</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiCheckCircle className="w-5 h-5 text-purple-600" />
               </div>
@@ -393,28 +393,28 @@ export default function ProfilePage() {
         )}
         {profile.role === "admin" && (
           <>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiUsers className="w-5 h-5 text-red-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">Admin</p>
               <p className="text-xs text-gray-500">Role</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiPackage className="w-5 h-5 text-[#7BA8D0]" />
+                <FiPackage className="w-5 h-5 text-[#023E8A]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{listings.length}</p>
               <p className="text-xs text-gray-500">All Listings</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiBarChart2 className="w-5 h-5 text-green-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{listings.filter(l => l.status === "Active").length}</p>
               <p className="text-xs text-gray-500">Active</p>
             </div>
-            <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiStar className="w-5 h-5 text-purple-600" />
               </div>
@@ -433,7 +433,7 @@ export default function ProfilePage() {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 pb-3 px-4 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
               activeTab === tab.id
-                ? "border-[#7BA8D0] text-[#7BA8D0]"
+                ? "border-[#023E8A] text-[#023E8A]"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -447,8 +447,8 @@ export default function ProfilePage() {
       {activeTab === "overview" && (
         <div className="grid md:grid-cols-2 gap-6">
           {/* About Card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiEdit2 className="w-4 h-4 text-gray-400" />
               About
             </h3>
@@ -463,8 +463,8 @@ export default function ProfilePage() {
           </div>
 
           {/* Contact Card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiMail className="w-4 h-4 text-gray-400" />
               Contact Information
             </h3>
@@ -494,8 +494,8 @@ export default function ProfilePage() {
           </div>
 
           {/* Quick Stats Card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiTrendingUp className="w-4 h-4 text-gray-400" />
               Statistics
             </h3>
@@ -520,15 +520,15 @@ export default function ProfilePage() {
           </div>
 
           {/* Activity Card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
-            <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiClock className="w-4 h-4 text-gray-400" />
               Recent Activity
             </h3>
             <div className="space-y-3">
               {listings.slice(0, 3).map((listing) => (
                 <div key={listing.id} className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                  <div className="w-8 h-8 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0">
                     {listing.imageUrl ? (
                       <img src={listing.imageUrl} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -536,7 +536,7 @@ export default function ProfilePage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <Link href={`/listing/${listing.slug}`} className="text-gray-900 hover:text-[#7BA8D0] truncate block">
+                    <Link href={`/listing/${listing.slug}`} className="text-gray-900 hover:text-[#023E8A] truncate block">
                       {listing.title}
                     </Link>
                     <p className="text-xs text-gray-400">{new Date(listing.createdAt).toLocaleDateString()}</p>
@@ -555,7 +555,7 @@ export default function ProfilePage() {
         <>
           {isOwnProfile && profile.role === "seller" && (
             <div className="flex justify-end mb-4">
-              <Link href="/sell" className="px-4 py-2 bg-[#F5D36B] text-white text-sm font-medium rounded-xl hover:bg-yellow-500 transition-all">
+              <Link href="/sell" className="px-4 py-2 bg-[#FFD581] text-white text-sm font-medium rounded-2xl hover:bg-yellow-500 transition-all">
                 + New Listing
               </Link>
             </div>
@@ -587,7 +587,7 @@ export default function ProfilePage() {
             />
           ) : (
             reviews.map((review) => (
-              <div key={review.id} className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
+              <div key={review.id} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-card">
                 <div className="flex items-start gap-3">
                   <Avatar src={review.reviewer.avatar} name={review.reviewer.name} size="sm" />
                   <div className="flex-1">
@@ -597,7 +597,7 @@ export default function ProfilePage() {
                     </div>
                     <Link
                       href={`/listing/${review.listing.slug}`}
-                      className="text-xs text-[#7BA8D0] hover:underline"
+                      className="text-xs text-[#023E8A] hover:underline"
                     >
                       {review.listing.title}
                     </Link>

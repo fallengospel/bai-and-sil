@@ -102,7 +102,7 @@ export default function NotificationsPage() {
             <Link
               key={notif.id}
               href={notif.link}
-              className={`flex items-start gap-3 p-4 rounded-xl border transition-colors ${
+              className={`flex items-start gap-3 p-4 rounded-2xl border transition-colors ${
                 notif.read
                   ? "bg-white border-gray-100"
                   : "bg-blue-50 border-blue-100"
@@ -110,7 +110,7 @@ export default function NotificationsPage() {
             >
               <div
                 className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  notif.read ? "bg-gray-100 text-gray-500" : "bg-[#7BA8D0]/10 text-[#7BA8D0]"
+                  notif.read ? "bg-gray-100 text-gray-500" : "bg-[#023E8A]/10 text-[#023E8A]"
                 }`}
               >
                 {iconMap[notif.type] || iconMap.default}
@@ -122,7 +122,7 @@ export default function NotificationsPage() {
                 <p className="text-xs text-gray-400 mt-1">{timeAgo(notif.createdAt)}</p>
               </div>
               {!notif.read && (
-                <div className="w-2 h-2 bg-[#7BA8D0] rounded-full flex-shrink-0 mt-2" />
+                <div className="w-2 h-2 bg-[#023E8A] rounded-full flex-shrink-0 mt-2" />
               )}
             </Link>
           ))}
