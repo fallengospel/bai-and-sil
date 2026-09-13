@@ -44,14 +44,21 @@ export async function POST(request: NextRequest) {
     });
 
     const html = verificationEmailHtml(user.name, code);
-    await sendEmail({
+    const emailSent = await sendEmail({
       to: user.email,
       subject: 'Your BAI & SIL verification code',
       html,
     });
 
+    if (!emailSent) {
+      console.error('[Resend] Failed to send verification email to:', user.email);
+    }
+
     return NextResponse.json({
-      message: 'If an account exists with that email, a verification code has been sent.',
+      message: emailSent
+        ? 'Verification code sent! Check your inbox.'
+        : 'Failed to send email. Please try again later.',
+      emailSent,
     });
   } catch (error) {
     console.error('[Resend Verification]', error);

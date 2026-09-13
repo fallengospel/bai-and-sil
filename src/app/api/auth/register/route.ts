@@ -59,13 +59,21 @@ export async function POST(request: NextRequest) {
     });
 
     const html = verificationEmailHtml(name, code);
-    await sendEmail({
+    const emailSent = await sendEmail({
       to: email,
       subject: 'Your BAI & SIL verification code',
       html,
     });
 
-    return NextResponse.json({ user, requiresVerification: true }, { status: 201 });
+    if (!emailSent) {
+      console.error('[Register] Failed to send verification email to:', email);
+    }
+
+    return NextResponse.json({
+      user,
+      requiresVerification: true,
+      emailSent,
+    }, { status: 201 });
   } catch (error) {
     console.error('[Register]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

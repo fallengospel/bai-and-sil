@@ -111,14 +111,18 @@ export default function VerifyEmailPage() {
         body: JSON.stringify({ email }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.emailSent) {
         setResendSuccess(true);
         setCountdown(60);
-        toast.success("New verification code sent!");
+        toast.success("New verification code sent! Check your inbox.");
         setOtp(["", "", "", "", "", ""]);
         inputRefs.current[0]?.focus();
+      } else if (res.ok && !data.emailSent) {
+        toast.error("Failed to send email. Please try again later.");
       } else {
-        toast.error("Failed to resend code");
+        toast.error(data.error || "Failed to resend code");
       }
     } catch {
       toast.error("Something went wrong");

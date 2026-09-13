@@ -1,15 +1,3 @@
-import nodemailer from 'nodemailer';
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
-
 interface SendEmailOptions {
   to: string;
   subject: string;
@@ -17,21 +5,37 @@ interface SendEmailOptions {
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailOptions): Promise<boolean> {
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-    console.warn('[Email] SMTP not configured. Set SMTP_USER and SMTP_PASS environment variables.');
-    console.log(`[Email] OTP for ${to}: ${subject}`);
-    console.log(`[Email] Preview: ${html.substring(0, 200)}...`);
-    return true;
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.error('[Email] RESEND_API_KEY not configured. Set it in Vercel environment variables.');
+    console.log(`[Email] Would send to ${to}: ${subject}`);
+    return false;
   }
 
   try {
-    await transporter.sendMail({
-      from: '"BAI & SIL" <noreply@baiandsil.ph>',
-      to,
-      subject,
-      html,
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'BAI & SIL <noreply@resend.dev>',
+        to: [to],
+        subject,
+        html,
+      }),
     });
-    console.log(`[Email] Sent to ${to}: ${subject}`);
+
+    if (!res.ok) {
+      const error = await res.text();
+      console.error('[Email] Resend API error:', res.status, error);
+      return false;
+    }
+
+    const data = await res.json();
+    console.log(`[Email] Sent to ${to}: ${subject} (id: ${data.id})`);
     return true;
   } catch (error) {
     console.error('[Email] Failed to send:', error);
