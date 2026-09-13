@@ -36,10 +36,7 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions): Promis
   }
 }
 
-export function verificationEmailHtml(name: string, token: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bai-and-sil.vercel.app';
-  const verifyUrl = `${baseUrl}/verify-email?token=${token}`;
-
+export function verificationEmailHtml(name: string, code: string): string {
   return `
     <!DOCTYPE html>
     <html>
@@ -53,15 +50,15 @@ export function verificationEmailHtml(name: string, token: string): string {
         <h2 style="color: #111827; margin-top: 0;">Verify your email</h2>
         <p style="color: #374151; line-height: 1.6;">
           Hi ${name},<br><br>
-          Thanks for registering! Please verify your email address to start buying and selling on BAI & SIL.
+          Thanks for registering! Use the OTP code below to verify your email address.
         </p>
         <div style="text-align: center; margin: 30px 0;">
-          <a href="${verifyUrl}" style="background: #1a56db; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
-            Verify Email Address
-          </a>
+          <div style="background: #1a56db; color: white; padding: 18px 0; border-radius: 12px; font-size: 36px; font-weight: 700; letter-spacing: 12px; display: inline-block; min-width: 200px;">
+            ${code}
+          </div>
         </div>
-        <p style="color: #6b7280; font-size: 14px;">
-          This link expires in 24 hours. If you didn't create an account, you can safely ignore this email.
+        <p style="color: #6b7280; font-size: 14px; text-align: center;">
+          This code expires in 10 minutes. If you didn't create an account, you can safely ignore this email.
         </p>
       </div>
       <div style="text-align: center; padding: 20px 0; color: #9ca3af; font-size: 12px;">

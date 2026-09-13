@@ -1,35 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const token = searchParams.get('token');
+    const { email, code } = await request.json();
 
-    if (!token) {
-      return NextResponse.json({ error: 'Token is required' }, { status: 400 });
+    if (!email || !code) {
+      return NextResponse.json({ error: 'Email and code are required' }, { status: 400 });
     }
 
-    const verificationToken = await prisma.verificationToken.findUnique({
-      where: { token },
-      include: { user: true },
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return NextResponse.json({ error: 'Invalid email or code' }, { status: 400 });
+    }
+
+    if (user.emailVerified) {
+      return NextResponse.json({ message: 'Email already verified' });
+    }
+
+    const verificationToken = await prisma.verificationToken.findFirst({
+      where: {
+        userId: user.id,
+        code,
+      },
+      orderBy: { createdAt: 'desc' },
     });
 
     if (!verificationToken) {
-      return NextResponse.json({ error: 'Invalid verification token' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid verification code' }, { status: 400 });
     }
 
     if (new Date() > verificationToken.expiresAt) {
-      await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
-      return NextResponse.json({ error: 'Verification token has expired' }, { status: 400 });
+      await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
+      return NextResponse.json({ error: 'Verification code has expired. Please request a new one.' }, { status: 400 });
     }
 
     await prisma.user.update({
-      where: { id: verificationToken.userId },
+      where: { id: user.id },
       data: { emailVerified: true },
     });
 
-    await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
+    await prisma.verificationToken.deleteMany({ where: { userId: user.id } });
 
     return NextResponse.json({ message: 'Email verified successfully' });
   } catch (error) {

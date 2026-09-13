@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail, verificationEmailHtml } from '@/lib/email';
-import { v4 as uuidv4 } from 'uuid';
+
+function generateOTP(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,13 +18,13 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json({
-        message: 'If an account exists with that email, a verification link has been sent.',
+        message: 'If an account exists with that email, a verification code has been sent.',
       });
     }
 
     if (user.emailVerified) {
       return NextResponse.json({
-        message: 'If an account exists with that email, a verification link has been sent.',
+        message: 'If an account exists with that email, a verification code has been sent.',
       });
     }
 
@@ -29,26 +32,26 @@ export async function POST(request: NextRequest) {
       where: { userId: user.id },
     });
 
-    const token = uuidv4();
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const code = generateOTP();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     await prisma.verificationToken.create({
       data: {
         userId: user.id,
-        token,
+        code,
         expiresAt,
       },
     });
 
-    const html = verificationEmailHtml(user.name, token);
+    const html = verificationEmailHtml(user.name, code);
     await sendEmail({
       to: user.email,
-      subject: 'Verify your BAI & SIL email',
+      subject: 'Your BAI & SIL verification code',
       html,
     });
 
     return NextResponse.json({
-      message: 'If an account exists with that email, a verification link has been sent.',
+      message: 'If an account exists with that email, a verification code has been sent.',
     });
   } catch (error) {
     console.error('[Resend Verification]', error);

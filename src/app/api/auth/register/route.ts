@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { hashPassword, createSession } from '@/lib/auth';
+import { hashPassword } from '@/lib/auth';
 import { sendEmail, verificationEmailHtml } from '@/lib/email';
-import { v4 as uuidv4 } from 'uuid';
+
+function generateOTP(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,36 +43,29 @@ export async function POST(request: NextRequest) {
         id: true,
         name: true,
         email: true,
-        avatar: true,
-        location: true,
-        phone: true,
         role: true,
-        isAdmin: true,
-        createdAt: true,
       },
     });
 
-    const token = uuidv4();
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const code = generateOTP();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     await prisma.verificationToken.create({
       data: {
         userId: user.id,
-        token,
+        code,
         expiresAt,
       },
     });
 
-    const html = verificationEmailHtml(name, token);
+    const html = verificationEmailHtml(name, code);
     await sendEmail({
       to: email,
-      subject: 'Verify your BAI & SIL email',
+      subject: 'Your BAI & SIL verification code',
       html,
     });
 
-    await createSession(user.id);
-
-    return NextResponse.json({ user }, { status: 201 });
+    return NextResponse.json({ user, requiresVerification: true }, { status: 201 });
   } catch (error) {
     console.error('[Register]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
