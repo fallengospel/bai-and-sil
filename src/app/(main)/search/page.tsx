@@ -180,7 +180,7 @@ export default function SearchPage() {
                   onChange={(e) => setQ(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") handleApplyFilters(); }}
                   placeholder="Search items..."
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20 focus:border-[#7298C7]"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
                 />
               </div>
             </div>
@@ -216,14 +216,14 @@ export default function SearchPage() {
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20 focus:border-[#7298C7]"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
                 />
                 <input
                   type="number"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20 focus:border-[#7298C7]"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
                 />
               </div>
             </div>

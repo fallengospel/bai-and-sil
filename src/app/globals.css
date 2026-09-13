@@ -92,23 +92,23 @@ body {
   }
 
   .gradient-primary {
-    @apply bg-gradient-to-r from-[#7298C7] to-[#7298C7]/80;
+    @apply bg-gradient-to-r from-[#7BA8D0] to-[#7BA8D0]/80;
   }
 
   .gradient-accent {
-    @apply bg-gradient-to-r from-[#7298C7] via-purple-500 to-[#F3D98F];
+    @apply bg-gradient-to-r from-[#7BA8D0] via-purple-500 to-[#F5D36B];
   }
 
   .gradient-hero {
-    @apply bg-gradient-to-br from-[#7298C7] via-[#7298C7] to-[#5A7DA8];
+    @apply bg-gradient-to-br from-[#7BA8D0] via-[#7BA8D0] to-[#5E8EB8];
   }
 
   .gradient-warm {
-    @apply bg-gradient-to-r from-[#F3D98F] to-[#E8C86A];
+    @apply bg-gradient-to-r from-[#F5D36B] to-[#E5BD48];
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#7298C7] to-[#F3D98F];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#7BA8D0] to-[#F5D36B];
   }
 
   .shadow-glow-blue {
@@ -223,5 +223,5 @@ body {
 
 /* Selection color */
 ::selection {
-  @apply bg-[#7298C7]/20 text-[#5A7DA8];
+  @apply bg-[#7BA8D0]/20 text-[#5E8EB8];
 }

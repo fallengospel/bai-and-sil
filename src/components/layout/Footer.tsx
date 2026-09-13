@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             <Link href="/" className="inline-flex items-center gap-2">
               <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
               <span className="text-2xl font-bold text-white">
-                BAI <span className="text-[#F3D98F]">&amp;</span> SIL
+                BAI <span className="text-[#F5D36B]">&amp;</span> SIL
               </span>
             </Link>
             <p className="mt-3 text-sm text-gray-400">

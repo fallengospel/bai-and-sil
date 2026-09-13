@@ -31,10 +31,10 @@ const MobileNav: React.FC = () => {
                 href={item.href}
                 className="flex flex-col items-center justify-center -mt-4"
               >
-                <div className="w-14 h-14 rounded-full bg-[#F3D98F] flex items-center justify-center shadow-lg">
+                <div className="w-14 h-14 rounded-full bg-[#F5D36B] flex items-center justify-center shadow-lg">
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-[10px] font-medium text-[#F3D98F] mt-1">
+                <span className="text-[10px] font-medium text-[#F5D36B] mt-1">
                   {item.label}
                 </span>
               </Link>
@@ -46,7 +46,7 @@ const MobileNav: React.FC = () => {
               key={item.href}
               href={item.href}
               className={`flex flex-col items-center justify-center py-1 min-w-[64px] ${
-                isActive ? "text-[#7298C7]" : "text-gray-500"
+                isActive ? "text-[#7BA8D0]" : "text-gray-500"
               }`}
             >
               <Icon className="w-5 h-5" />

@@ -221,8 +221,8 @@ export default function ProfilePage() {
         {/* Cover Banner */}
         <div className={`h-32 md:h-40 relative ${
           profile.role === "admin" ? "bg-gradient-to-r from-red-500 to-red-600" :
-          profile.role === "seller" ? "bg-gradient-to-r from-[#F3D98F] to-yellow-500" :
-          "bg-gradient-to-r from-[#7298C7] to-blue-500"
+          profile.role === "seller" ? "bg-gradient-to-r from-[#F5D36B] to-yellow-500" :
+          "bg-gradient-to-r from-[#7BA8D0] to-blue-500"
         }`}>
           <div className="absolute inset-0 bg-black/10" />
           <div className="absolute inset-0" style={{
@@ -254,9 +254,9 @@ export default function ProfilePage() {
               <div className="flex items-center gap-3 flex-wrap">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{profile.name}</h1>
                 <span className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full capitalize ${
-                  profile.role === "seller" ? "bg-[#F3D98F]/10 text-[#E8C86A]" :
+                  profile.role === "seller" ? "bg-[#F5D36B]/10 text-[#E5BD48]" :
                   profile.role === "admin" ? "bg-red-100 text-red-700" :
-                  "bg-[#7298C7]/10 text-[#7298C7]"
+                  "bg-[#7BA8D0]/10 text-[#7BA8D0]"
                 }`}>
                   {profile.role === "seller" && <FiShoppingBag className="w-3 h-3 mr-1" />}
                   {profile.role === "admin" && <FiUsers className="w-3 h-3 mr-1" />}
@@ -290,12 +290,12 @@ export default function ProfilePage() {
                     Edit Profile
                   </Button>
                   {profile.role === "seller" && (
-                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-[#F3D98F] text-white rounded-xl hover:bg-yellow-500 transition-all">
+                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-[#F5D36B] text-white rounded-xl hover:bg-yellow-500 transition-all">
                       Dashboard
                     </Link>
                   )}
                   {profile.role === "buyer" && (
-                    <Link href="/buyer/dashboard" className="px-4 py-2 text-sm font-medium bg-[#7298C7] text-white rounded-xl hover:bg-blue-700 transition-all">
+                    <Link href="/buyer/dashboard" className="px-4 py-2 text-sm font-medium bg-[#7BA8D0] text-white rounded-xl hover:bg-blue-700 transition-all">
                       Dashboard
                     </Link>
                   )}
@@ -331,7 +331,7 @@ export default function ProfilePage() {
           <>
             <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiPackage className="w-5 h-5 text-[#7298C7]" />
+                <FiPackage className="w-5 h-5 text-[#7BA8D0]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{activeListings.length}</p>
               <p className="text-xs text-gray-500">Active Listings</p>
@@ -352,7 +352,7 @@ export default function ProfilePage() {
             </div>
             <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
               <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiStar className="w-5 h-5 text-[#F3D98F]" />
+                <FiStar className="w-5 h-5 text-[#F5D36B]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{profile.rating.toFixed(1)}</p>
               <p className="text-xs text-gray-500">Rating</p>
@@ -370,7 +370,7 @@ export default function ProfilePage() {
             </div>
             <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiStar className="w-5 h-5 text-[#7298C7]" />
+                <FiStar className="w-5 h-5 text-[#7BA8D0]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{reviews.length}</p>
               <p className="text-xs text-gray-500">Reviews Given</p>
@@ -402,7 +402,7 @@ export default function ProfilePage() {
             </div>
             <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <FiPackage className="w-5 h-5 text-[#7298C7]" />
+                <FiPackage className="w-5 h-5 text-[#7BA8D0]" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{listings.length}</p>
               <p className="text-xs text-gray-500">All Listings</p>
@@ -433,7 +433,7 @@ export default function ProfilePage() {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 pb-3 px-4 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
               activeTab === tab.id
-                ? "border-[#7298C7] text-[#7298C7]"
+                ? "border-[#7BA8D0] text-[#7BA8D0]"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -536,7 +536,7 @@ export default function ProfilePage() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <Link href={`/listing/${listing.slug}`} className="text-gray-900 hover:text-[#7298C7] truncate block">
+                    <Link href={`/listing/${listing.slug}`} className="text-gray-900 hover:text-[#7BA8D0] truncate block">
                       {listing.title}
                     </Link>
                     <p className="text-xs text-gray-400">{new Date(listing.createdAt).toLocaleDateString()}</p>
@@ -555,7 +555,7 @@ export default function ProfilePage() {
         <>
           {isOwnProfile && profile.role === "seller" && (
             <div className="flex justify-end mb-4">
-              <Link href="/sell" className="px-4 py-2 bg-[#F3D98F] text-white text-sm font-medium rounded-xl hover:bg-yellow-500 transition-all">
+              <Link href="/sell" className="px-4 py-2 bg-[#F5D36B] text-white text-sm font-medium rounded-xl hover:bg-yellow-500 transition-all">
                 + New Listing
               </Link>
             </div>
@@ -597,7 +597,7 @@ export default function ProfilePage() {
                     </div>
                     <Link
                       href={`/listing/${review.listing.slug}`}
-                      className="text-xs text-[#7298C7] hover:underline"
+                      className="text-xs text-[#7BA8D0] hover:underline"
                     >
                       {review.listing.title}
                     </Link>

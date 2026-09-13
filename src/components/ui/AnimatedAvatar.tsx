@@ -42,12 +42,12 @@ const roleStyles: Record<UserRole, { ring: string; animation: string; glow: stri
     glow: "shadow-glow-red",
   },
   seller: {
-    ring: "ring-[#F3D98F]",
+    ring: "ring-[#F5D36B]",
     animation: "",
     glow: "shadow-glow-yellow",
   },
   buyer: {
-    ring: "ring-[#7298C7]",
+    ring: "ring-[#7BA8D0]",
     animation: "animate-float",
     glow: "shadow-glow-blue",
   },

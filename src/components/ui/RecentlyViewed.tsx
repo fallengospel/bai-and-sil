@@ -52,7 +52,7 @@ const RecentlyViewed: React.FC = () => {
               <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
                 {item.title}
               </h3>
-              <p className="text-lg font-bold text-[#7298C7] mb-1">
+              <p className="text-lg font-bold text-[#7BA8D0] mb-1">
                 ₱{item.price.toLocaleString()}
               </p>
               <Badge variant="gray" size="sm">

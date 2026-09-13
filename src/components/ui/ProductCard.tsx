@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
           {listing.category && (
             <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-white/90 backdrop-blur-sm text-[#7298C7] shadow-sm">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-white/90 backdrop-blur-sm text-[#7BA8D0] shadow-sm">
                 {listing.category.name}
               </span>
             </div>
@@ -106,7 +106,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           
           {/* Price badge */}
           <div className="absolute bottom-3 right-3">
-            <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-sm font-bold bg-white/95 backdrop-blur-sm text-[#7298C7] shadow-md">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-sm font-bold bg-white/95 backdrop-blur-sm text-[#7BA8D0] shadow-md">
               {formatPrice(listing.price)}
             </span>
           </div>
@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-4">
         <Link href={`/listing/${listing.slug}`}>
-          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-[#7298C7] transition-colors leading-relaxed">
+          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-[#7BA8D0] transition-colors leading-relaxed">
             {listing.title}
           </h3>
         </Link>

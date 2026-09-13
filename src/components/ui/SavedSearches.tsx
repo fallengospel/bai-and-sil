@@ -140,7 +140,7 @@ export default function SavedSearches({
         <h3 className="font-semibold text-gray-900 text-sm">Saved Searches</h3>
         <button
           onClick={() => setShowSaveModal(true)}
-          className="text-xs text-[#7298C7] hover:underline flex items-center gap-1"
+          className="text-xs text-[#7BA8D0] hover:underline flex items-center gap-1"
         >
           <FiPlus className="w-3 h-3" /> Save current
         </button>
@@ -157,7 +157,7 @@ export default function SavedSearches({
             >
               <button
                 onClick={() => handleLoad(search)}
-                className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#7298C7] text-left flex-1 min-w-0"
+                className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#7BA8D0] text-left flex-1 min-w-0"
               >
                 <FiBookmark className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
                 <span className="truncate">{search.name}</span>
@@ -183,7 +183,7 @@ export default function SavedSearches({
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
               placeholder="e.g., Electronics in Manila"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20 focus:border-[#7298C7]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0]"
             />
             <div className="flex gap-3 mt-4">
               <Button variant="ghost" onClick={() => setShowSaveModal(false)} fullWidth>

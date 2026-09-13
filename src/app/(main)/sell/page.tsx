@@ -171,7 +171,7 @@ export default function SellPage() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                 step >= s
-                  ? "bg-[#7298C7] text-white"
+                  ? "bg-[#7BA8D0] text-white"
                   : "bg-gray-200 text-gray-500"
               }`}
             >
@@ -197,7 +197,7 @@ export default function SellPage() {
             onDragLeave={() => setDragOver(false)}
             onClick={() => fileInputRef.current?.click()}
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
-              dragOver ? "border-[#7298C7] bg-blue-50" : "border-gray-300 hover:border-gray-400"
+              dragOver ? "border-[#7BA8D0] bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
             <FiUploadCloud className="w-10 h-10 text-gray-400 mx-auto mb-3" />
@@ -226,7 +226,7 @@ export default function SellPage() {
                     <FiX className="w-3 h-3" />
                   </button>
                   {i === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-[#7298C7] text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 bg-[#7BA8D0] text-white text-[10px] px-1.5 py-0.5 rounded">
                       Cover
                     </span>
                   )}

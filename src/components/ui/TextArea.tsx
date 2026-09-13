@@ -33,7 +33,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         )}
         <textarea
           ref={ref}
-          className={`w-full px-3 py-2 border rounded-lg text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20 focus:border-[#7298C7] resize-none ${
+          className={`w-full px-3 py-2 border rounded-lg text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7BA8D0]/20 focus:border-[#7BA8D0] resize-none ${
             error ? "border-[#e8634a]" : "border-gray-300"
           } ${className}`}
           maxLength={maxLength}

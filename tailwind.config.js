@@ -10,14 +10,14 @@ module.exports = {
     extend: {
       colors: {
         bai: {
-          blue: '#7298C7',
-          'blue-dark': '#5A7DA8',
-          'blue-light': '#E8EFF6',
+          blue: '#7BA8D0',
+          'blue-dark': '#5E8EB8',
+          'blue-light': '#EDF4FB',
         },
         sil: {
-          yellow: '#F3D98F',
-          'yellow-dark': '#E8C86A',
-          'yellow-light': '#FDF5E0',
+          yellow: '#F5D36B',
+          'yellow-dark': '#E5BD48',
+          'yellow-light': '#FEF6DB',
         },
         coral: '#e8634a',
         surface: {
@@ -34,8 +34,8 @@ module.exports = {
       boxShadow: {
         card: '0 2px 12px rgba(0,0,0,0.06)',
         'card-hover': '0 8px 24px rgba(0,0,0,0.1)',
-        'glow-blue': '0 0 20px rgba(114, 152, 199, 0.15)',
-        'glow-yellow': '0 0 20px rgba(243, 217, 143, 0.15)',
+        'glow-blue': '0 0 20px rgba(123, 168, 208, 0.2)',
+        'glow-yellow': '0 0 20px rgba(245, 211, 107, 0.2)',
         'glow-red': '0 0 20px rgba(232, 99, 74, 0.15)',
       },
       animation: {
