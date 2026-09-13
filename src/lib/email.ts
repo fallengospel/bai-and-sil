@@ -16,36 +16,42 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions): Promis
 }
 
 export async function sendEmailDetailed({ to, subject, html }: SendEmailOptions): Promise<EmailResult> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.BREVO_API_KEY;
 
   if (!apiKey) {
-    return { success: false, error: 'RESEND_API_KEY not configured' };
+    return { success: false, error: 'BREVO_API_KEY not configured' };
   }
 
   try {
-    const res = await fetch('https://api.resend.com/emails', {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'api-key': apiKey,
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
-        from: 'onboarding@resend.dev',
-        to: [to],
+        sender: {
+          name: 'BAI & SIL',
+          email: 'noreply@baiandsil.ph',
+        },
+        to: [
+          { email: to },
+        ],
         subject,
-        html,
+        htmlContent: html,
       }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      const errorMsg = data?.message || data?.error?.message || JSON.stringify(data);
-      console.error(`[Email] Resend API error ${res.status}:`, errorMsg);
+      const errorMsg = data?.message || data?.reason || JSON.stringify(data);
+      console.error(`[Email] Brevo API error ${res.status}:`, errorMsg);
       return { success: false, error: errorMsg, statusCode: res.status };
     }
 
-    console.log(`[Email] Sent to ${to}: ${subject} (id: ${data.id})`);
+    console.log(`[Email] Sent to ${to}: ${subject} (id: ${data.messageId})`);
     return { success: true };
   } catch (error: any) {
     console.error('[Email] Failed to send:', error?.message || error);

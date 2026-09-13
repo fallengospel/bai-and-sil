@@ -9,12 +9,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const apiKey = process.env.RESEND_API_KEY;
+    const apiKey = process.env.BREVO_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json({
-        error: 'RESEND_API_KEY not configured in Vercel',
-        fix: 'Add RESEND_API_KEY to Vercel environment variables',
+        error: 'BREVO_API_KEY not configured in Vercel',
+        fix: 'Add BREVO_API_KEY to Vercel environment variables',
       }, { status: 500 });
     }
 
