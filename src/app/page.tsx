@@ -32,10 +32,10 @@ export default async function HomePage() {
   return (
     <div className="page-transition">
       {/* Hero Section - Filipino Branded */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#1a56db] via-[#1e40af] to-[#1a3a8a] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#7298C7] via-[#7298C7] to-[#5A7DA8] text-white">
         {/* Decorative elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#f5a623]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F3D98F]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-300/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
         </div>
@@ -57,7 +57,7 @@ export default async function HomePage() {
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
                 Hanap, Benta,{' '}
-                <span className="text-[#f5a623]">I-repeat!</span>
+                <span className="text-[#F3D98F]">I-repeat!</span>
               </h1>
               <p className="text-blue-100/90 text-lg mb-8 leading-relaxed max-w-lg">
                 Ang marketplace na gawa ng Pinas, para sa Pinas. 
@@ -67,14 +67,14 @@ export default async function HomePage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/search"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#1a56db] font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#7298C7] font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
                 >
                   <FiSearch className="w-5 h-5" />
                   Mag-browse Na
                 </Link>
                 <Link
                   href="/sell"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#f5a623] to-[#d4901a] text-white font-bold rounded-xl hover:from-[#d4901a] hover:to-[#f5a623] transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F3D98F] to-[#E8C86A] text-white font-bold rounded-xl hover:from-[#E8C86A] hover:to-[#F3D98F] transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg"
                 >
                   <IoAddCircle className="w-5 h-5" />
                   Magbenta Na
@@ -122,7 +122,7 @@ export default async function HomePage() {
                 <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <FiShield className="w-5 h-5 text-[#1a56db]" />
+                      <FiShield className="w-5 h-5 text-[#7298C7]" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Secure na transaksyon</p>
@@ -141,8 +141,8 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#1a56db]/10 rounded-xl flex items-center justify-center">
-                <FiShield className="w-5 h-5 text-[#1a56db]" />
+              <div className="w-10 h-10 bg-[#7298C7]/10 rounded-xl flex items-center justify-center">
+                <FiShield className="w-5 h-5 text-[#7298C7]" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-900">Secure</p>
@@ -159,8 +159,8 @@ export default async function HomePage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#f5a623]/10 rounded-xl flex items-center justify-center">
-                <FiTruck className="w-5 h-5 text-[#f5a623]" />
+              <div className="w-10 h-10 bg-[#F3D98F]/10 rounded-xl flex items-center justify-center">
+                <FiTruck className="w-5 h-5 text-[#F3D98F]" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-gray-900">Meet-up</p>
@@ -189,7 +189,7 @@ export default async function HomePage() {
           </div>
           <Link 
             href="/search" 
-            className="text-sm font-medium text-[#1a56db] hover:text-[#1a56db]/80 transition-colors flex items-center gap-1"
+            className="text-sm font-medium text-[#7298C7] hover:text-[#7298C7]/80 transition-colors flex items-center gap-1"
           >
             View all
             <span className="text-lg">→</span>
@@ -228,7 +228,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/categories"
-              className="text-sm font-medium text-[#1a56db] hover:text-[#1a56db]/80 transition-colors flex items-center gap-1"
+              className="text-sm font-medium text-[#7298C7] hover:text-[#7298C7]/80 transition-colors flex items-center gap-1"
             >
               Lahat ng categories
               <span className="text-lg">→</span>
@@ -256,15 +256,15 @@ export default async function HomePage() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="w-16 h-16 bg-[#1a56db]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <FiSearch className="w-8 h-8 text-[#1a56db]" />
+            <div className="w-16 h-16 bg-[#7298C7]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <FiSearch className="w-8 h-8 text-[#7298C7]" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2">1. Mag-browse</h3>
             <p className="text-sm text-gray-500">Hanapin ang gusto mo sa 240+ items</p>
           </div>
           <div className="text-center">
-            <div className="w-16 h-16 bg-[#f5a623]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <FiDollarSign className="w-8 h-8 text-[#f5a623]" />
+            <div className="w-16 h-16 bg-[#F3D98F]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <FiDollarSign className="w-8 h-8 text-[#F3D98F]" />
             </div>
             <h3 className="font-bold text-gray-900 mb-2">2. Mag-deal</h3>
             <p className="text-sm text-gray-500">Mag-message o mag-offer sa seller</p>
@@ -281,9 +281,9 @@ export default async function HomePage() {
 
       {/* Seller CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="relative overflow-hidden bg-gradient-to-r from-[#f5a623]/10 via-[#f5a623]/5 to-[#1a56db]/10 border border-[#f5a623]/20 rounded-3xl p-8 md:p-12">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#f5a623]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#1a56db]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#F3D98F]/10 via-[#F3D98F]/5 to-[#7298C7]/10 border border-[#F3D98F]/20 rounded-3xl p-8 md:p-12">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#F3D98F]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#7298C7]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
           
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -297,7 +297,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/sell"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#f5a623] to-[#d4901a] text-white font-bold rounded-xl hover:from-[#d4901a] hover:to-[#f5a623] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#F3D98F] to-[#E8C86A] text-white font-bold rounded-xl hover:from-[#E8C86A] hover:to-[#F3D98F] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 whitespace-nowrap"
             >
               <IoAddCircle className="w-5 h-5" />
               Magbenta Na!
@@ -311,17 +311,17 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <FiUsers className="w-8 h-8 text-[#f5a623] mx-auto mb-3" />
+              <FiUsers className="w-8 h-8 text-[#F3D98F] mx-auto mb-3" />
               <p className="text-3xl font-bold">3</p>
               <p className="text-sm text-gray-400">Test Accounts</p>
             </div>
             <div>
-              <FiTrendingUp className="w-8 h-8 text-[#1a56db] mx-auto mb-3" />
+              <FiTrendingUp className="w-8 h-8 text-[#7298C7] mx-auto mb-3" />
               <p className="text-3xl font-bold">240+</p>
               <p className="text-sm text-gray-400">Active Listings</p>
             </div>
             <div>
-              <FiStar className="w-8 h-8 text-[#f5a623] mx-auto mb-3" />
+              <FiStar className="w-8 h-8 text-[#F3D98F] mx-auto mb-3" />
               <p className="text-3xl font-bold">12</p>
               <p className="text-sm text-gray-400">Categories</p>
             </div>

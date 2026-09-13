@@ -32,21 +32,21 @@ export default function BuyerLayout({ children }: { children: React.ReactNode })
       .finally(() => setLoading(false));
   }, [router]);
 
-  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a56db]" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#7298C7]" /></div>;
   if (!authorized) return null;
 
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 border-r bg-gray-50 hidden md:block">
         <div className="p-6">
-          <h2 className="text-lg font-bold text-[#1a56db]">Buyer Hub</h2>
+          <h2 className="text-lg font-bold text-[#7298C7]">Buyer Hub</h2>
           <p className="text-xs text-gray-500 mt-1">Find great deals</p>
         </div>
         <nav className="space-y-1 px-3">
           {sidebarLinks.map((link) => (
             <Link key={link.href} href={link.href}
               className={cn('flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                link.href === '/buyer/dashboard' ? 'bg-[#1a56db]/10 text-[#1a56db]' : 'text-gray-600 hover:bg-gray-100'
+                link.href === '/buyer/dashboard' ? 'bg-[#7298C7]/10 text-[#7298C7]' : 'text-gray-600 hover:bg-gray-100'
               )}>
               <link.icon className="h-5 w-5" />{link.title}
             </Link>

@@ -15,7 +15,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center gap-1 text-[#1a56db] ${textClasses} ${className}`}
+      className={`inline-flex items-center gap-1 text-[#7298C7] ${textClasses} ${className}`}
       title="Verified Seller"
     >
       <FiCheckCircle className={sizeClasses} />

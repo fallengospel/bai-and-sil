@@ -147,7 +147,7 @@ export default function MyListingsPage() {
             onClick={() => { setActiveTab(tab.key); setSelectedIds(new Set()); }}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.key
-                ? "border-[#1a56db] text-[#1a56db]"
+                ? "border-[#7298C7] text-[#7298C7]"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -164,7 +164,7 @@ export default function MyListingsPage() {
               type="checkbox"
               checked={selectedIds.size === filteredListings.length && filteredListings.length > 0}
               onChange={toggleSelectAll}
-              className="w-4 h-4 rounded border-gray-300 text-[#1a56db] focus:ring-[#1a56db]"
+              className="w-4 h-4 rounded border-gray-300 text-[#7298C7] focus:ring-[#7298C7]"
             />
             <span className="text-sm text-gray-600">
               {selectedIds.size > 0 ? `${selectedIds.size} selected` : "Select all"}
@@ -176,7 +176,7 @@ export default function MyListingsPage() {
               <select
                 value={bulkAction}
                 onChange={(e) => setBulkAction(e.target.value as any)}
-                className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a56db]/20"
+                className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7298C7]/20"
               >
                 <option value="">Bulk action</option>
                 <option value="Active">Mark Active</option>
@@ -223,7 +223,7 @@ export default function MyListingsPage() {
                   type="checkbox"
                   checked={selectedIds.has(listing.id)}
                   onChange={() => toggleSelect(listing.id)}
-                  className="w-4 h-4 rounded border-gray-300 text-[#1a56db] focus:ring-[#1a56db] bg-white shadow"
+                  className="w-4 h-4 rounded border-gray-300 text-[#7298C7] focus:ring-[#7298C7] bg-white shadow"
                 />
               </label>
               <ProductCard listing={listing} />

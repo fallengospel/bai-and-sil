@@ -123,7 +123,7 @@ export default function ResetPasswordPage() {
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          <Link href="/login" className="text-[#1a56db] font-medium hover:underline">
+          <Link href="/login" className="text-[#7298C7] font-medium hover:underline">
             Back to login
           </Link>
         </p>

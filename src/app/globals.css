@@ -92,31 +92,31 @@ body {
   }
 
   .gradient-primary {
-    @apply bg-gradient-to-r from-[#1a56db] to-[#1a56db]/80;
+    @apply bg-gradient-to-r from-[#7298C7] to-[#7298C7]/80;
   }
 
   .gradient-accent {
-    @apply bg-gradient-to-r from-[#1a56db] via-purple-500 to-[#f5a623];
+    @apply bg-gradient-to-r from-[#7298C7] via-purple-500 to-[#F3D98F];
   }
 
   .gradient-hero {
-    @apply bg-gradient-to-br from-[#1a56db] via-[#1a56db] to-blue-800;
+    @apply bg-gradient-to-br from-[#7298C7] via-[#7298C7] to-[#5A7DA8];
   }
 
   .gradient-warm {
-    @apply bg-gradient-to-r from-[#f5a623] to-[#e8634a];
+    @apply bg-gradient-to-r from-[#F3D98F] to-[#E8C86A];
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#1a56db] to-[#f5a623];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#7298C7] to-[#F3D98F];
   }
 
   .shadow-glow-blue {
-    box-shadow: 0 0 20px rgba(26, 86, 219, 0.15);
+    box-shadow: 0 0 20px rgba(114, 152, 199, 0.15);
   }
 
   .shadow-glow-yellow {
-    box-shadow: 0 0 20px rgba(245, 166, 35, 0.15);
+    box-shadow: 0 0 20px rgba(243, 217, 143, 0.15);
   }
 
   .shadow-glow-red {
@@ -223,5 +223,5 @@ body {
 
 /* Selection color */
 ::selection {
-  @apply bg-[#1a56db]/20 text-[#1a56db];
+  @apply bg-[#7298C7]/20 text-[#5A7DA8];
 }

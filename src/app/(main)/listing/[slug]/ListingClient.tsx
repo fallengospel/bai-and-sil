@@ -231,7 +231,7 @@ export default function ListingClient({
           )}
           {isReserved && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-[#f5a623] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
+              <span className="bg-[#F3D98F] text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
                 RESERVED
               </span>
             </div>
@@ -251,7 +251,7 @@ export default function ListingClient({
             </div>
 
             <div className="flex items-center gap-3 mt-3">
-              <span className="text-3xl font-bold text-[#1a56db]">
+              <span className="text-3xl font-bold text-[#7298C7]">
                 {formatPrice(listing.price)}
               </span>
               {listing.category && (
@@ -361,7 +361,7 @@ export default function ListingClient({
                 <div className="flex items-center gap-1.5">
                   <Link
                     href={`/profile/${listing.seller.id}`}
-                    className="font-semibold text-gray-900 hover:text-[#1a56db]"
+                    className="font-semibold text-gray-900 hover:text-[#7298C7]"
                   >
                     {listing.seller.name}
                   </Link>
@@ -376,7 +376,7 @@ export default function ListingClient({
             </div>
             <Link
               href={`/profile/${listing.seller.id}`}
-              className="inline-block mt-3 text-sm font-medium text-[#1a56db] hover:underline"
+              className="inline-block mt-3 text-sm font-medium text-[#7298C7] hover:underline"
             >
               View Seller
             </Link>
@@ -385,7 +385,7 @@ export default function ListingClient({
           {/* Trust Tips */}
           <div className="bg-blue-50 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-2">
-              <FiShield className="w-5 h-5 text-[#1a56db]" />
+              <FiShield className="w-5 h-5 text-[#7298C7]" />
               <h3 className="font-semibold text-gray-900">Trust Tips</h3>
             </div>
             <ul className="text-sm text-gray-600 space-y-1">

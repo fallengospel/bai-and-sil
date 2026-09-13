@@ -199,7 +199,7 @@ export default function VerifyEmailPage() {
               onChange={(e) => handleOtpChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               onPaste={i === 0 ? handlePaste : undefined}
-              className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#1a56db] focus:ring-2 focus:ring-[#1a56db] outline-none transition-colors"
+              className="w-12 h-14 text-center text-xl font-bold border-2 border-gray-300 rounded-lg focus:border-[#7298C7] focus:ring-2 focus:ring-[#7298C7] outline-none transition-colors"
               disabled={loading}
             />
           ))}
@@ -218,7 +218,7 @@ export default function VerifyEmailPage() {
             <button
               onClick={handleResend}
               disabled={resending}
-              className="text-sm text-[#1a56db] font-medium hover:underline disabled:opacity-50"
+              className="text-sm text-[#7298C7] font-medium hover:underline disabled:opacity-50"
             >
               {resending ? "Sending..." : "Resend code"}
             </button>
@@ -226,7 +226,7 @@ export default function VerifyEmailPage() {
         </div>
 
         <p className="text-center text-sm text-gray-500">
-          <Link href="/login" className="text-[#1a56db] font-medium hover:underline">
+          <Link href="/login" className="text-[#7298C7] font-medium hover:underline">
             Back to login
           </Link>
         </p>

@@ -28,7 +28,7 @@ const SellerCard: React.FC<SellerCardProps> = ({
         <div className="flex items-center gap-3 mb-3">
           <Avatar src={avatar} name={name} size="lg" />
           <div className="min-w-0">
-            <h3 className="text-sm font-semibold text-gray-900 truncate group-hover:text-[#1a56db] transition-colors">
+            <h3 className="text-sm font-semibold text-gray-900 truncate group-hover:text-[#7298C7] transition-colors">
               {name}
             </h3>
             <StarRating rating={rating} size="sm" />
