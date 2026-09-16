@@ -54,6 +54,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const error = searchParams.get('error');
+  const role = searchParams.get('state') || 'buyer';
 
   if (error) {
     return NextResponse.redirect(new URL(`/login?error=google_cancelled`, request.url));
@@ -64,7 +65,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const redirectUri = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/auth/google/callback`;
+    const origin = new URL(request.url).origin;
+    const redirectUri = `${origin}/api/auth/google/callback`;
+    console.log('[Google OAuth] Redirect URI:', redirectUri);
+    console.log('[Google OAuth] Client ID present:', !!process.env.GOOGLE_CLIENT_ID);
+    console.log('[Google OAuth] Client Secret present:', !!process.env.GOOGLE_CLIENT_SECRET);
     const tokens = await getGoogleTokens(code, redirectUri);
     const googleUser = await getGoogleUserInfo(tokens.access_token);
 
@@ -77,6 +82,11 @@ export async function GET(request: NextRequest) {
       where: { email: googleUser.email },
       select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
     });
+
+    if (user && user.authProvider !== 'google') {
+      // Email exists with a different auth method (email/password)
+      return NextResponse.redirect(new URL('/login?error=email_exists', request.url));
+    }
 
     if (user) {
       // User exists - update avatar if Google has a better one
@@ -99,7 +109,7 @@ export async function GET(request: NextRequest) {
           avatar: googleUser.picture,
           authProvider: 'google',
           emailVerified: true,
-          role: 'buyer',
+          role: ['buyer', 'seller'].includes(role) ? role : 'buyer',
         },
         select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
       });

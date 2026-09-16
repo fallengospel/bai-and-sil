@@ -20,6 +20,7 @@ export default function LoginPage() {
     if (error === "google_cancelled") toast.error("Google sign-in was cancelled");
     else if (error === "google_failed") toast.error("Google sign-in failed. Please try again.");
     else if (error === "no_email") toast.error("Google account has no email. Please use another method.");
+    else if (error === "email_exists") toast.error("Email already registered. Please log in with your password.");
   }, [error]);
 
   const handleSubmit = async (e: React.FormEvent) => {

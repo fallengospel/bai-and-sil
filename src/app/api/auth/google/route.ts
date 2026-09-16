@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const clientId = process.env.GOOGLE_CLIENT_ID;
-  const redirectUri = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/auth/google/callback`;
+  const origin = new URL(request.url).origin;
+  const redirectUri = `${origin}/api/auth/google/callback`;
   const scope = 'openid email profile';
+  const role = new URL(request.url).searchParams.get('role') || 'buyer';
 
   const url = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   url.searchParams.set('client_id', clientId || '');
@@ -12,6 +14,7 @@ export async function GET() {
   url.searchParams.set('scope', scope);
   url.searchParams.set('access_type', 'offline');
   url.searchParams.set('prompt', 'select_account');
+  url.searchParams.set('state', role);
 
   return NextResponse.redirect(url.toString());
 }
