@@ -48,7 +48,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       updateData.slug = slug;
     }
     if (description) updateData.description = description;
-    if (price) updateData.price = parseFloat(price);
+    if (price) {
+      const parsedPrice = parseFloat(price);
+      if (isNaN(parsedPrice) || parsedPrice <= 0) {
+        return NextResponse.json({ error: 'Price must be a positive number' }, { status: 400 });
+      }
+      updateData.price = parsedPrice;
+    }
     if (categoryId) updateData.categoryId = categoryId;
     if (condition) updateData.condition = condition;
     if (location) updateData.location = location;

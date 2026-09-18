@@ -51,13 +51,15 @@ function getConditionVariant(
   condition: string
 ): "blue" | "yellow" | "green" | "red" | "gray" {
   switch (condition.toLowerCase()) {
-    case "new":
+    case "brand new":
       return "green";
     case "like new":
       return "blue";
     case "good":
       return "yellow";
     case "fair":
+      return "yellow";
+    case "for parts":
       return "gray";
     default:
       return "gray";

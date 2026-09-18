@@ -47,7 +47,7 @@ export default function LoginPage() {
       toast.success("Welcome back!");
       window.dispatchEvent(new Event("auth-change"));
 
-      if (redirectTo) {
+      if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
         router.push(redirectTo);
       } else if (user.isAdmin || user.role === "admin") {
         router.push("/admin");

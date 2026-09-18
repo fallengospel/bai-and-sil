@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Badge from "./Badge";
+import { formatPrice } from "@/lib/helpers";
 
 interface ViewedItem {
   id: string;
@@ -53,7 +54,7 @@ const RecentlyViewed: React.FC = () => {
                 {item.title}
               </h3>
               <p className="text-lg font-bold text-bai-blue mb-1">
-                ₱{item.price.toLocaleString()}
+                {formatPrice(item.price)}
               </p>
               <Badge variant="gray" size="sm">
                 {item.condition}

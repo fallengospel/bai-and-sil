@@ -6,8 +6,8 @@ import { slugify } from '@/lib/helpers';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20') || 20));
     const category = searchParams.get('category');
     const location = searchParams.get('location');
     const condition = searchParams.get('condition');
@@ -29,8 +29,10 @@ export async function GET(request: NextRequest) {
     }
     if (minPrice || maxPrice) {
       where.price = {};
-      if (minPrice) where.price.gte = parseFloat(minPrice);
-      if (maxPrice) where.price.lte = parseFloat(maxPrice);
+      const min = parseFloat(minPrice || '0');
+      const max = parseFloat(maxPrice || '0');
+      if (minPrice && !isNaN(min) && min >= 0) where.price.gte = min;
+      if (maxPrice && !isNaN(max) && max >= 0) where.price.lte = max;
     }
     if (q) {
       where.OR = [
@@ -102,6 +104,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    const parsedPrice = parseFloat(price);
+    if (isNaN(parsedPrice) || parsedPrice <= 0) {
+      return NextResponse.json({ error: 'Price must be a positive number' }, { status: 400 });
+    }
+
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
     const todayCount = await prisma.listing.count({
@@ -126,7 +133,7 @@ export async function POST(request: NextRequest) {
         title,
         slug,
         description,
-        price: parseFloat(price),
+        price: parsedPrice,
         categoryId,
         condition,
         location,

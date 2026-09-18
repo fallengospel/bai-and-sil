@@ -50,26 +50,48 @@ async function getGoogleUserInfo(accessToken: string): Promise<GoogleUserInfo> {
   return res.json();
 }
 
+function isStateFresh(stateParam: string): boolean {
+  try {
+    const decoded = JSON.parse(Buffer.from(stateParam, 'base64url').toString());
+    if (!decoded.ts || typeof decoded.ts !== 'number') return false;
+    return Date.now() - decoded.ts < 10 * 60 * 1000;
+  } catch {
+    return false;
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const error = searchParams.get('error');
-  const role = searchParams.get('state') || 'buyer';
+  const stateParam = searchParams.get('state');
 
   if (error) {
     return NextResponse.redirect(new URL(`/login?error=google_cancelled`, request.url));
   }
 
-  if (!code) {
+  if (!code || !stateParam) {
     return NextResponse.redirect(new URL('/login?error=no_code', request.url));
   }
+
+  if (!isStateFresh(stateParam)) {
+    return NextResponse.redirect(new URL('/login?error=invalid_state', request.url));
+  }
+
+  let role = 'buyer';
+  try {
+    const stateData = JSON.parse(Buffer.from(stateParam, 'base64url').toString());
+    role = stateData.role || 'buyer';
+  } catch {
+    return NextResponse.redirect(new URL('/login?error=invalid_state', request.url));
+  }
+
+  const allowedRoles = ['buyer', 'seller'];
+  if (!allowedRoles.includes(role)) role = 'buyer';
 
   try {
     const origin = new URL(request.url).origin;
     const redirectUri = `${origin}/api/auth/google/callback`;
-    console.log('[Google OAuth] Redirect URI:', redirectUri);
-    console.log('[Google OAuth] Client ID present:', !!process.env.GOOGLE_CLIENT_ID);
-    console.log('[Google OAuth] Client Secret present:', !!process.env.GOOGLE_CLIENT_SECRET);
     const tokens = await getGoogleTokens(code, redirectUri);
     const googleUser = await getGoogleUserInfo(tokens.access_token);
 
@@ -77,19 +99,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL('/login?error=no_email', request.url));
     }
 
-    // Find existing user by email
     let user = await prisma.user.findUnique({
       where: { email: googleUser.email },
       select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
     });
 
     if (user && user.authProvider !== 'google') {
-      // Email exists with a different auth method (email/password)
       return NextResponse.redirect(new URL('/login?error=email_exists', request.url));
     }
 
     if (user) {
-      // User exists - update avatar if Google has a better one
       if (googleUser.picture && user.avatar !== googleUser.picture) {
         await prisma.user.update({
           where: { id: user.id },
@@ -101,7 +120,6 @@ export async function GET(request: NextRequest) {
         user.avatar = googleUser.picture;
       }
     } else {
-      // Create new user
       const newUser = await prisma.user.create({
         data: {
           name: googleUser.name,
@@ -109,14 +127,13 @@ export async function GET(request: NextRequest) {
           avatar: googleUser.picture,
           authProvider: 'google',
           emailVerified: true,
-          role: ['buyer', 'seller'].includes(role) ? role : 'buyer',
+          role,
         },
         select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
       });
       user = newUser;
     }
 
-    // Create session
     await createSession(user.id);
 
     return NextResponse.redirect(new URL('/buyer/dashboard', request.url));

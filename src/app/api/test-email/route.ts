@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendEmailDetailed } from '@/lib/email';
+import { requireAuth } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
+    const user = await requireAuth();
+    if (!user.isAdmin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const { email } = await request.json();
 
     if (!email) {
@@ -13,13 +19,10 @@ export async function POST(request: NextRequest) {
 
     if (!apiKey) {
       return NextResponse.json({
-        error: 'RESEND_API_KEY not configured in Vercel',
-        fix: 'Add RESEND_API_KEY to Vercel environment variables',
+        error: 'RESEND_API_KEY not configured',
+        fix: 'Add RESEND_API_KEY to environment variables',
       }, { status: 500 });
     }
-
-    console.log(`[Test Email] API Key present: ${apiKey.substring(0, 7)}...`);
-    console.log(`[Test Email] Sending test email to ${email}...`);
 
     const result = await sendEmailDetailed({
       to: email,
@@ -55,13 +58,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: result.success,
       error: result.error || null,
-      statusCode: result.statusCode || null,
       message: result.success
         ? `Test email sent to ${email}. Check inbox and spam folder.`
         : `Email failed. Error: ${result.error}`,
     }, { status: result.success ? 200 : 500 });
   } catch (error: any) {
-    console.error('[Test Email] Error:', error);
+    if (error.message === 'Unauthorized') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     return NextResponse.json({ error: error?.message || 'Internal server error' }, { status: 500 });
   }
 }
