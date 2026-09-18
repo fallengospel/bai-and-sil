@@ -6,6 +6,7 @@ import { I18nProvider } from "@/components/layout/I18nProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
+import UXTestingMode from "@/components/dev/UXTestingMode";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function RootLayout({
               <div className="md:hidden">
                 <MobileNav />
               </div>
+              <UXTestingMode />
             </AuthProvider>
           </I18nProvider>
         </ThemeProvider>
