@@ -1,13 +1,73 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { 
   FiSearch, FiShield, FiDollarSign, FiTruck, FiStar, FiUsers, 
   FiTrendingUp, FiArrowRight, FiMessageCircle, FiTag, FiCheck,
-  FiChevronRight, FiZap, FiHeart, FiShoppingBag
+  FiChevronRight, FiZap, FiHeart, FiShoppingBag, FiChevronLeft
 } from "react-icons/fi";
-import { IoAddCircle } from "react-icons/io5";
+import { IoAddCircle, IoStar } from "react-icons/io5";
+
+const HERO_SLIDES = [
+  {
+    id: 1,
+    type: "logo",
+    tagline: "The Filipino Marketplace",
+    headline: "BAI & SIL",
+    subtitle: "Find stuff. Sell stuff. Repeat.",
+    bg: "from-bai-blue via-bai-blue to-bai-blue-dark",
+  },
+  {
+    id: 2,
+    type: "product",
+    tagline: "Fresh Finds Daily",
+    headline: "iPhone 15 Pro Max",
+    price: "₱45,000",
+    condition: "Like New",
+    location: "Makati, Manila",
+    seller: "Juan D.",
+    sellerRating: 4.9,
+    bg: "from-[#1a1a2e] via-[#16213e] to-[#0f3460]",
+    accent: "#FFD581",
+  },
+  {
+    id: 3,
+    type: "product",
+    tagline: "Trending Now",
+    headline: "Nike Air Jordan 1",
+    price: "₱8,500",
+    condition: "Brand New",
+    location: "Quezon City",
+    seller: "Maria S.",
+    sellerRating: 4.8,
+    bg: "from-[#2d1b69] via-[#11998e] to-[#38ef7d]",
+    accent: "#FFFFFF",
+  },
+  {
+    id: 4,
+    type: "stats",
+    tagline: "Growing Community",
+    headline: "240+ Active Listings",
+    stats: [
+      { value: "240+", label: "Items for Sale" },
+      { value: "12", label: "Categories" },
+      { value: "100%", label: "Free to List" },
+    ],
+    bg: "from-[#0c0c1d] via-[#1a1a3e] to-[#2d1b69]",
+    accent: "#00D2D3",
+  },
+  {
+    id: 5,
+    type: "seller",
+    tagline: "Seller Spotlight",
+    headline: "Start Selling Today",
+    subtitle: "List your items in seconds. Reach thousands of buyers. No commission, no fees.",
+    cta: "Magbenta Na!",
+    bg: "from-[#ff6b6b] via-[#ee5a24] to-[#f39c12]",
+    accent: "#FFFFFF",
+  },
+];
 
 const FEATURES = [
   {
@@ -79,10 +139,35 @@ const STATS = [
 export default function LandingPage() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Auto-advance carousel every 5 seconds
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index);
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  }, []);
+
+  const slide = HERO_SLIDES[currentSlide];
 
   return (
     <div className="page-transition">
@@ -160,71 +245,148 @@ export default function LandingPage() {
               </div>
             </div>
             
-            {/* Right - Interactive Demo */}
-            <div className={`hidden lg:block transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {/* Right - Hero Carousel */}
+            <div 
+              className={`hidden lg:block transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
               <div className="relative">
-                {/* Main demo card */}
-                <div className="demo-card max-w-md mx-auto">
-                  {/* Search bar mock */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="flex-1 bg-gray-100 rounded-xl px-4 py-3 flex items-center gap-3">
-                      <FiSearch className="w-4 h-4 text-gray-400" />
-                      <span className="text-body-sm text-gray-400">Search "iPhone 15 Pro"...</span>
+                {/* Main carousel container */}
+                <div className={`relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br ${slide.bg} transition-all duration-500`}>
+                  {/* Slide content */}
+                  <div className="relative min-h-[480px] p-8 flex flex-col">
+                    {/* Tagline */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6 w-fit">
+                      <span className="w-2 h-2 bg-sil-yellow rounded-full animate-pulse" />
+                      <span className="text-caption uppercase tracking-wider text-white/80">{slide.tagline}</span>
                     </div>
-                    <button className="bg-bai-blue text-white px-4 py-3 rounded-xl">
-                      <FiSearch className="w-4 h-4" />
-                    </button>
-                  </div>
-                  
-                  {/* Product preview */}
-                  <div className="bg-gray-50 rounded-2xl p-4 mb-4">
-                    <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-3 flex items-center justify-center">
-                      <span className="text-4xl">📱</span>
-                    </div>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h4 className="font-bold text-gray-900 text-body">iPhone 15 Pro Max</h4>
-                        <p className="text-caption text-gray-500">Like New · Manila</p>
+
+                    {/* Content based on slide type */}
+                    {slide.type === "logo" && (
+                      <div className="flex-1 flex flex-col items-center justify-center text-center">
+                        <div className="w-32 h-32 bg-white rounded-3xl shadow-2xl flex items-center justify-center mb-8 animate-float">
+                          <img src="/logo.svg" alt="BAI & SIL" className="w-24 h-24" />
+                        </div>
+                        <h2 className="text-[3.5rem] font-black text-white mb-2 tracking-tight">{slide.headline}</h2>
+                        <p className="text-xl text-white/70">{slide.subtitle}</p>
                       </div>
-                      <span className="text-heading-3 font-black text-bai-blue">₱45,000</span>
-                    </div>
-                  </div>
-                  
-                  {/* Action buttons */}
-                  <div className="flex gap-3">
-                    <button className="flex-1 bg-bai-blue text-white py-3 rounded-xl font-bold text-body-sm flex items-center justify-center gap-2">
-                      <FiMessageCircle className="w-4 h-4" />
-                      Message Seller
-                    </button>
-                    <button className="w-12 h-12 bg-red-50 text-coral rounded-xl flex items-center justify-center hover:bg-red-100 transition-colors">
-                      <FiHeart className="w-5 h-5" />
-                    </button>
+                    )}
+
+                    {slide.type === "product" && (
+                      <div className="flex-1 flex flex-col">
+                        {/* Product image placeholder - large visual */}
+                        <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-2xl mb-6 flex items-center justify-center min-h-[280px] relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
+                          <div className="text-8xl relative z-10 drop-shadow-lg">
+                            {currentSlide === 1 ? "📱" : "👟"}
+                          </div>
+                          {/* Floating price tag */}
+                          <div className="absolute top-4 right-4 bg-white rounded-xl px-4 py-2 shadow-lg">
+                            <span className="text-heading-2 font-black text-bai-blue">{slide.price}</span>
+                          </div>
+                          {/* Condition badge */}
+                          <div className="absolute bottom-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-caption font-bold">
+                            {slide.condition}
+                          </div>
+                        </div>
+                        
+                        {/* Product info */}
+                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="text-xl font-bold text-white">{slide.headline}</h3>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                                <span className="text-sm font-bold text-white">{slide.seller?.charAt(0)}</span>
+                              </div>
+                              <div>
+                                <p className="text-body-sm font-medium text-white">{slide.seller}</p>
+                                <div className="flex items-center gap-1">
+                                  <IoStar className="w-3 h-3 text-sil-yellow fill-sil-yellow" />
+                                  <span className="text-caption text-white/70">{slide.sellerRating}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-caption text-white/60">{slide.location}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {slide.type === "stats" && (
+                      <div className="flex-1 flex flex-col justify-center">
+                        <h2 className="text-4xl font-black text-white mb-8">{slide.headline}</h2>
+                        <div className="grid grid-cols-3 gap-4">
+                          {slide.stats?.map((stat, i) => (
+                            <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center">
+                              <p className="text-3xl font-black text-white mb-1">{stat.value}</p>
+                              <p className="text-caption text-white/60">{stat.label}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {slide.type === "seller" && (
+                      <div className="flex-1 flex flex-col justify-center text-center">
+                        <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                          <IoAddCircle className="w-10 h-10 text-white" />
+                        </div>
+                        <h2 className="text-4xl font-black text-white mb-4">{slide.headline}</h2>
+                        <p className="text-lg text-white/80 mb-8 max-w-sm mx-auto">{slide.subtitle}</p>
+                        <Link
+                          href="/sell"
+                          className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-gray-900 font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 mx-auto"
+                        >
+                          {slide.cta}
+                          <FiArrowRight className="w-5 h-5" />
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
-                
-                {/* Floating badges */}
-                <div className="absolute -top-4 -right-4 bg-white rounded-2xl p-3 shadow-cartoon animate-float">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <FiCheck className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <div>
-                      <p className="text-caption text-gray-500">Verified</p>
-                      <p className="text-body-sm font-bold text-gray-900">Safe deal</p>
-                    </div>
-                  </div>
+
+                {/* Navigation arrows */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                >
+                  <FiChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                >
+                  <FiChevronRight className="w-5 h-5" />
+                </button>
+
+                {/* Slide indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                  {HERO_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => goToSlide(i)}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        i === currentSlide 
+                          ? "w-8 bg-white" 
+                          : "w-2 bg-white/40 hover:bg-white/60"
+                      }`}
+                    />
+                  ))}
                 </div>
-                
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-3 shadow-cartoon animate-float" style={{ animationDelay: "1s" }}>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-sil-yellow-light rounded-full flex items-center justify-center">
-                      <FiDollarSign className="w-4 h-4 text-sil-yellow-dark" />
-                    </div>
-                    <div>
-                      <p className="text-caption text-gray-500">Commission</p>
-                      <p className="text-body-sm font-bold text-gray-900">0% free!</p>
-                    </div>
-                  </div>
+
+                {/* Progress bar */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
+                  <div 
+                    className="h-full bg-sil-yellow transition-all duration-300"
+                    style={{ 
+                      width: `${((currentSlide + 1) / HERO_SLIDES.length) * 100}%`,
+                    }}
+                  />
                 </div>
               </div>
             </div>
