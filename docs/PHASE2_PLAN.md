@@ -56,14 +56,14 @@
 **Objective:** Verify user emails on registration
 
 **Tasks:**
-- [ ] Add `emailVerified` field to User model
-- [ ] Create VerificationToken model
-- [ ] Install Nodemailer/Resend for email sending
-- [ ] Create verification email template
-- [ ] Send verification email on registration
-- [ ] Create verify endpoint: `/api/auth/verify?token=xxx`
-- [ ] Block unverified users from creating listings
-- [ ] Add "Resend verification" option
+- [x] Add `emailVerified` field to User model
+- [x] Create VerificationToken model
+- [x] Install Resend for email sending
+- [x] Create verification email template
+- [x] Send verification email on registration
+- [x] Create verify endpoint: `/api/auth/verify`
+- [x] Block unverified users from creating listings
+- [x] Add "Resend verification" option
 
 **Database Changes:**
 ```prisma
@@ -78,22 +78,22 @@ model VerificationToken {
 ```
 
 **Testing:**
-- [ ] Test registration sends email
-- [ ] Test verification link works
-- [ ] Test token expiry (24 hours)
-- [ ] Test unverified user blocked from listing
+- [x] Test registration sends email
+- [x] Test verification link works
+- [x] Test token expiry (24 hours)
+- [x] Test unverified user blocked from listing
 
 ### 2.2 Password Reset
 
 **Objective:** Allow users to reset forgotten passwords
 
 **Tasks:**
-- [ ] Create ResetToken model (15min expiry)
-- [ ] Create forgot password API: `/api/auth/forgot-password`
-- [ ] Create reset password page: `/reset-password?token=xxx`
-- [ ] Send email with reset link
-- [ ] Validate token and update password
-- [ ] Invalidate used tokens
+- [x] Create ResetToken model (15min expiry)
+- [x] Create forgot password API: `/api/auth/forgot-password`
+- [x] Create reset password page: `/reset-password`
+- [x] Send email with reset OTP
+- [x] Validate OTP and update password
+- [x] Invalidate used tokens
 
 **Database Changes:**
 ```prisma
@@ -109,43 +109,48 @@ model ResetToken {
 ```
 
 **Testing:**
-- [ ] Test forgot password sends email
-- [ ] Test reset link works
-- [ ] Test token expiry (15 minutes)
-- [ ] Test invalid token rejected
-- [ ] Test used token rejected
+- [x] Test forgot password sends email
+- [x] Test reset link works
+- [x] Test token expiry (15 minutes)
+- [x] Test invalid token rejected
+- [x] Test used token rejected
 
 ### 2.3 Rate Limiting
 
 **Objective:** Prevent brute force attacks
 
 **Tasks:**
-- [ ] Install express-rate-limit
-- [ ] Create rate limiter middleware
-- [ ] Apply to auth routes (5 attempts/min)
-- [ ] Apply to API routes (60 requests/min)
-- [ ] Apply to upload routes (10 requests/min)
-- [ ] Add rate limit headers
+- [x] Create custom in-memory rate limiter (`src/lib/rate-limit.ts`)
+- [x] Apply to auth routes (10 attempts/15min)
+- [x] Apply to API routes (60 requests/min)
+- [x] Apply to upload routes (10 requests/min)
+- [x] Apply to search routes (30 requests/min)
+- [x] Rate limiting in middleware.ts
 
 **Testing:**
-- [ ] Test brute force protection
-- [ ] Test legitimate usage not blocked
-- [ ] Test different limits per route
+- [x] Test brute force protection
+- [x] Test legitimate usage not blocked
+- [x] Test different limits per route
 
 ### 2.4 Security Headers
 
 **Objective:** Add security headers
 
 **Tasks:**
-- [ ] Add CSP headers in next.config.js
-- [ ] Add X-Frame-Options
-- [ ] Add X-Content-Type-Options
-- [ ] Configure CORS
-- [ ] Add HSTS headers
+- [x] Add CSP headers in middleware.ts and next.config.js
+- [x] Add X-Frame-Options (DENY)
+- [x] Add X-Content-Type-Options (nosniff)
+- [x] Configure CORS on /api/* routes
+- [x] Add HSTS headers (max-age=63072000)
+- [x] Add X-XSS-Protection (1; mode=block)
+- [x] Add Referrer-Policy (strict-origin-when-cross-origin)
+- [x] Add Permissions-Policy
 
 **Testing:**
-- [ ] Test headers present
-- [ ] Test no broken functionality
+- [x] Test headers present
+- [x] Test no broken functionality
+
+**Status: ✅ COMPLETED**
 
 ---
 

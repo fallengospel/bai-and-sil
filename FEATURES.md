@@ -61,7 +61,7 @@ This document tracks all features implemented in the BAI & SIL Filipino marketpl
 | Email validation | ✅ Done | Format validation |
 | Password confirmation | ✅ Done | Must match on register |
 | Phone number field | ✅ Done | Optional, stored in profile |
-| Forgot password | 🔲 Pending | Password reset flow |
+| Forgot password | ✅ Done | OTP-based password reset via email |
 
 ---
 
@@ -219,7 +219,7 @@ Essential features needed for a functional marketplace.
 |---|---------|--------|-------|
 | 1 | Edit listing mode | 🔲 Pending | Seller needs to edit existing listings |
 | 2 | Offer accept/decline | 🔲 Pending | Sellers must respond to buyer offers |
-| 3 | Forgot password | 🔲 Pending | Password reset via email |
+| 3 | Forgot password | ✅ Done | OTP-based password reset via email |
 | 4 | Conversation messaging | 🔲 Pending | Real-time chat between buyer/seller |
 | 5 | Mark listing as sold | 🔲 Pending | Seller marks item as sold |
 | 6 | Leave reviews | 🔲 Pending | Buyers review sellers after purchase |
@@ -246,7 +246,7 @@ Features that add value but can wait.
 | # | Feature | Status | Notes |
 |---|---------|--------|-------|
 | 1 | Avatar upload | 🔲 Pending | File upload instead of URL |
-| 2 | Dark mode | 🔲 Pending | Theme toggle |
+| 2 | Dark mode | ✅ Done | Theme toggle with system preference |
 | 3 | Multi-language | 🔲 Pending | Filipino/English toggle |
 | 4 | Push notifications | 🔲 Pending | Browser push notifications |
 | 5 | Export listings | 🔲 Pending | Download listings as CSV |
@@ -295,11 +295,20 @@ Features that add value but can wait.
 4. ✅ Login redirect by role
 5. ✅ Profile edit for all roles
 
-### Phase 4 (Current)
-1. ✅ Navbar session detection fix (credentials: include)
-2. ✅ All fetch calls updated with credentials
-3. ✅ Role-based dashboard links in navbar
+### Phase 4 (Sprint 1 - Security & Auth)
+1. ✅ Email verification with OTP (crypto-random 6-digit codes)
+2. ✅ Password reset flow via email OTP
+3. ✅ Rate limiting on all API routes (auth, upload, search)
+4. ✅ Security headers (CSP, HSTS, X-Frame-Options, etc.)
+5. ✅ CORS configuration on API routes
+6. ✅ Dark mode with ThemeProvider and class strategy
+7. ✅ Cartoony UI rebrand (49 files updated)
+8. ✅ Hero carousel with 5 auto-advancing slides
+9. ✅ UX Testing Mode dev panel (3 personas)
+10. ✅ 33 bug fixes (commit d885b8f)
+11. ✅ Impeccable-inspired redesign (DESIGN.md + new components)
+12. ✅ Google OAuth integration (pending Vercel env vars)
 
 ---
 
-*Last updated: September 8, 2026*
+*Last updated: September 19, 2026*
