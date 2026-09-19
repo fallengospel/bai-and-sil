@@ -1,5 +1,6 @@
 'use client';
-import React from "react";
+
+import { useState } from 'react';
 
 type AvatarSize = "sm" | "md" | "lg" | "xl";
 
@@ -59,7 +60,7 @@ const Avatar: React.FC<AvatarProps> = ({
   ring = false,
   className = "",
 }) => {
-  const [imgError, setImgError] = React.useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const showImage = src && !imgError;
 

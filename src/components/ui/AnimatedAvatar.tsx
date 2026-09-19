@@ -1,5 +1,4 @@
 'use client';
-import React from "react";
 
 type AvatarSize = "sm" | "md" | "lg" | "xl";
 type UserRole = "buyer" | "seller" | "admin";

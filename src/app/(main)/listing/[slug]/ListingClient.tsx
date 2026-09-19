@@ -97,7 +97,7 @@ export default function ListingClient({
       return;
     }
     try {
-      const res = await fetch(`/api/listings/${listing.id}/favorite`, { method: "POST" });
+      const res = await fetch(`/api/listings/${listing.id}/favorite`, { method: "POST", credentials: "include" });
       const data = await res.json();
       setFavorited(data.favorited);
     } catch {

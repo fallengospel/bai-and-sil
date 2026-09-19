@@ -22,8 +22,8 @@ import { PH_LOCATIONS } from "@/lib/helpers";
 import {
   FiMessageSquare, FiFlag, FiPackage, FiStar, FiMapPin, FiCalendar,
   FiPhone, FiMail, FiEdit2, FiHeart, FiShoppingBag, FiDollarSign,
-  FiTrendingUp, FiClock, FiCheckCircle, FiAlertCircle, FiUsers,
-  FiBarChart2, FiEye, FiShare2, FiBookmark
+  FiTrendingUp, FiClock, FiCheckCircle, FiUsers,
+  FiBarChart2, FiEye
 } from "react-icons/fi";
 
 interface UserProfile {

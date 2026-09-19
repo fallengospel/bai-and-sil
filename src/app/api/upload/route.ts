@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
-import { v4 as uuid } from 'uuid';
 import path from 'path';
 import { getSession } from '@/lib/auth';
 
@@ -37,7 +36,7 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const ext = ALLOWED_TYPES[file.type];
-    const filename = `${uuid()}${ext}`;
+    const filename = `${crypto.randomUUID()}${ext}`;
     const uploadDir = path.join(process.cwd(), 'public', 'uploads');
 
     await writeFile(path.join(uploadDir, filename), buffer);

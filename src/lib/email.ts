@@ -45,7 +45,6 @@ export async function sendEmailDetailed({ to, subject, html }: SendEmailOptions)
       return { success: false, error: errorMsg, statusCode: res.status };
     }
 
-    console.log(`[Email] Sent to ${to}: ${subject} (id: ${data.id})`);
     return { success: true };
   } catch (error: any) {
     console.error('[Email] Failed to send:', error?.message || error);

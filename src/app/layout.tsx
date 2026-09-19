@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Gabarito, Hanken_Grotesk } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "@/components/layout/AuthProvider";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -7,8 +8,9 @@ import { I18nProvider } from "@/components/layout/I18nProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
-import UXTestingMode from "@/components/dev/UXTestingMode";
 import { Toaster } from "react-hot-toast";
+
+const UXTestingMode = dynamic(() => import("@/components/dev/UXTestingMode"), { ssr: false });
 
 const gabarito = Gabarito({
   subsets: ["latin"],

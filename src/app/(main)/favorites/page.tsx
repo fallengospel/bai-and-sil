@@ -26,7 +26,7 @@ export default function FavoritesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/users/me/favorites")
+    fetch("/api/users/me/favorites", { credentials: "include" })
       .then((res) => {
         if (!res.ok) {
           router.push("/login");

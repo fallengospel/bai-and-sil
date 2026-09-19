@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail, resetPasswordEmailHtml } from '@/lib/email';
 import { validateEmail } from '@/lib/validation';
-import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +24,7 @@ export async function POST(request: NextRequest) {
       where: { userId: user.id, used: false },
     });
 
-    const token = uuidv4();
+    const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
     await prisma.resetToken.create({

@@ -86,7 +86,7 @@ export default function SellPage() {
       formData.append("file", file);
 
       try {
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
+        const res = await fetch("/api/upload", { method: "POST", credentials: "include", body: formData });
         const data = await res.json();
         if (data.url) {
           setImages((prev) => [...prev, data.url]);
@@ -118,6 +118,7 @@ export default function SellPage() {
     try {
       const res = await fetch("/api/listings", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,

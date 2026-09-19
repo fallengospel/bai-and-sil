@@ -107,7 +107,7 @@ export default function EditListingPage() {
       formData.append("file", file);
 
       try {
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
+        const res = await fetch("/api/upload", { method: "POST", credentials: "include", body: formData });
         const data = await res.json();
         if (data.url) {
           setImages((prev) => [...prev, data.url]);
