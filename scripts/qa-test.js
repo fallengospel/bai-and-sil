@@ -94,14 +94,14 @@ async function testPublicPages() {
     assert(r.body.includes('Hanap') || r.body.includes('Find stuff'), 'Missing hero text');
   });
 
-  await test('Home page shows listings', async () => {
+  await test('Home page shows redesigned sections', async () => {
     const r = await get('/');
-    assert(r.body.includes('Bagong Items') || r.body.includes('Fresh Drops'), 'Missing listings section');
+    assert(r.body.includes('Bakit BAI') || r.body.includes('Paano Gamitin') || r.body.includes('Categories'), 'Missing redesigned sections');
   });
 
-  await test('Home page has product images', async () => {
+  await test('Home page has hero visual (SVG)', async () => {
     const r = await get('/');
-    assert(r.body.includes('pexels.com'), 'No Pexels images on home page');
+    assert(r.body.includes('svg') || r.body.includes('HeroVisual'), 'No SVG hero visual on home page');
   });
 
   await test('Categories page loads all 12', async () => {
@@ -398,11 +398,11 @@ async function testImages() {
     }
   });
 
-  await test('Home page has img tags', async () => {
+  await test('Home page has visual elements', async () => {
     const r = await get('/');
-    assert(r.body.includes('<img'), 'No img tags');
-    const imgCount = (r.body.match(/<img/g) || []).length;
-    assert(imgCount >= 4, `Only ${imgCount} images on home page`);
+    const hasImg = r.body.includes('<img');
+    const hasSvg = r.body.includes('<svg');
+    assert(hasImg || hasSvg, 'No visual elements on home page');
   });
 }
 

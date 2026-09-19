@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { HiOutlineViewGrid, HiOutlineUsers, HiOutlineArchive, HiOutlineExclamation } from 'react-icons/hi';
+import { HiOutlineViewGrid, HiOutlineUsers, HiOutlineArchive, HiOutlineExclamation, HiOutlineBeaker } from 'react-icons/hi';
 
 const sidebarLinks = [
   { title: 'Dashboard', href: '/admin', icon: HiOutlineViewGrid },
   { title: 'Users', href: '/admin/users', icon: HiOutlineUsers },
   { title: 'Listings', href: '/admin/listings', icon: HiOutlineArchive },
   { title: 'Reports', href: '/admin/reports', icon: HiOutlineExclamation },
+  { title: 'Testing', href: '/admin/testing', icon: HiOutlineBeaker },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
