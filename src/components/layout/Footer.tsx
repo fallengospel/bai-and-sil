@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
+import Logo from "@/components/brand/Logo";
 
 const Footer: React.FC = () => {
   return (
@@ -8,12 +9,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
-              <span className="text-2xl font-bold text-white">
-                BAI <span className="text-sil-yellow">&amp;</span> SIL
-              </span>
-            </Link>
+            <Logo tone="reverse" size={28} asLink />
             <p className="mt-3 text-sm text-gray-400">
               Ang marketplace ng Pinas. Benta, hanap, loop lang. Walang hassle, promise.
             </p>

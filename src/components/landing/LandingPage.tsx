@@ -8,6 +8,7 @@ import {
   FiChevronRight, FiZap, FiHeart, FiShoppingBag, FiChevronLeft
 } from "react-icons/fi";
 import { IoAddCircle, IoStar } from "react-icons/io5";
+import Logo from "@/components/brand/Logo";
 
 const HERO_SLIDES = [
   {
@@ -268,7 +269,7 @@ export default function LandingPage() {
                     {slide.type === "logo" && (
                       <div className="flex-1 flex flex-col items-center justify-center text-center px-8 pb-8">
                         <div className="w-40 h-40 bg-white rounded-[2rem] shadow-2xl flex items-center justify-center mb-8 animate-float">
-                          <img src="/logo.svg" alt="BAI & SIL" className="w-28 h-28" />
+                          <Logo variant="mark" tone="navy" size={112} />
                         </div>
                         <h2 className="text-[3.5rem] font-black text-white mb-2 tracking-tight">{slide.headline}</h2>
                         <p className="text-xl text-white/70">{slide.subtitle}</p>

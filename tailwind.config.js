@@ -39,6 +39,14 @@ module.exports = {
           800: '#065F46',
           900: '#064E3B',
         },
+        brand: {
+          navy: '#0A2E6E',
+          deep: '#062250',
+          mid: '#124A9E',
+          gold: '#F5BD5D',
+          sun: '#FFD68A',
+          green: '#22C55E',
+        },
         purple: {
           DEFAULT: '#8B5CF6',
           50: '#F5F3FF',
@@ -75,6 +83,7 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        brand: ['var(--font-brand)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'hero': ['3.5rem', { lineHeight: '1.1', fontWeight: '900' }],

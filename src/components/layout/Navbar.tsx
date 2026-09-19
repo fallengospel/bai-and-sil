@@ -8,6 +8,7 @@ import { IoAddCircle } from "react-icons/io5";
 import Avatar from "@/components/ui/Avatar";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { useI18n } from "@/components/layout/I18nProvider";
+import Logo from "@/components/brand/Logo";
 
 interface User {
   id: string;
@@ -135,12 +136,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex-shrink-0 flex items-center gap-2">
-              <img src="/logo.svg" alt="BAI & SIL" className="w-8 h-8" />
-              <span className="text-xl font-bold gradient-text">
-                BAI <span className="text-sil-yellow">&amp;</span> SIL
-              </span>
-            </Link>
+            <Logo tone="navy" size={30} asLink />
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href="/categories"
