@@ -47,6 +47,12 @@ module.exports = {
           sun: '#FFD68A',
           green: '#22C55E',
         },
+        ink: '#101B3A',
+        jeepney: '#0F3D91',
+        sun: '#FFC72C',
+        tomato: '#E63B2E',
+        mist: '#EAF0FB',
+        paper: '#FFFFFF',
         purple: {
           DEFAULT: '#8B5CF6',
           50: '#F5F3FF',
@@ -81,8 +87,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', '-apple-system', 'sans-serif'],
         brand: ['var(--font-brand)', 'system-ui', 'sans-serif'],
       },
       fontSize: {

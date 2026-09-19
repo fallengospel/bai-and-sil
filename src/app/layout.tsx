@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Gabarito, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/layout/AuthProvider";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -10,9 +10,15 @@ import MobileNav from "@/components/layout/MobileNav";
 import UXTestingMode from "@/components/dev/UXTestingMode";
 import { Toaster } from "react-hot-toast";
 
-const spaceGrotesk = Space_Grotesk({
+const gabarito = Gabarito({
   subsets: ["latin"],
-  variable: "--font-brand",
+  variable: "--font-display",
+  display: "swap",
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -25,8 +31,9 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "BAI AND SIL",
-    description: "Find stuff. Sell stuff. Repeat.",
+    title: "BAI AND SIL - Find stuff. Sell stuff. Repeat.",
+    description:
+      "The Filipino marketplace for buying and selling pre-loved items. Find deals, sell your stuff, repeat.",
     type: "website",
     images: [
       {
@@ -47,9 +54,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#062250" />
+        <meta name="theme-color" content="#0F3D91" />
       </head>
-      <body className={`${spaceGrotesk.variable} font-sans antialiased bg-surface dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200`}>
+      <body
+        className={`${gabarito.variable} ${hankenGrotesk.variable} font-sans antialiased bg-white text-[#101B3A] transition-colors duration-200`}
+      >
         <ThemeProvider>
           <I18nProvider>
             <AuthProvider>
