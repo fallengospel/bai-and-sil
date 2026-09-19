@@ -44,7 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link key={link.href} href={link.href}
               className={cn('flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
                 link.href === '/admin' 
-                  ? 'bg-[#023E8A]/10 text-[#023E8A] font-bold' 
+                  ? 'bg-bai-blue-light text-bai-blue font-bold' 
                   : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
               )}>
               <link.icon className="h-5 w-5" />

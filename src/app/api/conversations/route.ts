@@ -82,9 +82,11 @@ export async function POST(request: NextRequest) {
 
     const existing = await prisma.conversation.findFirst({
       where: {
-        buyerId: user.id,
-        sellerId,
         listingId,
+        OR: [
+          { buyerId: user.id, sellerId },
+          { buyerId: sellerId, sellerId: user.id },
+        ],
       },
     });
 

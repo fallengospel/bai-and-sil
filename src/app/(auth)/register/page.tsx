@@ -84,11 +84,11 @@ export default function RegisterPage() {
           <div className="space-y-4">
             <button
               onClick={() => handleRoleSelect("buyer")}
-              className="w-full p-6 border-2 border-gray-200 rounded-2xl text-left hover:border-[#023E8A] hover:bg-blue-50 transition-all group"
+              className="w-full p-6 border-2 border-gray-200 rounded-2xl text-left hover:border-bai-blue hover:bg-blue-50 transition-all group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-[#023E8A] transition-colors">
-                  <FiSearch className="w-6 h-6 text-[#023E8A] group-hover:text-white" />
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-bai-blue transition-colors">
+                  <FiSearch className="w-6 h-6 text-bai-blue group-hover:text-white" />
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">I want to buy</h3>
@@ -99,11 +99,11 @@ export default function RegisterPage() {
 
             <button
               onClick={() => handleRoleSelect("seller")}
-              className="w-full p-6 border-2 border-gray-200 rounded-2xl text-left hover:border-[#FFD581] hover:bg-yellow-50 transition-all group"
+              className="w-full p-6 border-2 border-gray-200 rounded-2xl text-left hover:border-sil-yellow hover:bg-yellow-50 transition-all group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-[#FFD581] transition-colors">
-                  <FiShoppingBag className="w-6 h-6 text-[#FFD581] group-hover:text-white" />
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-sil-yellow transition-colors">
+                  <FiShoppingBag className="w-6 h-6 text-sil-yellow group-hover:text-white" />
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">I want to sell</h3>
@@ -137,7 +137,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Already have an account?{" "}
-            <Link href="/login" className="text-[#023E8A] font-medium hover:underline">
+            <Link href="/login" className="text-bai-blue font-medium hover:underline">
               Log in
             </Link>
           </p>
@@ -244,7 +244,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{" "}
-            <Link href="/login" className="text-[#023E8A] font-medium hover:underline">
+            <Link href="/login" className="text-bai-blue font-medium hover:underline">
             Log in
           </Link>
         </p>

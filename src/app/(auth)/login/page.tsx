@@ -47,7 +47,7 @@ export default function LoginPage() {
       toast.success("Welcome back!");
       window.dispatchEvent(new Event("auth-change"));
 
-      if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
+      if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//") && !redirectTo.includes("://")) {
         router.push(redirectTo);
       } else if (user.isAdmin || user.role === "admin") {
         router.push("/admin");
@@ -89,7 +89,7 @@ export default function LoginPage() {
             required
           />
           <div className="flex justify-end">
-            <Link href="/forgot-password" className="text-sm text-[#023E8A] hover:underline">
+            <Link href="/forgot-password" className="text-sm text-bai-blue hover:underline">
               Forgot password?
             </Link>
           </div>
@@ -103,7 +103,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-gray-200" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white px-4 text-gray-400">or</span>
+          <span className="bg-white px-4 text-gray-400 dark:bg-dark-900">or</span>
           </div>
         </div>
 
@@ -122,7 +122,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-[#023E8A] font-medium hover:underline">
+          <Link href="/register" className="text-bai-blue font-medium hover:underline">
             Register
           </Link>
         </p>

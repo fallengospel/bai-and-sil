@@ -28,8 +28,22 @@ export default function MessagesPage() {
   const router = useRouter();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
+    fetch("/api/auth/me", { credentials: "include" })
+      .then((res) => {
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.user) setCurrentUserId(data.user.id);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!currentUserId) return;
     fetch("/api/conversations")
       .then((res) => {
         if (!res.ok) {
@@ -43,7 +57,7 @@ export default function MessagesPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [router]);
+  }, [router, currentUserId]);
 
   if (loading) return <LoadingSpinner text="Loading conversations..." className="py-16" />;
 
@@ -62,13 +76,13 @@ export default function MessagesPage() {
         <div className="space-y-2">
           {conversations.map((conv) => {
             const otherUser =
-              conv.buyer.id === conversations[0]?.buyer.id ? conv.seller : conv.buyer;
+              conv.buyer.id === currentUserId ? conv.seller : conv.buyer;
 
             return (
               <Link
                 key={conv.id}
                 href={`/messages/${conv.id}`}
-                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card transition-all"
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card transition-all dark:bg-dark-800 dark:border-dark-700"
               >
                 <Avatar
                   src={otherUser.avatar}
@@ -77,7 +91,7 @@ export default function MessagesPage() {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-medium text-gray-900 truncate">
+                    <span className="font-medium text-gray-900 dark:text-gray-100 truncate">
                       {otherUser.name}
                     </span>
                     {conv.lastMessage && (
@@ -86,15 +100,15 @@ export default function MessagesPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-500 truncate">{conv.listing.title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{conv.listing.title}</p>
                   {conv.lastMessage && (
-                    <p className="text-sm text-gray-600 truncate mt-0.5">
+                    <p className="text-sm text-gray-600 dark:text-gray-300 truncate mt-0.5">
                       {conv.lastMessage.message}
                     </p>
                   )}
                 </div>
                 {conv.unreadCount > 0 && (
-                  <span className="flex-shrink-0 w-5 h-5 bg-[#FF6B6B] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="flex-shrink-0 w-5 h-5 bg-coral text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {conv.unreadCount}
                   </span>
                 )}

@@ -5,9 +5,8 @@ import { slugify } from '@/lib/helpers';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const listing = await prisma.listing.update({
+    const listing = await prisma.listing.findUnique({
       where: { id: params.id },
-      data: { viewCount: { increment: 1 } },
       include: {
         seller: {
           select: { id: true, name: true, avatar: true, location: true, rating: true, reviewCount: true },
@@ -17,6 +16,16 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         _count: { select: { favorites: true } },
       },
     });
+
+    if (!listing) {
+      return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
+    }
+
+    // Increment viewCount separately (don't block the response)
+    prisma.listing.update({
+      where: { id: params.id },
+      data: { viewCount: { increment: 1 } },
+    }).catch(() => {});
 
     return NextResponse.json({ listing });
   } catch (error) {
@@ -66,15 +75,18 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       updateData.status = status;
     }
 
-    if (images) {
+    if (images && Array.isArray(images)) {
+      const validImages = images.filter((url: unknown): url is string => typeof url === 'string' && url.length > 0);
       await prisma.listingImage.deleteMany({ where: { listingId: params.id } });
-      await prisma.listingImage.createMany({
-        data: images.map((url: string, index: number) => ({
-          listingId: params.id,
-          imageUrl: url,
-          sortOrder: index,
-        })),
-      });
+      if (validImages.length > 0) {
+        await prisma.listingImage.createMany({
+          data: validImages.map((url: string, index: number) => ({
+            listingId: params.id,
+            imageUrl: url,
+            sortOrder: index,
+          })),
+        });
+      }
     }
 
     const updated = await prisma.listing.update({

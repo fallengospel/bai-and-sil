@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
               If an account exists with <strong>{email}</strong>, we&apos;ve sent reset
               instructions. Check your inbox.
             </p>
-            <Link href="/login" className="inline-block text-sm font-medium text-[#023E8A] hover:underline">
+            <Link href="/login" className="inline-block text-sm font-medium text-bai-blue hover:underline">
               Back to login
             </Link>
           </div>
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
         {!sent && (
           <p className="text-center text-sm text-gray-500 mt-6">
             Remember your password?{" "}
-            <Link href="/login" className="text-[#023E8A] font-medium hover:underline">
+            <Link href="/login" className="text-bai-blue font-medium hover:underline">
               Log in
             </Link>
           </p>

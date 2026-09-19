@@ -53,7 +53,7 @@ export default function AdminDashboard() {
       .finally(() => setLoading(false));
   }, [router]);
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#023E8A]" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
 
   const maxCategoryCount = Math.max(...(stats?.categoryStats.map(c => c.count) || [1]));
 
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#023E8A] to-[#023E8A]/80 rounded-2xl flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 bg-gradient-to-br from-bai-blue to-bai-blue/80 rounded-2xl flex items-center justify-center shadow-sm">
               <FiUsers className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#FF6B6B] to-red-400 rounded-2xl flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 bg-gradient-to-br from-coral to-red-400 rounded-2xl flex items-center justify-center shadow-sm">
               <FiAlertTriangle className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
       <div className="grid gap-6 md:grid-cols-2">
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
           <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
-            <FiUserCheck className="w-5 h-5 text-[#023E8A]" />
+            <FiUserCheck className="w-5 h-5 text-bai-blue" />
             User Breakdown
           </h2>
           <div className="space-y-4">
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-[#023E8A] to-[#023E8A]/80 h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-bai-blue to-bai-blue/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalBuyers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-[#FFD581] to-[#FFD581]/80 h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-sil-yellow to-sil-yellow/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalSellers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
@@ -153,16 +153,16 @@ export default function AdminDashboard() {
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-[#FF6B6B] to-red-400 h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-coral to-red-400 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${(((stats?.totalUsers || 0) - (stats?.totalBuyers || 0) - (stats?.totalSellers || 0)) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
             </div>
           </div>
           <div className="mt-5 pt-4 border-t border-gray-100 flex gap-5 text-sm">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#023E8A] rounded-full" /> Buyer</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#FFD581] rounded-full" /> Seller</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-[#FF6B6B] rounded-full" /> Admin</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-bai-blue rounded-full" /> Buyer</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-sil-yellow rounded-full" /> Seller</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-coral rounded-full" /> Admin</span>
           </div>
         </div>
 
@@ -181,7 +181,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#023E8A] to-[#FFD581] h-2.5 rounded-full transition-all duration-700 ease-out"
+                    className="bg-gradient-to-r from-bai-blue to-sil-yellow h-2.5 rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${(cat.count / maxCategoryCount) * 100}%` }}
                   />
                 </div>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Users</h2>
-            <Link href="/admin/users" className="text-sm text-[#023E8A] hover:underline font-medium">View all</Link>
+            <Link href="/admin/users" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentUsers || []).map((user: any) => (
@@ -209,9 +209,9 @@ export default function AdminDashboard() {
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
                 <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
-                  user.role === 'seller' ? 'bg-[#FFD581]/10 text-[#FFC233]' :
+                  user.role === 'seller' ? 'bg-sil-yellow/10 text-sil-yellow-dark' :
                   user.role === 'admin' ? 'bg-red-100 text-red-700' :
-                  'bg-[#023E8A]/10 text-[#023E8A]'
+                  'bg-bai-blue/10 text-bai-blue'
                 }`}>
                   {user.role || 'buyer'}
                 </span>
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Listings</h2>
-            <Link href="/admin/listings" className="text-sm text-[#023E8A] hover:underline font-medium">View all</Link>
+            <Link href="/admin/listings" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentListings || []).map((listing: any) => (
