@@ -253,20 +253,22 @@ export default function LandingPage() {
             >
               <div className="relative">
                 {/* Main carousel container */}
-                <div className={`relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br ${slide.bg} transition-all duration-500`}>
+                <div className={`relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br ${slide.bg} transition-all duration-700`}>
                   {/* Slide content */}
-                  <div className="relative min-h-[480px] p-8 flex flex-col">
+                  <div className="relative min-h-[520px] flex flex-col">
                     {/* Tagline */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6 w-fit">
-                      <span className="w-2 h-2 bg-sil-yellow rounded-full animate-pulse" />
-                      <span className="text-caption uppercase tracking-wider text-white/80">{slide.tagline}</span>
+                    <div className="px-8 pt-8">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 w-fit">
+                        <span className="w-2 h-2 bg-sil-yellow rounded-full animate-pulse" />
+                        <span className="text-caption uppercase tracking-wider text-white/80">{slide.tagline}</span>
+                      </div>
                     </div>
 
                     {/* Content based on slide type */}
                     {slide.type === "logo" && (
-                      <div className="flex-1 flex flex-col items-center justify-center text-center">
-                        <div className="w-32 h-32 bg-white rounded-3xl shadow-2xl flex items-center justify-center mb-8 animate-float">
-                          <img src="/logo.svg" alt="BAI & SIL" className="w-24 h-24" />
+                      <div className="flex-1 flex flex-col items-center justify-center text-center px-8 pb-8">
+                        <div className="w-40 h-40 bg-white rounded-[2rem] shadow-2xl flex items-center justify-center mb-8 animate-float">
+                          <img src="/logo.svg" alt="BAI & SIL" className="w-28 h-28" />
                         </div>
                         <h2 className="text-[3.5rem] font-black text-white mb-2 tracking-tight">{slide.headline}</h2>
                         <p className="text-xl text-white/70">{slide.subtitle}</p>
@@ -274,67 +276,101 @@ export default function LandingPage() {
                     )}
 
                     {slide.type === "product" && (
-                      <div className="flex-1 flex flex-col">
-                        {/* Product image placeholder - large visual */}
-                        <div className="flex-1 bg-white/10 backdrop-blur-sm rounded-2xl mb-6 flex items-center justify-center min-h-[280px] relative overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
-                          <div className="text-8xl relative z-10 drop-shadow-lg">
+                      <div className="flex-1 flex flex-col px-8 pb-8">
+                        {/* Product image - large prominent visual */}
+                        <div className="flex-1 bg-white/5 backdrop-blur-sm rounded-2xl mb-5 flex items-center justify-center min-h-[320px] relative overflow-hidden border border-white/10">
+                          <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent" />
+                          {/* Decorative circles */}
+                          <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
+                          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
+                          {/* Large product visual */}
+                          <div className="text-[10rem] relative z-10 drop-shadow-2xl filter brightness-110">
                             {currentSlide === 1 ? "📱" : "👟"}
                           </div>
                           {/* Floating price tag */}
-                          <div className="absolute top-4 right-4 bg-white rounded-xl px-4 py-2 shadow-lg">
-                            <span className="text-heading-2 font-black text-bai-blue">{slide.price}</span>
+                          <div className="absolute top-5 right-5 bg-white rounded-2xl px-5 py-3 shadow-xl">
+                            <span className="text-2xl font-black text-bai-blue">{slide.price}</span>
                           </div>
                           {/* Condition badge */}
-                          <div className="absolute bottom-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-caption font-bold">
+                          <div className="absolute bottom-5 left-5 bg-emerald-500 text-white px-4 py-2 rounded-full text-body-sm font-bold shadow-lg">
                             {slide.condition}
                           </div>
                         </div>
                         
                         {/* Product info */}
-                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <h3 className="text-xl font-bold text-white">{slide.headline}</h3>
-                          </div>
+                        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/10">
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                                <span className="text-sm font-bold text-white">{slide.seller?.charAt(0)}</span>
-                              </div>
-                              <div>
-                                <p className="text-body-sm font-medium text-white">{slide.seller}</p>
+                            <div>
+                              <h3 className="text-xl font-bold text-white mb-1">{slide.headline}</h3>
+                              <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center">
+                                    <span className="text-xs font-bold text-white">{slide.seller?.charAt(0)}</span>
+                                  </div>
+                                  <span className="text-body-sm text-white/80">{slide.seller}</span>
+                                </div>
                                 <div className="flex items-center gap-1">
-                                  <IoStar className="w-3 h-3 text-sil-yellow fill-sil-yellow" />
-                                  <span className="text-caption text-white/70">{slide.sellerRating}</span>
+                                  <IoStar className="w-4 h-4 text-sil-yellow fill-sil-yellow" />
+                                  <span className="text-body-sm font-bold text-white">{slide.sellerRating}</span>
                                 </div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className="text-caption text-white/60">{slide.location}</p>
+                              <p className="text-caption text-white/50 mb-1">Location</p>
+                              <p className="text-body-sm font-medium text-white">{slide.location}</p>
                             </div>
                           </div>
+                        </div>
+
+                        {/* Slide indicators - inside card */}
+                        <div className="flex items-center justify-center gap-2 mt-5">
+                          {HERO_SLIDES.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => goToSlide(i)}
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                i === currentSlide 
+                                  ? "w-8 bg-white" 
+                                  : "w-2 bg-white/30 hover:bg-white/50"
+                              }`}
+                            />
+                          ))}
                         </div>
                       </div>
                     )}
 
                     {slide.type === "stats" && (
-                      <div className="flex-1 flex flex-col justify-center">
+                      <div className="flex-1 flex flex-col justify-center px-8 pb-8">
                         <h2 className="text-4xl font-black text-white mb-8">{slide.headline}</h2>
                         <div className="grid grid-cols-3 gap-4">
                           {slide.stats?.map((stat, i) => (
-                            <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center">
+                            <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
                               <p className="text-3xl font-black text-white mb-1">{stat.value}</p>
                               <p className="text-caption text-white/60">{stat.label}</p>
                             </div>
+                          ))}
+                        </div>
+                        {/* Slide indicators */}
+                        <div className="flex items-center justify-center gap-2 mt-8">
+                          {HERO_SLIDES.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => goToSlide(i)}
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                i === currentSlide 
+                                  ? "w-8 bg-white" 
+                                  : "w-2 bg-white/30 hover:bg-white/50"
+                              }`}
+                            />
                           ))}
                         </div>
                       </div>
                     )}
 
                     {slide.type === "seller" && (
-                      <div className="flex-1 flex flex-col justify-center text-center">
-                        <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                          <IoAddCircle className="w-10 h-10 text-white" />
+                      <div className="flex-1 flex flex-col justify-center text-center px-8 pb-8">
+                        <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                          <IoAddCircle className="w-12 h-12 text-white" />
                         </div>
                         <h2 className="text-4xl font-black text-white mb-4">{slide.headline}</h2>
                         <p className="text-lg text-white/80 mb-8 max-w-sm mx-auto">{slide.subtitle}</p>
@@ -345,6 +381,20 @@ export default function LandingPage() {
                           {slide.cta}
                           <FiArrowRight className="w-5 h-5" />
                         </Link>
+                        {/* Slide indicators */}
+                        <div className="flex items-center justify-center gap-2 mt-8">
+                          {HERO_SLIDES.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => goToSlide(i)}
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                i === currentSlide 
+                                  ? "w-8 bg-white" 
+                                  : "w-2 bg-white/30 hover:bg-white/50"
+                              }`}
+                            />
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -353,41 +403,16 @@ export default function LandingPage() {
                 {/* Navigation arrows */}
                 <button
                   onClick={prevSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 shadow-lg border border-white/20"
                 >
-                  <FiChevronLeft className="w-5 h-5" />
+                  <FiChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 shadow-lg border border-white/20"
                 >
-                  <FiChevronRight className="w-5 h-5" />
+                  <FiChevronRight className="w-6 h-6" />
                 </button>
-
-                {/* Slide indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                  {HERO_SLIDES.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => goToSlide(i)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        i === currentSlide 
-                          ? "w-8 bg-white" 
-                          : "w-2 bg-white/40 hover:bg-white/60"
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                {/* Progress bar */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
-                  <div 
-                    className="h-full bg-sil-yellow transition-all duration-300"
-                    style={{ 
-                      width: `${((currentSlide + 1) / HERO_SLIDES.length) * 100}%`,
-                    }}
-                  />
-                </div>
               </div>
             </div>
           </div>
