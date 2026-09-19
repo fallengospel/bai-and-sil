@@ -63,6 +63,7 @@ export default function ForgotPasswordPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
+              maxLength={255}
             />
             <Button type="submit" loading={loading} fullWidth className="shadow-cartoon">
               Send Reset Link

@@ -253,6 +253,8 @@ export default function EditListingPage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="What are you selling?"
               required
+              minLength={5}
+              maxLength={200}
             />
 
             <Select
@@ -261,6 +263,7 @@ export default function EditListingPage() {
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
               placeholder="Select a category"
+              required
             />
 
             <TextArea
@@ -271,6 +274,8 @@ export default function EditListingPage() {
               rows={5}
               maxLength={2000}
               showCount
+              required
+              minLength={10}
             />
 
             <Input
@@ -279,7 +284,9 @@ export default function EditListingPage() {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="0"
-              min="0"
+              min={1}
+              max={999999999}
+              step="0.01"
               required
             />
 
@@ -289,6 +296,7 @@ export default function EditListingPage() {
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
               placeholder="Select condition"
+              required
             />
 
             <Select
@@ -297,6 +305,7 @@ export default function EditListingPage() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Select location"
+              required
             />
           </div>
         </div>

@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/auth';
+import { validatePassword } from '@/lib/validation';
 
 export async function POST(request: NextRequest) {
   try {
     const { token, password } = await request.json();
 
-    if (!token || !password) {
-      return NextResponse.json({ error: 'Token and password are required' }, { status: 400 });
+    if (!token) {
+      return NextResponse.json({ error: 'Token is required' }, { status: 400 });
     }
 
-    if (password.length < 6) {
-      return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
+    const passwordErr = validatePassword(password);
+    if (passwordErr) {
+      return NextResponse.json({ error: 'Validation failed', errors: { password: passwordErr } }, { status: 400 });
     }
 
     const resetToken = await prisma.resetToken.findUnique({

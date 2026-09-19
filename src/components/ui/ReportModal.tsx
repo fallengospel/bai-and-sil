@@ -110,6 +110,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) =
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             placeholder="Select a reason"
+            required
           />
           <TextArea
             label="Description (optional)"

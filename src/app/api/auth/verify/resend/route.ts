@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendEmail, verificationEmailHtml } from '@/lib/email';
+import { validateEmail } from '@/lib/validation';
 import crypto from 'crypto';
 
 function generateOTP(): string {
@@ -11,8 +12,9 @@ export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    const emailErr = validateEmail(email);
+    if (emailErr) {
+      return NextResponse.json({ error: 'Validation failed', errors: { email: emailErr } }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({ where: { email } });

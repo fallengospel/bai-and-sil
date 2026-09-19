@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 import { slugify } from '@/lib/helpers';
+import { validateUpdateListing, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -38,6 +39,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const user = await requireAuth();
     const body = await request.json();
 
+    const validation = validateUpdateListing(body);
+    if (!validation.valid) {
+      return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
+    }
+
     const listing = await prisma.listing.findUnique({ where: { id: params.id } });
     if (!listing) {
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
@@ -50,13 +56,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const updateData: any = {};
     if (title) {
-      updateData.title = title;
+      updateData.title = sanitizeInput(title);
       let slug = slugify(title);
       const existing = await prisma.listing.findFirst({ where: { slug, id: { not: params.id } } });
       if (existing) slug = `${slug}-${Date.now()}`;
       updateData.slug = slug;
     }
-    if (description) updateData.description = description;
+    if (description) updateData.description = sanitizeInput(description);
     if (price) {
       const parsedPrice = parseFloat(price);
       if (isNaN(parsedPrice) || parsedPrice <= 0) {
@@ -66,7 +72,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
     if (categoryId) updateData.categoryId = categoryId;
     if (condition) updateData.condition = condition;
-    if (location) updateData.location = location;
+    if (location) updateData.location = sanitizeInput(location);
     if (status) {
       const allowedStatuses = ['Active', 'Sold', 'Reserved'];
       if (!allowedStatuses.includes(status)) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { validateUpdateProfile, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -43,16 +44,21 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
+    const validation = validateUpdateProfile(body);
+    if (!validation.valid) {
+      return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
+    }
+
     const { name, avatar, location, bio, phone } = body;
 
     const updated = await prisma.user.update({
       where: { id: params.id },
       data: {
-        ...(name && { name }),
+        ...(name && { name: sanitizeInput(name) }),
         ...(avatar !== undefined && { avatar }),
-        ...(location !== undefined && { location }),
-        ...(bio !== undefined && { bio }),
-        ...(phone !== undefined && { phone }),
+        ...(location !== undefined && { location: sanitizeInput(location) }),
+        ...(bio !== undefined && { bio: sanitizeInput(bio) }),
+        ...(phone !== undefined && { phone: sanitizeInput(phone) }),
       },
       select: {
         id: true,

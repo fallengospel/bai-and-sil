@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSession, requireAuth } from '@/lib/auth';
 import { slugify } from '@/lib/helpers';
+import { validateCreateListing, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest) {
   try {
@@ -98,16 +99,19 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+
+    const validation = validateCreateListing(body);
+    if (!validation.valid) {
+      return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
+    }
+
     const { title, description, price, categoryId, condition, location, images } = body;
 
-    if (!title || !description || !price || !categoryId || !condition || !location) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-    }
+    const sanitizedName = sanitizeInput(title);
+    const sanitizedDescription = sanitizeInput(description);
+    const sanitizedLocation = sanitizeInput(location);
 
     const parsedPrice = parseFloat(price);
-    if (isNaN(parsedPrice) || parsedPrice <= 0) {
-      return NextResponse.json({ error: 'Price must be a positive number' }, { status: 400 });
-    }
 
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -130,13 +134,13 @@ export async function POST(request: NextRequest) {
     const listing = await prisma.listing.create({
       data: {
         sellerId: user.id,
-        title,
+        title: sanitizedName,
         slug,
-        description,
+        description: sanitizedDescription,
         price: parsedPrice,
         categoryId,
         condition,
-        location,
+        location: sanitizedLocation,
         images: {
           create: (images || []).map((url: string, index: number) => ({
             imageUrl: url,

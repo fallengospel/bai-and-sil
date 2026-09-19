@@ -108,6 +108,7 @@ export default function ResetPasswordPage() {
             placeholder="At least 6 characters"
             required
             minLength={6}
+            maxLength={128}
           />
           <Input
             label="Confirm Password"
@@ -116,6 +117,8 @@ export default function ResetPasswordPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm your password"
             required
+            minLength={6}
+            maxLength={128}
           />
           <Button type="submit" loading={loading} fullWidth className="shadow-cartoon">
             Reset Password

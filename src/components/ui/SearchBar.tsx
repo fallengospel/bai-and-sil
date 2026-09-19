@@ -44,6 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           className={`w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-2xl text-sm transition-all duration-300 focus:outline-none focus:border-bai-blue ${
             focused ? "shadow-md" : ""
           }`}
+          maxLength={200}
         />
       </div>
     </form>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { validateSendMessage, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -49,11 +50,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await requireAuth();
-    const { message } = await request.json();
+    const body = await request.json();
 
-    if (!message) {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    const validation = validateSendMessage(body);
+    if (!validation.valid) {
+      return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
     }
+
+    const message = sanitizeInput(body.message);
 
     const conversation = await prisma.conversation.findUnique({
       where: { id: params.id },
@@ -71,7 +75,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       data: {
         conversationId: params.id,
         senderId: user.id,
-        message,
+        message: message,
       },
       include: {
         sender: {

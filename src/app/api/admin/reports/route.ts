@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth';
+import { ALLOWED_REPORT_REASONS } from '@/lib/validation';
 
 export async function GET(request: NextRequest) {
   try {
@@ -34,6 +35,10 @@ export async function PUT(request: NextRequest) {
 
     if (!id || !status) {
       return NextResponse.json({ error: 'id and status are required' }, { status: 400 });
+    }
+
+    if (!ALLOWED_REPORT_REASONS.includes(status as any) && !['Pending', 'Reviewed', 'Dismissed'].includes(status)) {
+      return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
     }
 
     const report = await prisma.report.findUnique({ where: { id } });

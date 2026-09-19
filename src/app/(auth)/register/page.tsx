@@ -175,6 +175,8 @@ export default function RegisterPage() {
             onChange={(e) => setName(e.target.value)}
             placeholder="Juan Dela Cruz"
             required
+            minLength={2}
+            maxLength={100}
           />
           <Input
             label="Email Address"
@@ -183,6 +185,7 @@ export default function RegisterPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             required
+            maxLength={255}
           />
           <Input
             label="Phone Number"
@@ -190,6 +193,8 @@ export default function RegisterPage() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+63 9XX XXX XXXX"
+            maxLength={20}
+            pattern="[+]?[0-9\\s\\-]{10,20}"
           />
           <Input
             label="Password"
@@ -199,6 +204,7 @@ export default function RegisterPage() {
             placeholder="At least 6 characters"
             required
             minLength={6}
+            maxLength={128}
           />
           <Input
             label="Confirm Password"
@@ -207,6 +213,8 @@ export default function RegisterPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm your password"
             required
+            minLength={6}
+            maxLength={128}
           />
           <Select
             label="Location"
@@ -214,6 +222,7 @@ export default function RegisterPage() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Select your location"
+            required
           />
           <Button type="submit" loading={loading} fullWidth className="shadow-cartoon">
             Create {role === "seller" ? "Seller" : "Buyer"} Account

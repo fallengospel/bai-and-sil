@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { validateCreateReview, sanitizeInput } from '@/lib/validation';
 
 export async function POST(request: NextRequest) {
   try {
     const user = await requireAuth();
-    const { listingId, revieweeId, rating, comment } = await request.json();
+    const body = await request.json();
 
-    if (!listingId || !revieweeId || !rating) {
-      return NextResponse.json({ error: "listingId, revieweeId, and rating are required" }, { status: 400 });
+    const validation = validateCreateReview(body);
+    if (!validation.valid) {
+      return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
     }
 
-    if (rating < 1 || rating > 5) {
-      return NextResponse.json({ error: "Rating must be between 1 and 5" }, { status: 400 });
-    }
+    const { listingId, revieweeId, rating } = body;
+    const comment = body.comment ? sanitizeInput(body.comment) : null;
 
     const listing = await prisma.listing.findUnique({ where: { id: listingId } });
     if (!listing) {
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
         reviewerId: user.id,
         revieweeId,
         rating,
-        comment: comment || null,
+        comment: comment,
       },
       include: {
         reviewer: { select: { id: true, name: true, avatar: true } },

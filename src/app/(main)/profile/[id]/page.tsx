@@ -661,6 +661,9 @@ export default function ProfilePage() {
             label="Full Name"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
+            required
+            minLength={2}
+            maxLength={100}
           />
           <Input
             label="Phone"
@@ -668,6 +671,8 @@ export default function ProfilePage() {
             value={editPhone}
             onChange={(e) => setEditPhone(e.target.value)}
             placeholder="+63 9XX XXX XXXX"
+            maxLength={20}
+            pattern="[+]?[0-9\\s\\-]{10,20}"
           />
           <TextArea
             label="Bio"
@@ -684,6 +689,7 @@ export default function ProfilePage() {
             value={editLocation}
             onChange={(e) => setEditLocation(e.target.value)}
             placeholder="Select location"
+            required
           />
         </div>
       </Modal>

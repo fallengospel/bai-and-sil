@@ -79,6 +79,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             required
+            maxLength={255}
           />
           <Input
             label="Password"
@@ -87,6 +88,8 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Your password"
             required
+            minLength={6}
+            maxLength={128}
           />
           <div className="flex justify-end">
             <Link href="/forgot-password" className="text-sm text-bai-blue hover:underline">

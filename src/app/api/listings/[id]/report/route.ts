@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
+import { validateReportReason, sanitizeInput } from '@/lib/validation';
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await requireAuth();
     const { reason, description } = await request.json();
 
-    if (!reason) {
-      return NextResponse.json({ error: 'Reason is required' }, { status: 400 });
+    const reasonErr = validateReportReason(reason);
+    if (reasonErr) {
+      return NextResponse.json({ error: 'Validation failed', errors: { reason: reasonErr } }, { status: 400 });
     }
 
     const listing = await prisma.listing.findUnique({ where: { id: params.id } });
@@ -28,7 +30,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         reporterId: user.id,
         listingId: params.id,
         reason,
-        description: description || null,
+        description: description ? sanitizeInput(description) : null,
       },
     });
 

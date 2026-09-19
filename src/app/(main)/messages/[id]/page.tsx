@@ -326,6 +326,8 @@ export default function ConversationPage() {
           placeholder="Ask the seller something..."
           className="flex-1 px-4 py-2.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
           disabled={sending}
+          required
+          maxLength={5000}
         />
         <Button
           onClick={() => sendMessage(newMessage)}
@@ -362,7 +364,10 @@ export default function ConversationPage() {
           value={offerAmount}
           onChange={(e) => setOfferAmount(e.target.value)}
           placeholder="0"
-          min="1"
+          min={1}
+          max={999999999}
+          step="0.01"
+          required
         />
       </Modal>
     </div>

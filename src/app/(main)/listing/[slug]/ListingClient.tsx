@@ -431,7 +431,10 @@ export default function ListingClient({
           value={offerAmount}
           onChange={(e) => setOfferAmount(e.target.value)}
           placeholder="0"
-          min="1"
+          min={1}
+          max={999999999}
+          step="0.01"
+          required
         />
       </Modal>
 
