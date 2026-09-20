@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createSession } from '@/lib/auth';
+import { SignJWT, jwtVerify } from 'jose';
+
+const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback-secret');
 
 interface GoogleTokenResponse {
   access_token: string;
@@ -109,6 +112,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (user) {
+      // Existing user — log them in and redirect based on their role
       if (googleUser.picture && user.avatar !== googleUser.picture) {
         await prisma.user.update({
           where: { id: user.id },
@@ -119,24 +123,40 @@ export async function GET(request: NextRequest) {
         });
         user.avatar = googleUser.picture;
       }
-    } else {
-      const newUser = await prisma.user.create({
-        data: {
-          name: googleUser.name,
-          email: googleUser.email,
-          avatar: googleUser.picture,
-          authProvider: 'google',
-          emailVerified: true,
-          role,
-        },
-        select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
-      });
-      user = newUser;
+
+      await createSession(user.id);
+
+      const redirectPath = user.isAdmin
+        ? '/admin'
+        : user.role === 'seller'
+        ? '/seller/dashboard'
+        : '/buyer/dashboard';
+
+      return NextResponse.redirect(new URL(redirectPath, request.url));
     }
 
-    await createSession(user.id);
+    // New user — store Google data in a temporary JWT cookie and redirect to role selection
+    const pendingToken = await new SignJWT({
+      name: googleUser.name,
+      email: googleUser.email,
+      avatar: googleUser.picture,
+      googleSub: googleUser.sub,
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('10m')
+      .setIssuedAt()
+      .sign(secret);
 
-    return NextResponse.redirect(new URL('/buyer/dashboard', request.url));
+    const response = NextResponse.redirect(new URL('/register/google', request.url));
+    response.cookies.set('google_pending', pendingToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 600, // 10 minutes
+      path: '/',
+    });
+
+    return response;
   } catch (err) {
     console.error('[Google OAuth]', err);
     return NextResponse.redirect(new URL('/login?error=google_failed', request.url));
