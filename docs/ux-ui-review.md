@@ -269,3 +269,4 @@
 | 2026-09-25 | opencode | Resolved H2, H4, H5, H6, H7, H9, H10, H12 (Phase 2, deployed to main); added `/api/seller/stats`, `/api/users/[id]/report`, `src/lib/favorites.ts`; schema: Report.reportedUserId + nullable listingId |
 | 2026-09-25 | opencode | Resolved C2, H1, M1, M7, M16, M33, L4, M34 (Phase 3, deployed to main) |
 | 2026-09-25 | opencode | Resolved H3, M2, M3, M24, M27, M27b, L5, M31 (Phase 4, deployed to main); removed dead i18n (I18nProvider deleted), placeholder footer socials |
+| 2026-09-25 | opencode | Resolved H11, M15, M25 (Phase 5, deployed to main); new ConfirmDialog, admin+messages error.tsx, global-error.tsx, inline field errors, spinner escape hatches, empty states |

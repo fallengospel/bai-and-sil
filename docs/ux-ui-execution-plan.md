@@ -16,7 +16,7 @@
 | 2 | Core Interaction Fixes | ✅ Done | H2–H7, H9–H12 | ✅ | ✅ |
 | 3 | Mobile & Navigation | ✅ Done | C2, H1, M1, M7, M16, M33, L4 | ✅ | ✅ |
 | 4 | Dead & Misleading Features | ✅ Done | H3, M2, M3, M34, M24, M27b, L5, M31 | ✅ | ✅ |
-| 5 | Error Handling & Feedback | ⬜ Not started | H11, C5, M16, empty/loading states | ⬜ | ⬜ |
+| 5 | Error Handling & Feedback | ✅ Done | H11, C5, M15, M25 + inline errors, spinners, empty states | ✅ | ✅ |
 | 6 | Flows & Data Polish | ⬜ Not started | M6, M8–M12, M21–M23, M28, M30, M32 | ⬜ | ⬜ |
 | 7 | Visual Consistency | ⬜ Not started | L1–L3, M26, admin/dash unify | ⬜ | ⬜ |
 | 8 | Accessibility | ⬜ Not started | L6–L9, M13, contrast, keyboard | ⬜ | ⬜ |
@@ -100,19 +100,19 @@
 
 ---
 
-## Phase 5 — Error Handling & Feedback 🛡
+## Phase 5 — Error Handling & Feedback 🛡 ✅ (2026-09-25)
 **Purpose:** Never fail silently.
 
-- [ ] **H11** Audit every `!res.ok` / `catch {}` in: `messages/[id]` (sendMessage, handleSendOffer), `search`, `notifications` (markAllRead), `profile` (handleSaveProfile), `admin/users|listings|reports` mutations → add `toast.error`, stop optimistic updates on failure
-- [ ] **C5 continued** ReportModal error path verified
-- [ ] **Inline field errors:** wire `Input`/`Select`/`TextArea` `error` prop on login, register, sell, edit forms (server `errors` map → field errors)
-- [ ] **M25** Add nested `error.tsx` for `/admin` and `/messages`; add `global-error.tsx`
-- [ ] **Infinite spinner risks:** `/messages` inbox — resolve loading when `currentUserId` null; `/profile/me` — timeout/escape hatch
-- [ ] **Empty states:** admin tables use `EmptyState`; buyer dashboard saved-items section shows empty state instead of hiding
-- [ ] **M15** Replace native `confirm()` with `Modal` in `ListingClient`, admin listings/users/reports
-- [ ] **Logout:** toast on logout failure instead of `console.error`
+- [x] **H11** Audited mutations → `toast.error` + no optimistic update on failure: chat sendMessage/handleSendOffer/handleOfferAction, notifications markAllRead, profile handleSaveProfile, admin users/listings/reports (status + delete), ListingClient status/delete/offer POST (favorites already covered by `lib/favorites.ts`)
+- [x] **C5 continued** ReportModal error path verified (Phase 1)
+- [x] **Inline field errors:** server `errors` map wired to `Input`/`Select`/`TextArea` `error` prop on login, register (incl. client password mismatch), sell (jumps back to step 2 on validation failure), edit forms
+- [x] **M25** Nested `error.tsx` added for `/admin` and `(main)/messages`; `global-error.tsx` added
+- [x] **Infinite spinner risks:** `/messages` resolves + redirects to login when auth fetch fails/null; `/profile/me` has 8s timeout escape hatch
+- [x] **Empty states:** admin users/listings/reports tables use `EmptyState`; buyer dashboard saved-items section now always renders with empty state
+- [x] **M15** New `ui/ConfirmDialog.tsx`; native `confirm()` replaced in ListingClient, admin users/listings/reports
+- [x] **Logout:** `toast.error` on logout failure (Navbar + AuthProvider)
 
-**Exit criteria:** Force a 401/500 → user sees a message; no page can spin forever; all destructive actions confirm consistently.
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live root/login 200, /messages 307→login ✅
 
 ---
 
