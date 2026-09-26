@@ -15,7 +15,7 @@
 | 1 | Critical Fixes | ✅ Done | C1–C6 | ✅ | ✅ |
 | 2 | Core Interaction Fixes | ✅ Done | H2–H7, H9–H12 | ✅ | ✅ |
 | 3 | Mobile & Navigation | ✅ Done | C2, H1, M1, M7, M16, M33, L4 | ✅ | ✅ |
-| 4 | Dead & Misleading Features | ⬜ Not started | H3, M2, M3, M34, M24, M27b, L5 | ⬜ | ⬜ |
+| 4 | Dead & Misleading Features | ✅ Done | H3, M2, M3, M34, M24, M27b, L5, M31 | ✅ | ✅ |
 | 5 | Error Handling & Feedback | ⬜ Not started | H11, C5, M16, empty/loading states | ⬜ | ⬜ |
 | 6 | Flows & Data Polish | ⬜ Not started | M6, M8–M12, M21–M23, M28, M30, M32 | ⬜ | ⬜ |
 | 7 | Visual Consistency | ⬜ Not started | L1–L3, M26, admin/dash unify | ⬜ | ⬜ |
@@ -84,17 +84,17 @@
 
 ---
 
-## Phase 4 — Dead & Misleading Features 🧹
+## Phase 4 — Dead & Misleading Features 🧹 ✅ (2026-09-25)
 **Purpose:** Remove lies and dead ends.
 
-- [ ] **M2/M3** i18n decision: **remove** Globe toggle + `I18nProvider` dead dictionary (recommended — zero call sites), or wire up `t()` on landing + nav (bigger scope). Default: remove.
-- [ ] **M3** Keep theme toggle available to guests (move out of `user ?` block)
-- [ ] **M34** Dev-gate `/admin/testing`: hide sidebar link unless `NODE_ENV !== 'production'` (+ middleware block)
-- [ ] **H3** Related Items: pass `relatedListings` (same category, exclude current) from `listing/[slug]/page.tsx`
-- [ ] **M24** Fix sell preview card dead link (`/listing/preview`) — render non-link preview
-- [ ] **M27b** Buyer dashboard: remove fabricated "Browsing: Active"; rename "Recommended" → "Latest on BAI & SIL" or compute real recommendations
-- [ ] **L5** Footer: de-dupe `/categories`, add Help/Contact/About or Safety/Report; fix social URLs (remove if placeholder)
-- [ ] **M31** UXTestingMode: label hardcoded results as static or remove "Re-analyze" (dev-only, low priority)
+- [x] **M2/M3** i18n decision: **remove** Globe toggle + `I18nProvider` dead dictionary (recommended — zero call sites), or wire up `t()` on landing + nav (bigger scope). Default: remove.
+- [x] **M3** Keep theme toggle available to guests (move out of `user ?` block)
+- [x] **M34** Dev-gate `/admin/testing`: hide sidebar link unless `NODE_ENV !== 'production'` (+ middleware block)
+- [x] **H3** Related Items: pass `relatedListings` (same category, exclude current) from `listing/[slug]/page.tsx`
+- [x] **M24** Fix sell preview card dead link (`/listing/preview`) — render non-link preview
+- [x] **M27b** Buyer dashboard: remove fabricated "Browsing: Active"; rename "Recommended" → "Latest on BAI & SIL" or compute real recommendations
+- [x] **L5** Footer: de-dupe `/categories`, add Help/Contact/About or Safety/Report; fix social URLs (remove if placeholder)
+- [x] **M31** UXTestingMode: label hardcoded results as static or remove "Re-analyze" (dev-only, low priority)
 
 **Exit criteria:** No dead links, no fake stats, no dead toggles, testing page hidden in prod.
 

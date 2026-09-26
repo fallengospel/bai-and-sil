@@ -166,10 +166,10 @@ export default function BuyerDashboard() {
         </div>
       )}
 
-      {/* Recommended For You */}
+      {/* Latest listings */}
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-bold text-lg">Recommended For You</h2>
+          <h2 className="font-bold text-lg">Latest on BAI &amp; SIL</h2>
           <Link href="/search" className="text-sm text-bai-blue hover:underline font-medium">View more</Link>
         </div>
         <div className="p-5">
