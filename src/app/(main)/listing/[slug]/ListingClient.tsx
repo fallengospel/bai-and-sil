@@ -21,6 +21,7 @@ import { FiMessageSquare, FiHeart, FiShare2, FiFlag, FiShield, FiBell, FiBellOff
 import { FaHeart } from "react-icons/fa";
 import ReviewForm from "@/components/ReviewForm";
 import ProductCard from "@/components/ui/ProductCard";
+import { getConditionVariant } from "@/lib/condition";
 
 interface ListingData {
   id: string;
@@ -277,17 +278,7 @@ export default function ListingClient({
             </div>
 
             <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
-              <Badge
-                variant={
-                  listing.condition === "Brand New"
-                    ? "green"
-                    : listing.condition === "Like New"
-                    ? "blue"
-                    : listing.condition === "Good"
-                    ? "yellow"
-                    : "gray"
-                }
-              >
+              <Badge variant={getConditionVariant(listing.condition)}>
                 {listing.condition}
               </Badge>
               <span className="flex items-center gap-1">

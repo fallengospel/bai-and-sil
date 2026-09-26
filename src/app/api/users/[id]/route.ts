@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { requireAuth } from '@/lib/auth';
+import { requireAuth, getSession } from '@/lib/auth';
 import { validateUpdateProfile, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -14,6 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         location: true,
         bio: true,
         phone: true,
+        phonePublic: true,
         role: true,
         rating: true,
         reviewCount: true,
@@ -27,6 +28,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const session = await getSession();
+    if (!user.phonePublic && session?.id !== user.id) {
+      user.phone = null;
     }
 
     return NextResponse.json({ user });
@@ -49,7 +55,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Validation failed', errors: validation.errors }, { status: 400 });
     }
 
-    const { name, avatar, location, bio, phone } = body;
+    const { name, avatar, location, bio, phone, phonePublic } = body;
 
     const updated = await prisma.user.update({
       where: { id: params.id },
@@ -59,6 +65,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         ...(location !== undefined && { location: sanitizeInput(location) }),
         ...(bio !== undefined && { bio: sanitizeInput(bio) }),
         ...(phone !== undefined && { phone: sanitizeInput(phone) }),
+        ...(phonePublic !== undefined && { phonePublic: !!phonePublic }),
       },
       select: {
         id: true,
@@ -68,6 +75,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         location: true,
         bio: true,
         phone: true,
+        phonePublic: true,
         role: true,
         isAdmin: true,
       },

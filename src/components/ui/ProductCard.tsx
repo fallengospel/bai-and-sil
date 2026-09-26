@@ -5,6 +5,7 @@ import Badge from "./Badge";
 import Avatar from "./Avatar";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import { getConditionVariant } from "@/lib/condition";
 
 interface ListingSeller {
   id: string;
@@ -46,25 +47,6 @@ function formatPrice(price: number): string {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(price);
-}
-
-function getConditionVariant(
-  condition: string
-): "blue" | "yellow" | "green" | "red" | "gray" {
-  switch (condition.toLowerCase()) {
-    case "brand new":
-      return "green";
-    case "like new":
-      return "blue";
-    case "good":
-      return "yellow";
-    case "fair":
-      return "yellow";
-    case "for parts":
-      return "gray";
-    default:
-      return "gray";
-  }
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({

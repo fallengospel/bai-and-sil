@@ -24,6 +24,22 @@ export async function PUT(request: NextRequest) {
   try {
     const user = await requireAuth();
 
+    let id: string | null = null;
+    try {
+      const body = await request.json();
+      id = body?.id || null;
+    } catch {
+      // no body → mark all
+    }
+
+    if (id) {
+      await prisma.notification.updateMany({
+        where: { id, userId: user.id },
+        data: { read: true },
+      });
+      return NextResponse.json({ message: 'Notification marked as read' });
+    }
+
     await prisma.notification.updateMany({
       where: { userId: user.id, read: false },
       data: { read: true },

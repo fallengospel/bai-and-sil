@@ -3,6 +3,7 @@ import React from 'react';
 interface SelectOption {
   value: string;
   label: string;
+  group?: string;
 }
 
 interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "children"> {
@@ -14,6 +15,17 @@ interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, error, options, placeholder, className = "", ...props }, ref) => {
+    const groups = new Map<string, SelectOption[]>();
+    const ungrouped: SelectOption[] = [];
+    for (const opt of options) {
+      if (opt.group) {
+        if (!groups.has(opt.group)) groups.set(opt.group, []);
+        groups.get(opt.group)!.push(opt);
+      } else {
+        ungrouped.push(opt);
+      }
+    }
+
     return (
       <div className="w-full">
         {label && (
@@ -33,10 +45,19 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               {placeholder}
             </option>
           )}
-          {options.map((option) => (
+          {ungrouped.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
+          ))}
+          {Array.from(groups.entries()).map(([groupName, groupOptions]) => (
+            <optgroup key={groupName} label={groupName}>
+              {groupOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
         {error && <p className="mt-1 text-xs text-coral font-medium">{error}</p>}

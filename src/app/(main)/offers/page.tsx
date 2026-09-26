@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import Badge from "@/components/ui/Badge";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Button from "@/components/ui/Button";
 import { formatPrice, timeAgo } from "@/lib/helpers";
-import { FiDollarSign, FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
+import { FiDollarSign, FiArrowUpRight, FiArrowDownRight, FiMessageSquare } from "react-icons/fi";
 
 interface OfferListing {
   id: string;
@@ -30,6 +31,7 @@ interface Offer {
   amount: number;
   status: string;
   createdAt: string;
+  conversationId: string;
   listing: OfferListing;
   seller?: OfferPerson;
   buyer?: OfferPerson;
@@ -43,6 +45,7 @@ export default function OffersPage() {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("sent");
+  const [respondingId, setRespondingId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOffers = async () => {
@@ -75,6 +78,28 @@ export default function OffersPage() {
   const sentOffers = offers.filter((o) => o.role === "buyer");
   const receivedOffers = offers.filter((o) => o.role === "seller");
   const filteredOffers = activeTab === "sent" ? sentOffers : receivedOffers;
+
+  const handleRespond = async (offer: Offer, status: "Accepted" | "Declined") => {
+    setRespondingId(offer.id);
+    try {
+      const res = await fetch(`/api/listings/${offer.listing.id}/offers/${offer.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Failed to update offer");
+        return;
+      }
+      setOffers((prev) => prev.map((o) => (o.id === offer.id ? { ...o, status } : o)));
+      toast.success(`Offer ${status.toLowerCase()}!`);
+    } catch {
+      toast.error("Failed to update offer");
+    } finally {
+      setRespondingId(null);
+    }
+  };
 
   const statusVariant = (status: string): "green" | "yellow" | "red" | "blue" | "gray" => {
     switch (status) {
@@ -126,48 +151,80 @@ export default function OffersPage() {
       ) : (
         <div className="space-y-3">
           {filteredOffers.map((offer) => (
-            <Link
+            <div
               key={offer.id}
-              href={`/listing/${offer.listing.slug}`}
-              className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card-hover transition-shadow"
+              className="p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card-hover transition-shadow"
             >
-              <div className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
-                <img
-                  src={offer.listing.imageUrl || "/placeholder.svg"}
-                  alt={offer.listing.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-medium text-gray-900 truncate">
-                  {offer.listing.title}
-                </h3>
-                <div className="flex items-center gap-2 mt-1">
-                  {offer.role === "buyer" ? (
-                    <FiArrowUpRight className="w-3 h-3 text-bai-blue" />
-                  ) : (
-                    <FiArrowDownRight className="w-3 h-3 text-sil-yellow" />
-                  )}
-                  <span className="text-sm font-bold text-bai-blue">
-                    {formatPrice(offer.amount)}
-                  </span>
-                  <span className="text-xs text-gray-400">
-                    (Listed: {formatPrice(offer.listing.price)})
-                  </span>
+              <div className="flex items-center gap-4">
+                <Link href={`/listing/${offer.listing.slug}`} className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
+                  <img
+                    src={offer.listing.imageUrl || "/placeholder.svg"}
+                    alt={offer.listing.title}
+                    className="w-full h-full object-cover"
+                  />
+                </Link>
+                <div className="flex-1 min-w-0">
+                  <Link
+                    href={`/listing/${offer.listing.slug}`}
+                    className="text-sm font-medium text-gray-900 truncate hover:text-bai-blue transition-colors block"
+                  >
+                    {offer.listing.title}
+                  </Link>
+                  <div className="flex items-center gap-2 mt-1">
+                    {offer.role === "buyer" ? (
+                      <FiArrowUpRight className="w-3 h-3 text-bai-blue" />
+                    ) : (
+                      <FiArrowDownRight className="w-3 h-3 text-sil-yellow" />
+                    )}
+                    <span className="text-sm font-bold text-bai-blue">
+                      {formatPrice(offer.amount)}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      (Listed: {formatPrice(offer.listing.price)})
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {offer.role === "buyer" ? `To: ${offer.seller?.name}` : `From: ${offer.buyer?.name}`} • {timeAgo(offer.createdAt)}
+                  </p>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">
-                  {offer.role === "buyer" ? `To: ${offer.seller?.name}` : `From: ${offer.buyer?.name}`} • {timeAgo(offer.createdAt)}
-                </p>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant={statusVariant(offer.status)} size="sm">
+                    {offer.status}
+                  </Badge>
+                  {offer.listing.status !== "Active" && (
+                    <Badge variant="gray" size="sm">{offer.listing.status}</Badge>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col items-end gap-1">
-                <Badge variant={statusVariant(offer.status)} size="sm">
-                  {offer.status}
-                </Badge>
-                {offer.listing.status !== "Active" && (
-                  <Badge variant="gray" size="sm">{offer.listing.status}</Badge>
+
+              <div className="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-gray-100">
+                <Link
+                  href={`/messages/${offer.conversationId}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  <FiMessageSquare className="w-3.5 h-3.5" /> Conversation
+                </Link>
+                {offer.role === "seller" && offer.status === "Pending" && (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      loading={respondingId === offer.id}
+                      onClick={() => handleRespond(offer, "Declined")}
+                    >
+                      Decline
+                    </Button>
+                    <Button
+                      size="sm"
+                      loading={respondingId === offer.id}
+                      onClick={() => handleRespond(offer, "Accepted")}
+                    >
+                      Accept
+                    </Button>
+                  </>
                 )}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

@@ -16,9 +16,13 @@ export async function GET(request: NextRequest) {
     const maxPrice = searchParams.get('maxPrice');
     const q = searchParams.get('q') || searchParams.get('search');
     const sort = searchParams.get('sort') || 'newest';
+    const sellerId = searchParams.get('sellerId');
 
     const where: any = { status: 'Active' };
 
+    if (sellerId) {
+      where.sellerId = sellerId;
+    }
     if (category) {
       where.category = { slug: category };
     }

@@ -62,6 +62,8 @@ export default function ConversationPage() {
   const [sending, setSending] = useState(false);
   const [userId, setUserId] = useState<string>("");
   const [offerModal, setOfferModal] = useState(false);
+  const [pendingPrompt, setPendingPrompt] = useState<string | null>(null);
+  const promptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [offerAmount, setOfferAmount] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -116,13 +118,33 @@ export default function ConversationPage() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(() => {
+      if (!document.hidden) fetchData();
+    }, 5000);
     return () => clearInterval(interval);
   }, [fetchData]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    return () => {
+      if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+    };
+  }, []);
+
+  const handleQuickPrompt = (prompt: string) => {
+    if (pendingPrompt === prompt) {
+      setPendingPrompt(null);
+      if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+      sendMessage(prompt);
+      return;
+    }
+    setPendingPrompt(prompt);
+    if (promptTimerRef.current) clearTimeout(promptTimerRef.current);
+    promptTimerRef.current = setTimeout(() => setPendingPrompt(null), 3000);
+  };
 
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
@@ -219,9 +241,16 @@ export default function ConversationPage() {
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Messages + offers (chronological) */}
       <div className="flex-1 overflow-y-auto py-4 space-y-4">
-        {messages.map((msg) => {
+        {[
+          ...messages.map((msg) => ({ kind: "message" as const, id: msg.id, createdAt: msg.createdAt, data: msg })),
+          ...offers.map((offer) => ({ kind: "offer" as const, id: offer.id, createdAt: offer.createdAt, data: offer })),
+        ]
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          .map((item) => {
+        if (item.kind === "message") {
+          const msg = item.data;
           const isOwn = msg.sender.id === userId;
           return (
             <div key={msg.id} className={`flex ${isOwn ? "justify-end" : "justify-start"}`}>
@@ -241,64 +270,67 @@ export default function ConversationPage() {
               </div>
             </div>
           );
-        })}
+        }
 
-        {/* Inline offers */}
-        {offers.map((offer) => {
-          const isSellerViewing = !isBuyer && offer.seller.id === userId;
-          return (
-            <div key={offer.id} className="flex justify-center">
-              <div className="bg-white border border-gray-200 rounded-2xl p-3 text-center max-w-xs">
-                <FiDollarSign className="w-5 h-5 text-sil-yellow mx-auto mb-1" />
-                <p className="text-sm font-bold text-gray-900">
-                  {formatPrice(offer.amount)} offer
-                </p>
-                <Badge
-                  variant={
-                    offer.status === "Accepted"
-                      ? "green"
-                      : offer.status === "Declined"
-                      ? "red"
-                      : "yellow"
-                  }
-                  size="sm"
-                >
-                  {offer.status}
-                </Badge>
-                {offer.status === "Pending" && isSellerViewing && (
-                  <div className="flex gap-2 mt-2 justify-center">
-                    <button
-                      onClick={() => handleOfferAction(offer.id, "Accepted")}
-                      className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-2xl hover:bg-green-700 transition-colors"
-                    >
-                      Accept
-                    </button>
-                    <button
-                      onClick={() => handleOfferAction(offer.id, "Declined")}
-                      className="px-3 py-1 text-xs font-medium text-white bg-coral rounded-2xl hover:bg-red-600 transition-colors"
-                    >
-                      Decline
-                    </button>
-                  </div>
-                )}
-                <p className="text-[10px] text-gray-400 mt-1">{timeAgo(offer.createdAt)}</p>
-              </div>
+        const offer = item.data;
+        const isSellerViewing = !isBuyer && offer.seller.id === userId;
+        return (
+          <div key={offer.id} className="flex justify-center">
+            <div className="bg-white border border-gray-200 rounded-2xl p-3 text-center max-w-xs">
+              <FiDollarSign className="w-5 h-5 text-sil-yellow mx-auto mb-1" />
+              <p className="text-sm font-bold text-gray-900">
+                {formatPrice(offer.amount)} offer
+              </p>
+              <Badge
+                variant={
+                  offer.status === "Accepted"
+                    ? "green"
+                    : offer.status === "Declined"
+                    ? "red"
+                    : "yellow"
+                }
+                size="sm"
+              >
+                {offer.status}
+              </Badge>
+              {offer.status === "Pending" && isSellerViewing && (
+                <div className="flex gap-2 mt-2 justify-center">
+                  <button
+                    onClick={() => handleOfferAction(offer.id, "Accepted")}
+                    className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-2xl hover:bg-green-700 transition-colors"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleOfferAction(offer.id, "Declined")}
+                    className="px-3 py-1 text-xs font-medium text-white bg-coral rounded-2xl hover:bg-red-600 transition-colors"
+                  >
+                    Decline
+                  </button>
+                </div>
+              )}
+              <p className="text-[10px] text-gray-400 mt-1">{timeAgo(offer.createdAt)}</p>
             </div>
-          );
-        })}
+          </div>
+        );
+          })}
 
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick prompts */}
+      {/* Quick prompts (tap once to arm, tap again to send) */}
       <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4">
         {quickPrompts.map((prompt) => (
           <button
             key={prompt}
-            onClick={() => sendMessage(prompt)}
-            className="flex-shrink-0 px-3 py-1.5 text-xs bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200 transition-colors"
+            onClick={() => handleQuickPrompt(prompt)}
+            className={`flex-shrink-0 px-3 py-1.5 text-xs rounded-full transition-colors ${
+              pendingPrompt === prompt
+                ? "bg-bai-blue text-white font-bold"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
           >
-            {prompt}
+            {pendingPrompt === prompt ? "Send? Tap again" : prompt}
           </button>
         ))}
       </div>

@@ -9,7 +9,8 @@ import Select from "@/components/ui/Select";
 import TextArea from "@/components/ui/TextArea";
 import Badge from "@/components/ui/Badge";
 import ProductCard from "@/components/ui/ProductCard";
-import { CONDITIONS, PH_LOCATIONS } from "@/lib/helpers";
+import { CONDITIONS, getLocationOptions } from "@/lib/helpers";
+import { loadDraft, saveDraft, clearDraft } from "@/lib/drafts";
 import { FiUploadCloud, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 interface Category {
@@ -19,12 +20,7 @@ interface Category {
 }
 
 const conditionOptions = CONDITIONS.map((c) => ({ value: c, label: c }));
-const locationOptions = PH_LOCATIONS.flatMap((loc) =>
-  loc.cities.map((city) => ({
-    value: `${city}, ${loc.province}`,
-    label: `${city}, ${loc.province}`,
-  }))
-);
+const locationOptions = getLocationOptions();
 
 export default function SellPage() {
   const router = useRouter();
@@ -43,6 +39,37 @@ export default function SellPage() {
   const [submitting, setSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [dragOver, setDragOver] = useState(false);
+  const draftLoaded = useRef(false);
+
+  useEffect(() => {
+    const draft = loadDraft<{
+      title?: string;
+      categoryId?: string;
+      description?: string;
+      price?: string;
+      condition?: string;
+      location?: string;
+      images?: string[];
+      step?: number;
+    }>("sell");
+    if (draft) {
+      if (draft.title) setTitle(draft.title);
+      if (draft.categoryId) setCategoryId(draft.categoryId);
+      if (draft.description) setDescription(draft.description);
+      if (draft.price) setPrice(draft.price);
+      if (draft.condition) setCondition(draft.condition);
+      if (draft.location) setLocation(draft.location);
+      if (draft.images?.length) setImages(draft.images);
+      if (draft.step && draft.step >= 1 && draft.step <= 3) setStep(draft.step);
+    }
+    draftLoaded.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+    saveDraft("sell", { title, categoryId, description, price, condition, location, images, step });
+  }, [title, categoryId, description, price, condition, location, images, step]);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -145,6 +172,7 @@ export default function SellPage() {
       }
 
       const data = await res.json();
+      clearDraft("sell");
       toast.success("Listing created!");
       router.push(`/listing/${data.listing.slug}`);
     } catch {

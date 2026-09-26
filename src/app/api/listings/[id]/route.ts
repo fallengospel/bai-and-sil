@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { requireAuth } from '@/lib/auth';
+import { requireAuth, getSession } from '@/lib/auth';
 import { slugify } from '@/lib/helpers';
 import { validateUpdateListing, sanitizeInput } from '@/lib/validation';
 
@@ -37,11 +37,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
     }
 
-    // Increment viewCount separately (don't block the response)
-    prisma.listing.update({
-      where: { id: listing.id },
-      data: { viewCount: { increment: 1 } },
-    }).catch(() => {});
+    // Increment viewCount separately (don't block the response).
+    // Owners don't count their own views (edit page fetches this endpoint).
+    const session = await getSession();
+    if (session?.id !== listing.sellerId) {
+      prisma.listing.update({
+        where: { id: listing.id },
+        data: { viewCount: { increment: 1 } },
+      }).catch(() => {});
+    }
 
     return NextResponse.json({ listing });
   } catch (error) {

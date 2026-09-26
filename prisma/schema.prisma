@@ -18,6 +18,7 @@ model User {
   location      String?
   bio           String?
   phone         String?
+  phonePublic   Boolean   @default(true)
   rating        Float     @default(0)
   reviewCount   Int       @default(0)
   emailVerified Boolean   @default(false)

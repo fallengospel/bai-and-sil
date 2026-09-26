@@ -8,7 +8,8 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import TextArea from "@/components/ui/TextArea";
-import { CONDITIONS, PH_LOCATIONS } from "@/lib/helpers";
+import { CONDITIONS, getLocationOptions } from "@/lib/helpers";
+import { loadDraft, saveDraft, clearDraft } from "@/lib/drafts";
 import { FiUploadCloud, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 interface Category {
@@ -30,12 +31,7 @@ interface ListingData {
 }
 
 const conditionOptions = CONDITIONS.map((c) => ({ value: c, label: c }));
-const locationOptions = PH_LOCATIONS.flatMap((loc) =>
-  loc.cities.map((city) => ({
-    value: `${city}, ${loc.province}`,
-    label: `${city}, ${loc.province}`,
-  }))
-);
+const locationOptions = getLocationOptions();
 
 export default function EditListingPage() {
   const params = useParams();
@@ -57,6 +53,7 @@ export default function EditListingPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [dragOver, setDragOver] = useState(false);
   const [listingId, setListingId] = useState("");
+  const draftLoaded = useRef(false);
 
   useEffect(() => {
     Promise.all([
@@ -88,13 +85,41 @@ export default function EditListingPage() {
         setCondition(listing.condition);
         setLocation(listing.location);
         setImages(listing.images.map((img: { imageUrl: string }) => img.imageUrl));
+
+        const draft = loadDraft<{
+          title?: string;
+          categoryId?: string;
+          description?: string;
+          price?: string;
+          condition?: string;
+          location?: string;
+          images?: string[];
+        }>(`edit:${slug}`);
+        if (draft) {
+          if (draft.title !== undefined) setTitle(draft.title);
+          if (draft.categoryId !== undefined) setCategoryId(draft.categoryId);
+          if (draft.description !== undefined) setDescription(draft.description);
+          if (draft.price !== undefined) setPrice(draft.price);
+          if (draft.condition !== undefined) setCondition(draft.condition);
+          if (draft.location !== undefined) setLocation(draft.location);
+          if (draft.images !== undefined) setImages(draft.images);
+          toast("Restored your unsaved draft", { icon: "📝" });
+        }
       })
       .catch(() => {
         toast.error("Failed to load listing");
         router.push("/");
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        draftLoaded.current = true;
+        setLoading(false);
+      });
   }, [slug, router]);
+
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+    saveDraft(`edit:${slug}`, { title, categoryId, description, price, condition, location, images });
+  }, [slug, title, categoryId, description, price, condition, location, images]);
 
   const handleUpload = async (files: FileList | null) => {
     if (!files) return;
@@ -174,6 +199,7 @@ export default function EditListingPage() {
       }
 
       const data = await res.json();
+      clearDraft(`edit:${slug}`);
       toast.success("Listing updated!");
       router.push(`/listing/${data.listing.slug}`);
     } catch {
@@ -334,7 +360,7 @@ export default function EditListingPage() {
 
         {/* Actions */}
         <div className="flex justify-between pt-4">
-          <Link href={`/listing/${slug}`}>
+          <Link href={`/listing/${slug}`} onClick={() => clearDraft(`edit:${slug}`)}>
             <Button variant="ghost">
               <FiChevronLeft className="w-4 h-4" /> Cancel
             </Button>

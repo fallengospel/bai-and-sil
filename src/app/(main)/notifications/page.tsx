@@ -34,20 +34,54 @@ export default function NotificationsPage() {
   const [markingAll, setMarkingAll] = useState(false);
 
   useEffect(() => {
-    fetch("/api/notifications")
-      .then((res) => {
-        if (!res.ok) {
-          router.push("/login");
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data) setNotifications(data.notifications || []);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    let cancelled = false;
+
+    const load = () =>
+      fetch("/api/notifications")
+        .then((res) => {
+          if (!res.ok) {
+            if (!cancelled && res.status === 401) router.push("/login");
+            throw new Error("fetch failed");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (!cancelled && data) setNotifications(data.notifications || []);
+        })
+        .catch(() => {});
+
+    load().finally(() => {
+      if (!cancelled) setLoading(false);
+    });
+
+    const interval = setInterval(() => {
+      if (!document.hidden) load();
+    }, 30000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, [router]);
+
+  const markOneRead = async (notif: Notification) => {
+    if (notif.read) return;
+    setNotifications((prev) => prev.map((n) => (n.id === notif.id ? { ...n, read: true } : n)));
+    try {
+      const res = await fetch("/api/notifications", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: notif.id }),
+      });
+      if (!res.ok) {
+        setNotifications((prev) => prev.map((n) => (n.id === notif.id ? { ...n, read: false } : n)));
+        toast.error("Failed to mark notification as read");
+      }
+    } catch {
+      setNotifications((prev) => prev.map((n) => (n.id === notif.id ? { ...n, read: false } : n)));
+      toast.error("Failed to mark notification as read");
+    }
+  };
 
   const markAllRead = async () => {
     setMarkingAll(true);
@@ -107,6 +141,7 @@ export default function NotificationsPage() {
             <Link
               key={notif.id}
               href={notif.link}
+              onClick={() => markOneRead(notif)}
               className={`flex items-start gap-3 p-4 rounded-2xl border transition-colors ${
                 notif.read
                   ? "bg-white border-gray-100"

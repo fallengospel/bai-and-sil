@@ -7,7 +7,7 @@ import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { CONDITIONS, PH_LOCATIONS } from "@/lib/helpers";
+import { CONDITIONS, getLocationOptions } from "@/lib/helpers";
 import { toggleFavorite } from "@/lib/favorites";
 import { FiSearch } from "react-icons/fi";
 
@@ -37,12 +37,7 @@ const sortOptions = [
   { value: "price_desc", label: "Price: High to Low" },
 ];
 
-const locationOptions = PH_LOCATIONS.flatMap((loc) =>
-  loc.cities.map((city) => ({
-    value: `${city}, ${loc.province}`,
-    label: `${city}, ${loc.province}`,
-  }))
-);
+const locationOptions = getLocationOptions(true);
 
 const conditionOptions = CONDITIONS.map((c) => ({ value: c, label: c }));
 
@@ -227,7 +222,7 @@ export default function SearchPage() {
 
             <Select
               label="Location"
-              options={[{ value: "", label: "All Locations" }, ...locationOptions]}
+              options={locationOptions}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
@@ -260,13 +255,6 @@ export default function SearchPage() {
                 />
               </div>
             </div>
-
-            <Select
-              label="Sort by"
-              options={sortOptions}
-              value={sort}
-              onChange={(e) => handleSortChange(e.target.value)}
-            />
 
             <Button onClick={handleApplyFilters} fullWidth>
               Apply Filters

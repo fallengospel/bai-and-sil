@@ -64,3 +64,18 @@ export const PH_LOCATIONS = [
   { province: 'Baguio', cities: ['Baguio City', 'La Trinidad'] },
   { province: 'Other', cities: ['Other'] },
 ];
+
+/**
+ * City options grouped by province for <optgroup> rendering.
+ * Values keep the stored format "City, Province".
+ */
+export function getLocationOptions(includeAll = false) {
+  const options = PH_LOCATIONS.flatMap((loc) =>
+    loc.cities.map((city) => ({
+      value: `${city}, ${loc.province}`,
+      label: city,
+      group: loc.province,
+    }))
+  );
+  return includeAll ? [{ value: '', label: 'All Locations' }, ...options] : options;
+}

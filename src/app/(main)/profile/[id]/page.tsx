@@ -18,7 +18,7 @@ import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import AnimatedAvatar from "@/components/ui/AnimatedAvatar";
-import { PH_LOCATIONS } from "@/lib/helpers";
+import { getLocationOptions } from "@/lib/helpers";
 import { toggleFavorite } from "@/lib/favorites";
 import {
   FiMessageSquare, FiFlag, FiPackage, FiStar, FiMapPin, FiCalendar,
@@ -67,12 +67,7 @@ interface ReviewItem {
   listing: { id: string; title: string; slug: string };
 }
 
-const locationOptions = PH_LOCATIONS.flatMap((loc) =>
-  loc.cities.map((city) => ({
-    value: `${city}, ${loc.province}`,
-    label: `${city}, ${loc.province}`,
-  }))
-);
+const locationOptions = getLocationOptions();
 
 export default function ProfilePage() {
   const params = useParams();
@@ -97,6 +92,7 @@ export default function ProfilePage() {
   const [editLocation, setEditLocation] = useState("");
   const [editAvatar, setEditAvatar] = useState("");
   const [editPhone, setEditPhone] = useState("");
+  const [editPhonePublic, setEditPhonePublic] = useState(true);
 
   const isOwnProfile = currentUserId === id;
 
@@ -141,16 +137,13 @@ export default function ProfilePage() {
     setLoading(true);
     Promise.all([
       fetch(`/api/users/${id}`, { credentials: "include" }).then((r) => r.json()),
-      fetch(`/api/listings?limit=50`, { credentials: "include" }).then((r) => r.json()),
+      fetch(`/api/listings?sellerId=${id}&limit=50`, { credentials: "include" }).then((r) => r.json()),
       fetch(`/api/reviews?userId=${id}`, { credentials: "include" }).then((r) => r.json()),
       isOwnProfile ? fetch(`/api/users/me/favorites`, { credentials: "include" }).then((r) => r.json()).catch(() => ({ favorites: [] })) : Promise.resolve({ favorites: [] }),
     ])
       .then(([userData, listingsData, reviewsData, favsData]) => {
         setProfile(userData.user);
-        const userListings = (listingsData.listings || []).filter(
-          (l: Listing) => l.seller?.id === id
-        );
-        setListings(userListings);
+        setListings(listingsData.listings || []);
         setReviews(reviewsData.reviews || []);
         setFavorites((favsData.favorites || []).map((f: any) => f.listing || f).filter(Boolean));
         if (userData.user) {
@@ -159,6 +152,7 @@ export default function ProfilePage() {
           setEditLocation(userData.user.location || "");
           setEditAvatar(userData.user.avatar || "");
           setEditPhone(userData.user.phone || "");
+          setEditPhonePublic(userData.user.phonePublic ?? true);
         }
       })
       .catch(() => {})
@@ -178,6 +172,7 @@ export default function ProfilePage() {
           location: editLocation,
           avatar: editAvatar,
           phone: editPhone,
+          phonePublic: editPhonePublic,
         }),
       });
       if (res.ok) {
@@ -269,10 +264,10 @@ export default function ProfilePage() {
         { id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar }
       );
     } else if (profile.role === "buyer") {
-      baseTabs.push(
-        { id: "favorites", label: `Favorites (${favorites.length})`, icon: FiHeart },
-        { id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar }
-      );
+      if (isOwnProfile) {
+        baseTabs.push({ id: "favorites", label: `Favorites (${favorites.length})`, icon: FiHeart });
+      }
+      baseTabs.push({ id: "reviews", label: `Reviews (${reviews.length})`, icon: FiStar });
     } else {
       baseTabs.push(
         { id: "listings", label: `All Listings (${listings.length})`, icon: FiPackage },
@@ -342,7 +337,7 @@ export default function ProfilePage() {
                 )}
                 <span className="flex items-center gap-1">
                   <FiCalendar className="w-4 h-4" />
-                  Member for {memberDays} days
+                  Member since {new Date(profile.createdAt).toLocaleDateString("en-PH", { month: "short", year: "numeric" })}
                 </span>
                 <div className="flex items-center gap-1">
                   <StarRating rating={profile.rating} size="sm" />
@@ -448,8 +443,8 @@ export default function ProfilePage() {
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                 <FiCalendar className="w-5 h-5 text-green-600" />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{memberDays}</p>
-              <p className="text-xs text-gray-500">Days Active</p>
+              <p className="text-2xl font-bold text-gray-900">{new Date(profile.createdAt).toLocaleDateString("en-PH", { month: "short", year: "numeric" })}</p>
+              <p className="text-xs text-gray-500">Member Since</p>
             </div>
             <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-card">
               <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -753,6 +748,15 @@ export default function ProfilePage() {
             maxLength={20}
             pattern="[+]?[0-9\\s\\-]{10,20}"
           />
+          <label className="flex items-center gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={editPhonePublic}
+              onChange={(e) => setEditPhonePublic(e.target.checked)}
+              className="w-4 h-4 rounded border-gray-300 text-bai-blue focus:ring-bai-blue/20"
+            />
+            <span className="text-sm text-gray-600">Show my phone number on my public profile</span>
+          </label>
           <TextArea
             label="Bio"
             value={editBio}

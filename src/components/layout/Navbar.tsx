@@ -77,7 +77,9 @@ const Navbar: React.FC = () => {
       }
     };
     fetchCount();
-    const interval = setInterval(fetchCount, 60000);
+    const interval = setInterval(() => {
+      if (!document.hidden) fetchCount();
+    }, 60000);
     return () => clearInterval(interval);
   }, [user]);
 

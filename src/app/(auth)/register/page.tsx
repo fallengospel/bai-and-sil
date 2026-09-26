@@ -1,21 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
-import { PH_LOCATIONS } from "@/lib/helpers";
+import { getLocationOptions } from "@/lib/helpers";
+import { loadDraft, saveDraft, clearDraft } from "@/lib/drafts";
 import { FiShoppingBag, FiSearch } from "react-icons/fi";
 
-const locationOptions = PH_LOCATIONS.flatMap((loc) =>
-  loc.cities.map((city) => ({
-    value: `${city}, ${loc.province}`,
-    label: `${city}, ${loc.province}`,
-  }))
-);
+const locationOptions = getLocationOptions();
 
 const roleOptions = [
   { value: "buyer", label: "Buyer - I want to buy items" },
@@ -34,6 +30,33 @@ export default function RegisterPage() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const draftLoaded = useRef(false);
+
+  useEffect(() => {
+    const draft = loadDraft<{
+      role?: string;
+      name?: string;
+      email?: string;
+      location?: string;
+      phone?: string;
+      step?: number;
+    }>("register");
+    if (draft) {
+      if (draft.role) setRole(draft.role);
+      if (draft.name) setName(draft.name);
+      if (draft.email) setEmail(draft.email);
+      if (draft.location) setLocation(draft.location);
+      if (draft.phone) setPhone(draft.phone);
+      if (draft.step === 2 && draft.role) setStep(2);
+    }
+    draftLoaded.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+    saveDraft("register", { role, name, email, location, phone, step });
+  }, [role, name, email, location, phone, step]);
 
   const handleRoleSelect = (selectedRole: string) => {
     setRole(selectedRole);
@@ -69,6 +92,7 @@ export default function RegisterPage() {
         return;
       }
 
+      clearDraft("register");
       toast.success("Account created! Check your email for the verification code.");
       router.push(`/verify-email?email=${encodeURIComponent(email)}`);
     } catch {
