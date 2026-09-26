@@ -37,6 +37,7 @@ model User {
   reviewsGiven     Review[]         @relation("Reviewer")
   reviewsReceived  Review[]         @relation("Reviewee")
   reports          Report[]
+  reportsAgainst   Report[]         @relation("ReportedUser")
   notifications    Notification[]
   actionLogs       ActionLog[]
   savedSearches    SavedSearch[]
@@ -184,16 +185,18 @@ model Review {
 }
 
 model Report {
-  id         String   @id @default(uuid())
-  reporterId String
-  listingId  String
-  reason     String
-  description String?
-  status     String   @default("Pending")
-  createdAt  DateTime @default(now())
+  id             String  @id @default(uuid())
+  reporterId     String
+  listingId      String?
+  reportedUserId String?
+  reason         String
+  description    String?
+  status         String   @default("Pending")
+  createdAt      DateTime @default(now())
 
-  reporter User    @relation(fields: [reporterId], references: [id])
-  listing  Listing @relation(fields: [listingId], references: [id])
+  reporter     User    @relation(fields: [reporterId], references: [id])
+  listing      Listing? @relation(fields: [listingId], references: [id])
+  reportedUser User?   @relation("ReportedUser", fields: [reportedUserId], references: [id])
 }
 
 model Notification {

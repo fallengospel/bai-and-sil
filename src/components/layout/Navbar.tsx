@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
           </form>
 
           <div className="flex items-center gap-3">
-            {user?.role === "seller" && (
+            {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
                 className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-white text-sm font-bold rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
@@ -266,16 +266,14 @@ const Navbar: React.FC = () => {
                         <FiPackage className="w-4 h-4 text-gray-400" />
                         My Offers
                       </Link>
-                      {user.role === "seller" && (
-                        <Link
-                          href="/my-listings"
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                          onClick={() => setProfileDropdownOpen(false)}
-                        >
-                          <FiPackage className="w-4 h-4 text-gray-400" />
-                          My Listings
-                        </Link>
-                      )}
+                      <Link
+                        href="/my-listings"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        onClick={() => setProfileDropdownOpen(false)}
+                      >
+                        <FiPackage className="w-4 h-4 text-gray-400" />
+                        My Listings
+                      </Link>
                       <div className="border-t border-gray-100 mt-1 pt-1">
                         <button
                           onClick={handleLogout}
@@ -332,7 +330,7 @@ const Navbar: React.FC = () => {
             </div>
           </form>
           <div className="px-4 pb-4 space-y-2">
-            {user?.role === "seller" && (
+            {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-white font-bold rounded-2xl shadow-cartoon-sm"

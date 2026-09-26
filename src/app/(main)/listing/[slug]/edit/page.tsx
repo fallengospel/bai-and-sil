@@ -61,13 +61,22 @@ export default function EditListingPage() {
     Promise.all([
       fetch("/api/categories").then((r) => r.json()),
       fetch(`/api/listings/${slug}`).then((r) => r.json()),
+      fetch("/api/auth/me", { credentials: "include" }).then((r) => r.json()),
     ])
-      .then(([catData, listData]) => {
+      .then(([catData, listData, meData]) => {
         setCategories(catData.categories || []);
         const listing = listData.listing;
         if (!listing) {
           toast.error("Listing not found");
           router.push("/");
+          return;
+        }
+        const me = meData.user;
+        const isOwner = me && listing.seller?.id === me.id;
+        const isAdmin = me?.role === "admin";
+        if (!isOwner && !isAdmin) {
+          toast.error("You can only edit your own listings");
+          router.push(`/listing/${listing.slug}`);
           return;
         }
         setListingId(listing.id);
@@ -228,7 +237,7 @@ export default function EditListingPage() {
                   <img src={img} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeImage(i)}
-                    className="absolute top-1 right-1 p-1 bg-black/50 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1 right-1 p-1 bg-black/50 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                   >
                     <FiX className="w-3 h-3" />
                   </button>

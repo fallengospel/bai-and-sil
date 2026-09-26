@@ -115,11 +115,12 @@ export async function middleware(request: NextRequest) {
   // Protected paths check
   const protectedPaths = ['/sell', '/messages', '/favorites', '/notifications', '/profile/me', '/my-listings', '/offers', '/seller/dashboard', '/buyer/dashboard'];
   const adminPaths = ['/admin'];
+  const isEditPage = /^\/listing\/[^/]+\/edit$/.test(pathname);
 
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
   const isAdmin = adminPaths.some((p) => pathname.startsWith(p));
 
-  if (isProtected || isAdmin) {
+  if (isProtected || isAdmin || isEditPage) {
     if (!session) {
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
@@ -152,6 +153,7 @@ export const config = {
     '/offers',
     '/seller/dashboard',
     '/buyer/dashboard',
+    '/listing/:slug/edit',
     '/admin/:path*',
     '/api/:path*',
   ],

@@ -15,6 +15,9 @@ export async function GET(request: NextRequest) {
         listing: {
           select: { id: true, title: true, slug: true },
         },
+        reportedUser: {
+          select: { id: true, name: true },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });

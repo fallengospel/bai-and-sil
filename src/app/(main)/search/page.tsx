@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { CONDITIONS, PH_LOCATIONS } from "@/lib/helpers";
+import { toggleFavorite } from "@/lib/favorites";
 import { FiSearch } from "react-icons/fi";
 
 interface Listing {
@@ -68,6 +69,29 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [favIds, setFavIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    fetch("/api/users/me/favorites", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data?.listings) {
+          setFavIds(new Set(data.listings.map((l: Listing) => l.id)));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleToggleFavorite = async (id: string) => {
+    const next = await toggleFavorite(id);
+    if (next === null) return;
+    setFavIds((prev) => {
+      const s = new Set(prev);
+      if (next) s.add(id);
+      else s.delete(id);
+      return s;
+    });
+  };
 
   const [q, setQ] = useState(initial.q);
   const [category, setCategory] = useState(initial.category);
@@ -273,6 +297,8 @@ export default function SearchPage() {
                       ...listing,
                       imageUrl: listing.imageUrl || "/placeholder.png",
                     }}
+                    favorited={favIds.has(listing.id)}
+                    onToggleFavorite={handleToggleFavorite}
                   />
                 ))}
               </div>

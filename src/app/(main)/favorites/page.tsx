@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { toggleFavorite } from "@/lib/favorites";
 import { FiHeart } from "react-icons/fi";
 
 interface Listing {
@@ -41,6 +42,13 @@ export default function FavoritesPage() {
       .finally(() => setLoading(false));
   }, [router]);
 
+  const handleToggleFavorite = async (id: string) => {
+    const next = await toggleFavorite(id);
+    if (next === false) {
+      setListings((prev) => prev.filter((l) => l.id !== id));
+    }
+  };
+
   if (loading) return <LoadingSpinner text="Loading saved items..." className="py-16" />;
 
   return (
@@ -61,6 +69,7 @@ export default function FavoritesPage() {
               key={listing.id}
               listing={listing}
               favorited
+              onToggleFavorite={handleToggleFavorite}
             />
           ))}
         </div>

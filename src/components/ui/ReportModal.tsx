@@ -19,10 +19,11 @@ const reportReasons = [
 interface ReportModalProps {
   open: boolean;
   onClose: () => void;
-  listingId: string;
+  listingId?: string;
+  userId?: string;
 }
 
-const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) => {
+const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId, userId }) => {
   const [reason, setReason] = useState("");
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -33,11 +34,14 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) =
 
     setSubmitting(true);
     try {
-      const res = await fetch(`/api/listings/${listingId}/report`, {
+      const endpoint = userId
+        ? `/api/users/${userId}/report`
+        : `/api/listings/${listingId}/report`;
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ listingId, reason, description }),
+        body: JSON.stringify({ listingId, userId, reason, description }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -63,7 +67,7 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) =
     <Modal
       open={open}
       onClose={handleClose}
-      title="Report Listing"
+      title={userId ? "Report User" : "Report Listing"}
       footer={
         submitted ? (
           <Button onClick={handleClose} fullWidth>

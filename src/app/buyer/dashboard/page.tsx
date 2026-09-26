@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FiHeart, FiSearch, FiMessageSquare, FiPackage, FiShoppingBag, FiStar, FiClock } from 'react-icons/fi';
 import ProductCard from '@/components/ui/ProductCard';
+import { toggleFavorite } from '@/lib/favorites';
 
 interface BuyerStats {
   totalFavorites: number;
@@ -15,6 +16,31 @@ export default function BuyerDashboard() {
   const [stats, setStats] = useState<BuyerStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [favIds, setFavIds] = useState<Set<string>>(new Set());
+
+  const handleToggleFavorite = async (id: string) => {
+    const next = await toggleFavorite(id);
+    if (next === null) return;
+    setFavIds((prev) => {
+      const s = new Set(prev);
+      if (next) s.add(id);
+      else s.delete(id);
+      return s;
+    });
+    if (next === false) {
+      setStats((prev) =>
+        prev
+          ? {
+              ...prev,
+              totalFavorites: Math.max(0, prev.totalFavorites - 1),
+              recentFavorites: prev.recentFavorites.filter(
+                (f: any) => (f.id || f.listing?.id) !== id
+              ),
+            }
+          : prev
+      );
+    }
+  };
 
   useEffect(() => {
     Promise.all([
@@ -23,9 +49,11 @@ export default function BuyerDashboard() {
       fetch('/api/listings?limit=8', { credentials: 'include' }).then(r => r.json()),
     ]).then(([userData, favsData, listingsData]) => {
       setUser(userData.user);
+      const favList = favsData.listings || favsData.favorites || [];
+      setFavIds(new Set(favList.map((f: any) => f.id || f.listing?.id).filter(Boolean)));
       setStats({
-        totalFavorites: (favsData.listings || favsData.favorites || []).length,
-        recentFavorites: (favsData.listings || favsData.favorites || []).slice(0, 4),
+        totalFavorites: favList.length,
+        recentFavorites: favList.slice(0, 4),
         recommendedListings: (listingsData.listings || []).slice(0, 8),
       });
     }).catch(() => {})
@@ -124,7 +152,12 @@ export default function BuyerDashboard() {
           <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {stats?.recentFavorites.map((fav: any) => (
-                <ProductCard key={fav.id} listing={fav.listing || fav} />
+                <ProductCard
+                  key={fav.id}
+                  listing={fav.listing || fav}
+                  favorited
+                  onToggleFavorite={handleToggleFavorite}
+                />
               ))}
             </div>
           </div>
@@ -140,7 +173,12 @@ export default function BuyerDashboard() {
         <div className="p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {(stats?.recommendedListings || []).map((listing: any) => (
-              <ProductCard key={listing.id} listing={listing} />
+              <ProductCard
+                key={listing.id}
+                listing={listing}
+                favorited={favIds.has(listing.id)}
+                onToggleFavorite={handleToggleFavorite}
+              />
             ))}
           </div>
         </div>

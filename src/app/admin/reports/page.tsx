@@ -10,7 +10,8 @@ interface Report {
   status: string;
   createdAt: string;
   reporter: { name: string };
-  listing: { id: string; title: string };
+  listing: { id: string; title: string } | null;
+  reportedUser?: { id: string; name: string } | null;
 }
 
 export default function AdminReportsPage() {
@@ -48,7 +49,8 @@ export default function AdminReportsPage() {
   };
 
   const filtered = reports.filter(r => {
-    const matchSearch = r.reason.toLowerCase().includes(search.toLowerCase()) || r.listing.title.toLowerCase().includes(search.toLowerCase());
+    const target = r.listing?.title || r.reportedUser?.name || '';
+    const matchSearch = r.reason.toLowerCase().includes(search.toLowerCase()) || target.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === 'ALL' || r.status === statusFilter;
     return matchSearch && matchStatus;
   });
@@ -69,12 +71,12 @@ export default function AdminReportsPage() {
       </div>
       <div className="card overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50"><tr><th className="text-left p-3">Reporter</th><th className="text-left p-3">Listing</th><th className="text-left p-3">Reason</th><th className="text-left p-3">Status</th><th className="text-left p-3">Date</th><th className="text-right p-3">Actions</th></tr></thead>
+          <thead className="bg-gray-50"><tr><th className="text-left p-3">Reporter</th><th className="text-left p-3">Target</th><th className="text-left p-3">Reason</th><th className="text-left p-3">Status</th><th className="text-left p-3">Date</th><th className="text-right p-3">Actions</th></tr></thead>
           <tbody>
             {filtered.map(r => (
               <tr key={r.id} className="border-t hover:bg-gray-50">
                 <td className="p-3">{r.reporter.name}</td>
-                <td className="p-3 font-medium">{r.listing.title}</td>
+                <td className="p-3 font-medium">{r.listing?.title || (r.reportedUser ? `${r.reportedUser.name} (user)` : '—')}</td>
                 <td className="p-3">{r.reason}</td>
                 <td className="p-3"><span className={`badge ${r.status === 'Pending' ? 'badge-yellow' : r.status === 'Reviewed' ? 'badge-green' : 'badge-gray'}`}>{r.status}</span></td>
                 <td className="p-3">{new Date(r.createdAt).toLocaleDateString()}</td>
@@ -83,7 +85,9 @@ export default function AdminReportsPage() {
                     <>
                       <button onClick={() => handleUpdateStatus(r.id, 'Reviewed')} className="btn-ghost text-xs text-green-600">Mark Reviewed</button>
                       <button onClick={() => handleUpdateStatus(r.id, 'Dismissed')} className="btn-ghost text-xs">Dismiss</button>
-                      <button onClick={() => handleRemoveListing(r.id, r.listing.id)} className="btn-ghost text-xs text-red-600">Remove Listing</button>
+                      {r.listing && (
+                        <button onClick={() => handleRemoveListing(r.id, r.listing!.id)} className="btn-ghost text-xs text-red-600">Remove Listing</button>
+                      )}
                     </>
                   )}
                 </td>

@@ -19,6 +19,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import AnimatedAvatar from "@/components/ui/AnimatedAvatar";
 import { PH_LOCATIONS } from "@/lib/helpers";
+import { toggleFavorite } from "@/lib/favorites";
 import {
   FiMessageSquare, FiFlag, FiPackage, FiStar, FiMapPin, FiCalendar,
   FiPhone, FiMail, FiEdit2, FiHeart, FiShoppingBag, FiDollarSign,
@@ -89,6 +90,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [favorites, setFavorites] = useState<Listing[]>([]);
+  const [favIds, setFavIds] = useState<Set<string>>(new Set());
 
   const [editName, setEditName] = useState("");
   const [editBio, setEditBio] = useState("");
@@ -109,6 +111,31 @@ export default function ProfilePage() {
       })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    fetch("/api/users/me/favorites", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data?.listings) {
+          setFavIds(new Set(data.listings.map((l: Listing) => l.id)));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleToggleFavorite = async (id: string) => {
+    const next = await toggleFavorite(id);
+    if (next === null) return;
+    if (next === false) {
+      setFavorites((prev) => prev.filter((l) => l.id !== id));
+    }
+    setFavIds((prev) => {
+      const s = new Set(prev);
+      if (next) s.add(id);
+      else s.delete(id);
+      return s;
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -609,7 +636,12 @@ export default function ProfilePage() {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {activeListings.map((listing) => (
-                <ProductCard key={listing.id} listing={listing} />
+                <ProductCard
+                  key={listing.id}
+                  listing={listing}
+                  favorited={favIds.has(listing.id)}
+                  onToggleFavorite={handleToggleFavorite}
+                />
               ))}
             </div>
           )}
@@ -668,7 +700,12 @@ export default function ProfilePage() {
             />
           ) : (
             favorites.map((listing) => (
-              <ProductCard key={listing.id} listing={listing} />
+              <ProductCard
+                key={listing.id}
+                listing={listing}
+                favorited
+                onToggleFavorite={handleToggleFavorite}
+              />
             ))
           )}
         </div>
@@ -736,7 +773,7 @@ export default function ProfilePage() {
       <ReportModal
         open={reportModal}
         onClose={() => setReportModal(false)}
-        listingId=""
+        userId={id}
       />
     </div>
   );

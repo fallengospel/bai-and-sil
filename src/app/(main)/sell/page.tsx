@@ -222,7 +222,7 @@ export default function SellPage() {
                   <img src={img} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeImage(i)}
-                    className="absolute top-1 right-1 p-1 bg-black/50 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1 right-1 p-1 bg-black/50 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                   >
                     <FiX className="w-3 h-3" />
                   </button>

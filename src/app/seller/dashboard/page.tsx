@@ -23,7 +23,7 @@ interface SellerStats {
   soldListings: number;
   totalViews: number;
   avgViewsPerListing: number;
-  conversionRate: number;
+  sellThroughRate: number;
   recentListings: ListingData[];
 }
 
@@ -58,29 +58,38 @@ export default function SellerDashboard() {
   useEffect(() => {
     Promise.all([
       fetch("/api/auth/me", { credentials: "include" }).then((r) => r.json()),
-      fetch("/api/listings?limit=50", { credentials: "include" }).then((r) => r.json()),
+      fetch("/api/seller/stats", { credentials: "include" }).then((r) =>
+        r.ok ? r.json() : null
+      ),
     ])
-      .then(([userData, listingsData]) => {
+      .then(([userData, statsData]) => {
         setUser(userData.user);
-        const myListings = (listingsData.listings || []).filter(
-          (l: any) => l.seller?.id === userData.user?.id
-        );
-        const totalViews = myListings.reduce((sum: number, l: any) => sum + (l.viewCount || l.views || 0), 0);
-        const activeCount = myListings.filter((l: any) => l.status === "Active").length;
-        const soldCount = myListings.filter((l: any) => l.status === "Sold").length;
-        setStats({
-          totalListings: myListings.length,
-          activeListings: activeCount,
-          soldListings: soldCount,
-          totalViews,
-          avgViewsPerListing: myListings.length > 0 ? Math.round(totalViews / myListings.length) : 0,
-          conversionRate: myListings.length > 0 ? Math.round((soldCount / myListings.length) * 100) : 0,
-          recentListings: myListings.slice(0, 5),
-        });
+        if (statsData) {
+          setStats({
+            totalListings: statsData.totalListings,
+            activeListings: statsData.activeListings,
+            soldListings: statsData.soldListings,
+            totalViews: statsData.totalViews,
+            avgViewsPerListing: statsData.avgViewsPerListing,
+            sellThroughRate: statsData.sellThroughRate,
+            recentListings: statsData.recentListings,
+          });
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  const handleExportCSV = async () => {
+    try {
+      const res = await fetch("/api/seller/stats?export=1", { credentials: "include" });
+      if (!res.ok) return;
+      const data = await res.json();
+      exportToCSV((data.listings || []).map((l: any) => ({ ...l, views: l.viewCount || 0 })));
+    } catch {
+      // export failed silently — button remains available for retry
+    }
+  };
 
   if (loading)
     return (
@@ -98,7 +107,7 @@ export default function SellerDashboard() {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => stats?.recentListings && exportToCSV(stats.recentListings)}
+            onClick={handleExportCSV}
             className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-2xl hover:bg-gray-50 transition-all duration-200 shadow-card hover:shadow-card-hover"
           >
             <FiDownload className="w-4 h-4" />
@@ -177,8 +186,8 @@ export default function SellerDashboard() {
               <FiTrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-xs text-gray-500">Conversion</p>
-              <p className="text-xl font-bold text-gray-900 animate-count-up">{stats?.conversionRate || 0}%</p>
+              <p className="text-xs text-gray-500">Sell-Through</p>
+              <p className="text-xl font-bold text-gray-900 animate-count-up">{stats?.sellThroughRate || 0}%</p>
             </div>
           </div>
         </div>
@@ -197,7 +206,7 @@ export default function SellerDashboard() {
             <div className="text-sm text-gray-500 mt-1">Avg Views/Listing</div>
           </div>
           <div className="text-center p-4 bg-green-50 rounded-2xl">
-            <div className="text-3xl font-bold text-green-600">{stats?.conversionRate || 0}%</div>
+            <div className="text-3xl font-bold text-green-600">{stats?.sellThroughRate || 0}%</div>
             <div className="text-sm text-gray-500 mt-1">Sell-Through Rate</div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import ProductCard from "@/components/ui/ProductCard";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Button from "@/components/ui/Button";
+import Modal from "@/components/ui/Modal";
 import { FiPackage, FiPlus, FiTrash2 } from "react-icons/fi";
 import toast from "react-hot-toast";
 
@@ -33,6 +34,7 @@ export default function MyListingsPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkAction, setBulkAction] = useState<"delete" | "Sold" | "Reserved" | "Active" | "">("");
   const [bulkProcessing, setBulkProcessing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -92,37 +94,56 @@ export default function MyListingsPage() {
 
   const handleBulkAction = async () => {
     if (!bulkAction || selectedIds.size === 0) return;
+    if (bulkAction === "delete") {
+      setConfirmDelete(true);
+      return;
+    }
     setBulkProcessing(true);
     try {
-      if (bulkAction === "delete") {
-        await Promise.all(
-          Array.from(selectedIds).map((id) =>
-            fetch(`/api/listings/${id}`, { method: "DELETE" })
-          )
-        );
-        setListings((prev) => prev.filter((l) => !selectedIds.has(l.id)));
-        toast.success(`${selectedIds.size} listing(s) deleted`);
-      } else {
-        await Promise.all(
-          Array.from(selectedIds).map((id) =>
-            fetch(`/api/listings/${id}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: bulkAction }),
-            })
-          )
-        );
-        setListings((prev) =>
-          prev.map((l) =>
-            selectedIds.has(l.id) ? { ...l, status: bulkAction } : l
-          )
-        );
-        toast.success(`${selectedIds.size} listing(s) updated to ${bulkAction}`);
-      }
+      await Promise.all(
+        Array.from(selectedIds).map((id) =>
+          fetch(`/api/listings/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: bulkAction }),
+          })
+        )
+      );
+      setListings((prev) =>
+        prev.map((l) =>
+          selectedIds.has(l.id) ? { ...l, status: bulkAction } : l
+        )
+      );
+      toast.success(`${selectedIds.size} listing(s) updated to ${bulkAction}`);
       setSelectedIds(new Set());
       setBulkAction("");
     } catch {
       toast.error("Bulk action failed");
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
+  const confirmBulkDelete = async () => {
+    setConfirmDelete(false);
+    setBulkProcessing(true);
+    try {
+      const results = await Promise.all(
+        Array.from(selectedIds).map((id) =>
+          fetch(`/api/listings/${id}`, { method: "DELETE" })
+        )
+      );
+      const failed = results.filter((r) => !r.ok).length;
+      setListings((prev) => prev.filter((l) => !selectedIds.has(l.id)));
+      if (failed > 0) {
+        toast.error(`${failed} listing(s) could not be deleted`);
+      } else {
+        toast.success(`${selectedIds.size} listing(s) deleted`);
+      }
+      setSelectedIds(new Set());
+      setBulkAction("");
+    } catch {
+      toast.error("Bulk delete failed");
     } finally {
       setBulkProcessing(false);
     }
@@ -231,6 +252,27 @@ export default function MyListingsPage() {
           ))}
         </div>
       )}
+
+      <Modal
+        open={confirmDelete}
+        onClose={() => setConfirmDelete(false)}
+        title="Delete listings?"
+        footer={
+          <div className="flex gap-3">
+            <Button variant="ghost" onClick={() => setConfirmDelete(false)} fullWidth>
+              Cancel
+            </Button>
+            <Button variant="danger" loading={bulkProcessing} onClick={confirmBulkDelete} fullWidth>
+              Delete {selectedIds.size} listing(s)
+            </Button>
+          </div>
+        }
+      >
+        <p className="text-sm text-gray-600">
+          This will permanently delete {selectedIds.size} listing(s). This action
+          cannot be undone.
+        </p>
+      </Modal>
     </div>
   );
 }

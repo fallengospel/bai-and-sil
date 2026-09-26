@@ -80,6 +80,7 @@ export default function OffersPage() {
     switch (status) {
       case "Accepted": return "green";
       case "Pending": return "yellow";
+      case "Declined":
       case "Rejected": return "red";
       case "Countered": return "blue";
       default: return "gray";

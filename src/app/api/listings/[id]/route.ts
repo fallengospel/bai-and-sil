@@ -6,7 +6,7 @@ import { validateUpdateListing, sanitizeInput } from '@/lib/validation';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const listing = await prisma.listing.findUnique({
+    let listing = await prisma.listing.findUnique({
       where: { id: params.id },
       include: {
         seller: {
@@ -18,13 +18,28 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       },
     });
 
+    // Also resolve by slug (edit page and other clients pass slugs)
+    if (!listing) {
+      listing = await prisma.listing.findUnique({
+        where: { slug: params.id },
+        include: {
+          seller: {
+            select: { id: true, name: true, avatar: true, location: true, rating: true, reviewCount: true },
+          },
+          category: true,
+          images: { orderBy: { sortOrder: 'asc' } },
+          _count: { select: { favorites: true } },
+        },
+      });
+    }
+
     if (!listing) {
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
     }
 
     // Increment viewCount separately (don't block the response)
     prisma.listing.update({
-      where: { id: params.id },
+      where: { id: listing.id },
       data: { viewCount: { increment: 1 } },
     }).catch(() => {});
 
