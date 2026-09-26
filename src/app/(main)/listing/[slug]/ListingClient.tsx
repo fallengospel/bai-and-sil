@@ -247,7 +247,7 @@ export default function ListingClient({
 
             {/* Share buttons */}
             <div className="mt-3">
-              <ListingShareButtons title={listing.title} url={window.location.href} />
+              <ListingShareButtons title={listing.title} url={`/listing/${listing.slug}`} />
             </div>
 
             <div className="flex items-center gap-3 mt-3">
@@ -309,6 +309,14 @@ export default function ListingClient({
                 }`}
               >
                 {favorited ? <FaHeart className="w-5 h-5" /> : <FiHeart className="w-5 h-5" />}
+              </button>
+              <button
+                onClick={() => setReportModal(true)}
+                aria-label="Report this listing"
+                title="Report this listing"
+                className="p-3 rounded-2xl border border-gray-200 text-gray-400 hover:text-bai-blue hover:border-bai-blue transition-colors"
+              >
+                <FiFlag className="w-5 h-5" />
               </button>
             </div>
           )}

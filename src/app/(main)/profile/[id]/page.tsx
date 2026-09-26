@@ -171,7 +171,46 @@ export default function ProfilePage() {
       toast.error("Please log in to message users");
       return;
     }
-    router.push("/messages");
+    if (id === currentUserId) {
+      toast.error("You can't message yourself");
+      return;
+    }
+    try {
+      const convRes = await fetch("/api/conversations", { credentials: "include" });
+      const convData = await convRes.json().catch(() => ({ conversations: [] }));
+      const existing = (convData.conversations || []).find(
+        (c: any) =>
+          (c.buyer?.id === id || c.seller?.id === id) &&
+          (c.buyer?.id === currentUserId || c.seller?.id === currentUserId)
+      );
+      if (existing) {
+        router.push(`/messages/${existing.id}`);
+        return;
+      }
+
+      const targetListing =
+        listings.find((l) => l.status === "Active") || listings[0];
+      if (!targetListing) {
+        toast.error("This user has no listings to message about yet.");
+        return;
+      }
+
+      const res = await fetch("/api/conversations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ sellerId: id, listingId: targetListing.id }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Could not start a conversation");
+        return;
+      }
+      const data = await res.json();
+      router.push(`/messages/${data.conversation.id}`);
+    } catch {
+      toast.error("Could not start a conversation");
+    }
   };
 
   if (loading) return <LoadingSpinner text="Loading profile..." className="py-16" />;

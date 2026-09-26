@@ -199,7 +199,7 @@ export default function ConversationPage() {
   const otherUser = isBuyer ? conversation.seller : conversation.buyer;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-6 h-[calc(100vh-4rem)] flex flex-col">
+    <div className="max-w-3xl mx-auto px-4 py-6 h-[calc(100vh-8rem)] md:h-[calc(100vh-4rem)] flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
         <button onClick={() => router.push("/messages")} className="p-1 hover:bg-gray-100 rounded-2xl">

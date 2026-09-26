@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import Modal from "./Modal";
 import Select from "./Select";
 import TextArea from "./TextArea";
@@ -32,15 +33,20 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId }) =
 
     setSubmitting(true);
     try {
-      await fetch(`/api/listings/${listingId}/report`, {
+      const res = await fetch(`/api/listings/${listingId}/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ listingId, reason, description }),
       });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Failed to submit report. Please try again.");
+        return;
+      }
       setSubmitted(true);
     } catch {
-      console.error("Failed to submit report");
+      toast.error("Failed to submit report. Please check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
