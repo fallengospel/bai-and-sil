@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
 import { IoAddCircle } from "react-icons/io5";
+import toast from "react-hot-toast";
 import Avatar from "@/components/ui/Avatar";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import Logo from "@/components/brand/Logo";
@@ -109,7 +110,7 @@ const Navbar: React.FC = () => {
       window.dispatchEvent(new Event("auth-change"));
       router.push("/");
     } catch {
-      console.error("Logout failed");
+      toast.error("Logout failed. Please try again.");
     }
   };
 

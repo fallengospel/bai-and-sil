@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { FiInbox } from 'react-icons/fi';
+import ConfirmDialog from '@/components/ui/ConfirmDialog';
+import EmptyState from '@/components/ui/EmptyState';
 
 interface Listing {
   id: string;
@@ -20,6 +24,8 @@ export default function AdminListingsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [pendingRemove, setPendingRemove] = useState<string | null>(null);
+  const [removing, setRemoving] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/listings').then(r => r.json()).then(data => {
@@ -29,9 +35,22 @@ export default function AdminListingsPage() {
   }, [router]);
 
   const handleRemove = async (id: string) => {
-    if (!confirm('Remove this listing?')) return;
-    await fetch(`/api/admin/listings/${id}`, { method: 'DELETE' });
-    setListings(listings.filter(l => l.id !== id));
+    setRemoving(true);
+    try {
+      const res = await fetch(`/api/admin/listings/${id}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || 'Failed to remove listing');
+        return;
+      }
+      setListings(listings.filter(l => l.id !== id));
+      toast.success('Listing removed');
+      setPendingRemove(null);
+    } catch {
+      toast.error('Failed to remove listing');
+    } finally {
+      setRemoving(false);
+    }
   };
 
   const filtered = listings.filter(l => {
@@ -68,13 +87,31 @@ export default function AdminListingsPage() {
                 <td className="p-3">{l.category.name}</td>
                 <td className="p-3"><span className={`badge ${l.status === 'Active' ? 'badge-green' : l.status === 'Sold' ? 'badge-blue' : 'badge-gray'}`}>{l.status}</span></td>
                 <td className="p-3">{'\u20B1'}{l.price.toLocaleString()}</td>
-                <td className="p-3 text-right"><button onClick={() => handleRemove(l.id)} className="btn-ghost text-xs text-red-600">Remove</button></td>
+                <td className="p-3 text-right"><button onClick={() => setPendingRemove(l.id)} className="btn-ghost text-xs text-red-600">Remove</button></td>
               </tr>
             ))}
           </tbody>
         </table>
         </div>
+        {filtered.length === 0 && (
+          <EmptyState
+            icon={<FiInbox className="w-10 h-10" />}
+            title="No listings found"
+            description={search || statusFilter !== 'ALL' ? 'Try adjusting your search or filters.' : 'Listings will appear here once created.'}
+          />
+        )}
       </div>
+
+      <ConfirmDialog
+        open={!!pendingRemove}
+        title="Remove listing"
+        message="Remove this listing from the marketplace? Buyers will no longer see it."
+        confirmLabel="Remove"
+        danger
+        loading={removing}
+        onConfirm={() => pendingRemove && handleRemove(pendingRemove)}
+        onClose={() => setPendingRemove(null)}
+      />
     </div>
   );
 }

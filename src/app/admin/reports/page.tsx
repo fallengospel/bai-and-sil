@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { FiFlag } from 'react-icons/fi';
+import ConfirmDialog from '@/components/ui/ConfirmDialog';
+import EmptyState from '@/components/ui/EmptyState';
 
 interface Report {
   id: string;
@@ -20,6 +24,8 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [pendingRemove, setPendingRemove] = useState<{ reportId: string; listingId: string } | null>(null);
+  const [removing, setRemoving] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/reports').then(r => r.json()).then(data => {
@@ -29,23 +35,51 @@ export default function AdminReportsPage() {
   }, [router]);
 
   const handleUpdateStatus = async (reportId: string, status: string) => {
-    await fetch('/api/admin/reports', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: reportId, status }),
-    });
-    setReports(reports.map(r => r.id === reportId ? { ...r, status } : r));
+    try {
+      const res = await fetch('/api/admin/reports', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: reportId, status }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || 'Failed to update report');
+        return;
+      }
+      setReports(reports.map(r => r.id === reportId ? { ...r, status } : r));
+      toast.success(`Report ${status.toLowerCase()}`);
+    } catch {
+      toast.error('Failed to update report');
+    }
   };
 
-  const handleRemoveListing = async (reportId: string, listingId: string) => {
-    if (!confirm('Remove this listing?')) return;
-    await fetch(`/api/admin/listings/${listingId}`, { method: 'DELETE' });
-    await fetch('/api/admin/reports', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: reportId, status: 'Reviewed' }),
-    });
-    setReports(reports.map(r => r.id === reportId ? { ...r, status: 'Reviewed' } : r));
+  const confirmRemoveListing = async () => {
+    if (!pendingRemove) return;
+    setRemoving(true);
+    try {
+      const delRes = await fetch(`/api/admin/listings/${pendingRemove.listingId}`, { method: 'DELETE' });
+      if (!delRes.ok) {
+        const data = await delRes.json().catch(() => null);
+        toast.error(data?.error || 'Failed to remove listing');
+        return;
+      }
+      const res = await fetch('/api/admin/reports', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: pendingRemove.reportId, status: 'Reviewed' }),
+      });
+      if (!res.ok) {
+        toast.error('Listing removed, but failed to update report status');
+      } else {
+        toast.success('Listing removed');
+      }
+      setReports(reports.map(r => r.id === pendingRemove.reportId ? { ...r, status: 'Reviewed' } : r));
+      setPendingRemove(null);
+    } catch {
+      toast.error('Failed to remove listing');
+    } finally {
+      setRemoving(false);
+    }
   };
 
   const filtered = reports.filter(r => {
@@ -87,18 +121,39 @@ export default function AdminReportsPage() {
                       <button onClick={() => handleUpdateStatus(r.id, 'Reviewed')} className="btn-ghost text-xs text-green-600">Mark Reviewed</button>
                       <button onClick={() => handleUpdateStatus(r.id, 'Dismissed')} className="btn-ghost text-xs">Dismiss</button>
                       {r.listing && (
-                        <button onClick={() => handleRemoveListing(r.id, r.listing!.id)} className="btn-ghost text-xs text-red-600">Remove Listing</button>
+                        <button onClick={() => setPendingRemove({ reportId: r.id, listingId: r.listing!.id })} className="btn-ghost text-xs text-red-600">Remove Listing</button>
                       )}
                     </>
                   )}
                 </td>
               </tr>
             ))}
-            {filtered.length === 0 && <tr><td colSpan={6} className="p-8 text-center text-gray-400">No reports.</td></tr>}
+            {filtered.length === 0 && (
+              <tr>
+                <td colSpan={6} className="p-8">
+                  <EmptyState
+                    icon={<FiFlag className="w-10 h-10" />}
+                    title="No reports found"
+                    description={search || statusFilter !== 'ALL' ? 'Try adjusting your search or filters.' : 'User reports will appear here.'}
+                  />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={!!pendingRemove}
+        title="Remove listing"
+        message="Remove this listing from the marketplace and mark the report as reviewed?"
+        confirmLabel="Remove"
+        danger
+        loading={removing}
+        onConfirm={confirmRemoveListing}
+        onClose={() => setPendingRemove(null)}
+      />
     </div>
   );
 }

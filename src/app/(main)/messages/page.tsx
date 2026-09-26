@@ -37,10 +37,18 @@ export default function MessagesPage() {
         return res.json();
       })
       .then((data) => {
-        if (data?.user) setCurrentUserId(data.user.id);
+        if (data?.user) {
+          setCurrentUserId(data.user.id);
+        } else {
+          setLoading(false);
+          router.push("/login?redirect=/messages");
+        }
       })
-      .catch(() => {});
-  }, []);
+      .catch(() => {
+        setLoading(false);
+        router.push("/login?redirect=/messages");
+      });
+  }, [router]);
 
   useEffect(() => {
     if (!currentUserId) return;

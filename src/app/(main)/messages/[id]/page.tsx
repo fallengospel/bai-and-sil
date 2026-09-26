@@ -137,6 +137,8 @@ export default function ConversationPage() {
         const data = await res.json();
         setMessages((prev) => [...prev, data.message]);
         setNewMessage("");
+      } else {
+        toast.error("Failed to send message");
       }
     } catch {
       toast.error("Failed to send message");

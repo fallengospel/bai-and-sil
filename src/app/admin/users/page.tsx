@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { FiUsers } from 'react-icons/fi';
 import Avatar from '@/components/ui/Avatar';
+import ConfirmDialog from '@/components/ui/ConfirmDialog';
+import EmptyState from '@/components/ui/EmptyState';
 
 interface User {
   id: string;
@@ -19,6 +23,8 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [pendingDelete, setPendingDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/users').then(r => r.json()).then(data => {
@@ -28,18 +34,42 @@ export default function AdminUsersPage() {
   }, [router]);
 
   const handleToggleAdmin = async (userId: string, currentIsAdmin: boolean) => {
-    await fetch(`/api/admin/users/${userId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ isAdmin: !currentIsAdmin }),
-    });
-    setUsers(users.map(u => u.id === userId ? { ...u, isAdmin: !currentIsAdmin } : u));
+    try {
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isAdmin: !currentIsAdmin }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || 'Failed to update user');
+        return;
+      }
+      setUsers(users.map(u => u.id === userId ? { ...u, isAdmin: !currentIsAdmin } : u));
+      toast.success(currentIsAdmin ? 'Admin removed' : 'User made admin');
+    } catch {
+      toast.error('Failed to update user');
+    }
   };
 
-  const handleDelete = async (userId: string) => {
-    if (!confirm('Delete this user?')) return;
-    await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
-    setUsers(users.filter(u => u.id !== userId));
+  const confirmDelete = async () => {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/users/${pendingDelete}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || 'Failed to delete user');
+        return;
+      }
+      setUsers(users.filter(u => u.id !== pendingDelete));
+      toast.success('User deleted');
+      setPendingDelete(null);
+    } catch {
+      toast.error('Failed to delete user');
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const filtered = users.filter(u => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()));
@@ -63,14 +93,32 @@ export default function AdminUsersPage() {
                 <td className="p-3">{new Date(u.createdAt).toLocaleDateString()}</td>
                 <td className="p-3 text-right space-x-2">
                   <button onClick={() => handleToggleAdmin(u.id, u.isAdmin)} className="btn-ghost text-xs">{u.isAdmin ? 'Remove Admin' : 'Make Admin'}</button>
-                  <button onClick={() => handleDelete(u.id)} className="btn-ghost text-xs text-red-600">Delete</button>
+                  <button onClick={() => setPendingDelete(u.id)} className="btn-ghost text-xs text-red-600">Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         </div>
+        {filtered.length === 0 && (
+          <EmptyState
+            icon={<FiUsers className="w-10 h-10" />}
+            title="No users found"
+            description={search ? 'Try a different search term.' : 'Registered users will appear here.'}
+          />
+        )}
       </div>
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        title="Delete user"
+        message="Permanently delete this user? Their listings will also be removed. This cannot be undone."
+        confirmLabel="Delete"
+        danger
+        loading={deleting}
+        onConfirm={confirmDelete}
+        onClose={() => setPendingDelete(null)}
+      />
     </div>
   );
 }

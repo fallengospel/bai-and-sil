@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Button from "@/components/ui/Button";
@@ -51,10 +52,14 @@ export default function NotificationsPage() {
   const markAllRead = async () => {
     setMarkingAll(true);
     try {
-      await fetch("/api/notifications", { method: "PUT" });
+      const res = await fetch("/api/notifications", { method: "PUT" });
+      if (!res.ok) {
+        toast.error("Failed to mark notifications as read");
+        return;
+      }
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
     } catch {
-      // ignore
+      toast.error("Failed to mark notifications as read");
     } finally {
       setMarkingAll(false);
     }

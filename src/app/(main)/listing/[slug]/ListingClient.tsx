@@ -12,6 +12,7 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import ReportModal from "@/components/ui/ReportModal";
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import ListingShareButtons from "@/components/ui/ListingShareButtons";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import { formatPrice, timeAgo } from "@/lib/helpers";
@@ -70,6 +71,7 @@ export default function ListingClient({
   const [offerModal, setOfferModal] = useState(false);
   const [offerAmount, setOfferAmount] = useState("");
   const [reportModal, setReportModal] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [priceAlerted, setPriceAlerted] = useState(initialPriceAlerted);
   const [alertProcessing, setAlertProcessing] = useState(false);
@@ -137,11 +139,16 @@ export default function ListingClient({
       });
       const convData = await convRes.json();
 
-      await fetch(`/api/conversations/${convData.conversation.id}/offers`, {
+      const offerRes = await fetch(`/api/conversations/${convData.conversation.id}/offers`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: offerAmount }),
       });
+      if (!offerRes.ok) {
+        const data = await offerRes.json().catch(() => null);
+        toast.error(data?.error || "Failed to send offer");
+        return;
+      }
 
       toast.success("Offer sent!");
       setOfferModal(false);
@@ -155,12 +162,17 @@ export default function ListingClient({
   const handleUpdateStatus = async (status: string) => {
     setUpdating(true);
     try {
-      await fetch(`/api/listings/${listing.id}/status`, {
+      const res = await fetch(`/api/listings/${listing.id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ status }),
       });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Failed to update listing");
+        return;
+      }
       toast.success(`Listing marked as ${status.toLowerCase()}`);
       router.refresh();
     } catch {
@@ -171,10 +183,15 @@ export default function ListingClient({
   };
 
   const handleDelete = async () => {
-    if (!confirm("Remove this listing?")) return;
     setUpdating(true);
     try {
-      await fetch(`/api/listings/${listing.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/listings/${listing.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Failed to remove listing");
+        setDeleteOpen(false);
+        return;
+      }
       toast.success("Listing removed");
       router.push("/");
     } catch {
@@ -345,7 +362,7 @@ export default function ListingClient({
                   </Button>
                 </>
               )}
-              <Button variant="danger" loading={updating} onClick={handleDelete}>
+              <Button variant="danger" loading={updating} onClick={() => setDeleteOpen(true)}>
                 Delete
               </Button>
             </div>
@@ -450,6 +467,17 @@ export default function ListingClient({
         open={reportModal}
         onClose={() => setReportModal(false)}
         listingId={listing.id}
+      />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        title="Remove listing"
+        message="Remove this listing from the marketplace? This cannot be undone."
+        confirmLabel="Remove"
+        danger
+        loading={updating}
+        onConfirm={handleDelete}
+        onClose={() => setDeleteOpen(false)}
       />
 
       {/* Related Items */}

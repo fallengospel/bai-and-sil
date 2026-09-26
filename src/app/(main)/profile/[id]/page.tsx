@@ -185,6 +185,9 @@ export default function ProfilePage() {
         setProfile((prev) => (prev ? { ...prev, ...data.user } : prev));
         setEditModal(false);
         toast.success("Profile updated!");
+      } else {
+        const data = await res.json().catch(() => null);
+        toast.error(data?.error || "Failed to update profile");
       }
     } catch {
       toast.error("Failed to update profile");

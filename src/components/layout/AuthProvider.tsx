@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import toast from "react-hot-toast";
 
 interface User {
   id: string;
@@ -65,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await fetch("/api/auth/logout", { method: "POST" });
       setUser(null);
     } catch {
-      console.error("Logout failed");
+      toast.error("Logout failed. Please try again.");
     }
   };
 

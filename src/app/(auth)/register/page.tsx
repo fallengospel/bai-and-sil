@@ -33,6 +33,7 @@ export default function RegisterPage() {
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const handleRoleSelect = (selectedRole: string) => {
     setRole(selectedRole);
@@ -41,9 +42,10 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFieldErrors({});
 
     if (password !== confirmPassword) {
-      toast.error("Passwords don't match");
+      setFieldErrors({ confirmPassword: "Passwords don't match" });
       return;
     }
 
@@ -59,7 +61,11 @@ export default function RegisterPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        toast.error(data.error || "Registration failed");
+        if (data.errors && Object.keys(data.errors).length > 0) {
+          setFieldErrors(data.errors);
+        } else {
+          toast.error(data.error || "Registration failed");
+        }
         return;
       }
 
@@ -177,6 +183,7 @@ export default function RegisterPage() {
             required
             minLength={2}
             maxLength={100}
+            error={fieldErrors.name}
           />
           <Input
             label="Email Address"
@@ -186,6 +193,7 @@ export default function RegisterPage() {
             placeholder="you@example.com"
             required
             maxLength={255}
+            error={fieldErrors.email}
           />
           <Input
             label="Phone Number"
@@ -195,6 +203,7 @@ export default function RegisterPage() {
             placeholder="+63 9XX XXX XXXX"
             maxLength={20}
             pattern="[+]?[0-9\\s\\-]{10,20}"
+            error={fieldErrors.phone}
           />
           <Input
             label="Password"
@@ -205,6 +214,7 @@ export default function RegisterPage() {
             required
             minLength={6}
             maxLength={128}
+            error={fieldErrors.password}
           />
           <Input
             label="Confirm Password"
@@ -215,6 +225,7 @@ export default function RegisterPage() {
             required
             minLength={6}
             maxLength={128}
+            error={fieldErrors.confirmPassword}
           />
           <Select
             label="Location"

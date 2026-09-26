@@ -145,12 +145,22 @@ export default function BuyerDashboard() {
       </div>
 
       {/* Recent Favorites */}
-      {(stats?.recentFavorites || []).length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-lg">Your Saved Items</h2>
+      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
+        <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+          <h2 className="font-bold text-lg">Your Saved Items</h2>
+          {(stats?.recentFavorites || []).length > 0 && (
             <Link href="/favorites" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
+          )}
+        </div>
+        {(stats?.recentFavorites || []).length === 0 ? (
+          <div className="p-8 text-center">
+            <FiHeart className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+            <p className="text-sm text-gray-500 mb-4">Nothing saved yet. Tap the heart on any listing to save it here.</p>
+            <Link href="/search" className="inline-block px-5 py-2.5 bg-bai-blue text-white text-sm font-bold rounded-2xl hover:bg-bai-blue-hover transition-colors">
+              Browse Listings
+            </Link>
           </div>
+        ) : (
           <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {stats?.recentFavorites.map((fav: any) => (
@@ -163,8 +173,8 @@ export default function BuyerDashboard() {
               ))}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Latest listings */}
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">

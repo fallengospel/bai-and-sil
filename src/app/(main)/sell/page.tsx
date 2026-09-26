@@ -41,6 +41,7 @@ export default function SellPage() {
   const [condition, setCondition] = useState("");
   const [location, setLocation] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [dragOver, setDragOver] = useState(false);
 
   useEffect(() => {
@@ -133,7 +134,13 @@ export default function SellPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        toast.error(data.error || "Failed to create listing");
+        if (data.errors && Object.keys(data.errors).length > 0) {
+          setFieldErrors(data.errors);
+          setStep(2);
+          toast.error("Please fix the highlighted fields");
+        } else {
+          toast.error(data.error || "Failed to create listing");
+        }
         return;
       }
 
@@ -257,6 +264,7 @@ export default function SellPage() {
             required
             minLength={5}
             maxLength={200}
+            error={fieldErrors.title}
           />
 
           <Select
@@ -266,6 +274,7 @@ export default function SellPage() {
             onChange={(e) => setCategoryId(e.target.value)}
             placeholder="Select a category"
             required
+            error={fieldErrors.categoryId}
           />
 
           <TextArea
@@ -278,6 +287,7 @@ export default function SellPage() {
             showCount
             required
             minLength={10}
+            error={fieldErrors.description}
           />
 
           <Input
@@ -290,6 +300,7 @@ export default function SellPage() {
             max={999999999}
             step="0.01"
             required
+            error={fieldErrors.price}
           />
 
           <Select
@@ -299,6 +310,7 @@ export default function SellPage() {
             onChange={(e) => setCondition(e.target.value)}
             placeholder="Select condition"
             required
+            error={fieldErrors.condition}
           />
 
           <Select
@@ -308,6 +320,7 @@ export default function SellPage() {
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Select location"
             required
+            error={fieldErrors.location}
           />
 
           <div className="flex justify-between pt-4">

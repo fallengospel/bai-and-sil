@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (error === "google_cancelled") toast.error("Google sign-in was cancelled");
@@ -26,6 +27,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setFieldErrors({});
 
     try {
       const res = await fetch("/api/auth/login", {
@@ -37,7 +39,11 @@ export default function LoginPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        toast.error(data.error || "Login failed");
+        if (data.errors && Object.keys(data.errors).length > 0) {
+          setFieldErrors(data.errors);
+        } else {
+          toast.error(data.error || "Login failed");
+        }
         return;
       }
 
@@ -80,6 +86,7 @@ export default function LoginPage() {
             placeholder="you@example.com"
             required
             maxLength={255}
+            error={fieldErrors.email}
           />
           <Input
             label="Password"
@@ -90,6 +97,7 @@ export default function LoginPage() {
             required
             minLength={6}
             maxLength={128}
+            error={fieldErrors.password}
           />
           <div className="flex justify-end">
             <Link href="/forgot-password" className="text-sm text-bai-blue hover:underline">
