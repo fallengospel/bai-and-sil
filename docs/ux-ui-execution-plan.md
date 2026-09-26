@@ -13,7 +13,7 @@
 |---|---|---|---|---|---|
 | 0 | Baseline & Setup | ✅ Done | — | ✅ | — |
 | 1 | Critical Fixes | ✅ Done | C1–C6 | ✅ | ✅ |
-| 2 | Core Interaction Fixes | ⬜ Not started | H2–H7, H9–H12 | ⬜ | ⬜ |
+| 2 | Core Interaction Fixes | ✅ Done | H2–H7, H9–H12 | ✅ | ✅ |
 | 3 | Mobile & Navigation | ⬜ Not started | C2, H1, M1, M7, M33, L4 | ⬜ | ⬜ |
 | 4 | Dead & Misleading Features | ⬜ Not started | H3, M2, M3, M34, M24, M27b, L5 | ⬜ | ⬜ |
 | 5 | Error Handling & Feedback | ⬜ Not started | H11, C5, M16, empty/loading states | ⬜ | ⬜ |
@@ -52,19 +52,19 @@
 
 ---
 
-## Phase 2 — Core Interaction Fixes 🟠
+## Phase 2 — Core Interaction Fixes 🟠 ✅ (2026-09-25)
 **Purpose:** Make existing interactions actually work.
 
-- [ ] **H2** Pass `onToggleFavorite` into ProductCard on: `search/page.tsx`, `favorites/page.tsx`, `profile/[id]/page.tsx`, `buyer/dashboard/page.tsx`; guests get login toast
-- [ ] **H5** Fix offer status mapping: `offers/page.tsx` map `Declined → red`, remove dead `Rejected/Countered` branches
-- [ ] **H6** Fix profile report: pass real listing/report target or add user-report endpoint (`profile/[id]:700`)
-- [ ] **H7** Seller dashboard: server-side stats endpoint (aggregate in API) + CSV export uses full listing set, not `.slice(0,5)`
-- [ ] **H9** Add `/listing/[slug]/edit` to middleware `protectedPaths` + matcher; add ownership/role check in edit page and `PUT` handler
-- [ ] **H10** Unify Sell gating: guard `/sell` page (role + verification pre-flight), hide Sell in MobileNav for buyers or show same rule as Navbar, add pre-flight checks at step 1 instead of final submit
-- [ ] **H12** Make "Remove image" visible without hover (`opacity-100 md:opacity-0 md:group-hover:opacity-100`) in `sell/page.tsx`, `edit/page.tsx`
-- [ ] **H4** Confirmation dialog for bulk delete in `my-listings` (use existing `Modal`, not native `confirm`)
+- [x] **H2** `toggleFavorite` helper (`src/lib/favorites.ts`); wired on Search, Favorites, Profile, Buyer Dashboard with real favorited state (favorites fetched on mount); guests get login toast
+- [x] **H5** Offer status mapping fixed: `Declined → red` in `offers/page.tsx`
+- [x] **H6** Real user reports: `Report` schema gained `reportedUserId` + nullable `listingId` (`db push` applied to Neon); new `POST /api/users/[id]/report`; `ReportModal` targets user or listing; admin reports shows Target column with null-guards
+- [x] **H7** New `GET /api/seller/stats` (server-side aggregates per seller) + `?export=1` for full CSV; dashboard rewired; "Conversion" relabeled "Sell-Through"
+- [x] **H9** `/listing/[slug]/edit` added to middleware (`isEditPage` regex + matcher) + page-level ownership/admin check; **bonus fix:** GET listings API now resolves slugs (edit page previously couldn't load at all)
+- [x] **H10** Sell unified: any authenticated non-admin can sell (Navbar desktop + mobile + dropdown match MobileNav; API already role-agnostic)
+- [x] **H12** Remove-image buttons visible without hover on touch (`opacity-100 md:opacity-0 md:group-hover:opacity-100`)
+- [x] **H4** Bulk delete now shows a `Modal` confirmation with per-item failure reporting
 
-**Exit criteria:** Favorite toggles everywhere; offers show correct colors; edit route guarded; sell fails fast not late; QA 50/50.
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live: root/listing 200, `/api/seller/stats` 401 (auth-gated), slug GET 200 ✅
 
 ---
 
