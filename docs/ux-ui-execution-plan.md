@@ -17,7 +17,7 @@
 | 3 | Mobile & Navigation | ✅ Done | C2, H1, M1, M7, M16, M33, L4 | ✅ | ✅ |
 | 4 | Dead & Misleading Features | ✅ Done | H3, M2, M3, M34, M24, M27b, L5, M31 | ✅ | ✅ |
 | 5 | Error Handling & Feedback | ✅ Done | H11, C5, M15, M25 + inline errors, spinners, empty states | ✅ | ✅ |
-| 6 | Flows & Data Polish | ⬜ Not started | M6, M8–M12, M21–M23, M28, M30, M32 | ⬜ | ⬜ |
+| 6 | Flows & Data Polish | ✅ Done | M6, M8–M12, M20–M23, M27, M28, M30, M32 | ✅ | ✅ |
 | 7 | Visual Consistency | ⬜ Not started | L1–L3, M26, admin/dash unify | ⬜ | ⬜ |
 | 8 | Accessibility | ⬜ Not started | L6–L9, M13, contrast, keyboard | ⬜ | ⬜ |
 | 9 | Final Verification & Deploy | ⬜ Not started | all | ⬜ | ⬜ |
@@ -116,25 +116,25 @@
 
 ---
 
-## Phase 6 — Flows & Data Polish ✨
+## Phase 6 — Flows & Data Polish ✨ ✅ (2026-09-25)
 **Purpose:** Smooth the existing journeys.
 
-- [ ] **M6/M29** Search: single apply model — remove duplicate sort or make all filters auto-apply consistently
-- [ ] **M8** Location select: group by province (`<optgroup>`), or searchable combobox
-- [ ] **M9** Offers page: Accept/Decline buttons (reuse thread API) + link to conversation
-- [ ] **M10** Interleave offers with messages chronologically in thread
-- [ ] **M11** Quick prompts: send on tap but with 3s undo toast (or confirm chip)
-- [ ] **M12** Notifications: mark read on click, per-item read state, poll/refresh, error handling
-- [ ] **M32** Pause polling when `document.hidden` (chat 5s + navbar 60s)
-- [ ] **M21** Profile phone privacy toggle (show/hide on public profile)
-- [ ] **M20** Hide Favorites tab for non-owners
-- [ ] **M22** Profile listings: fetch by seller (API param) instead of global `limit=50`
-- [ ] **M23** Draft persistence: `localStorage` drafts for sell wizard, edit form, register step
-- [ ] **M27** "Member for" copy → "Member since {Month Year}"
-- [ ] **M28** Centralize condition→color map in one helper (used by ProductCard, ListingClient, Badge)
-- [ ] **M30** `viewCount`: skip increment on edit-owner fetch (or move to POST/view endpoint)
+- [x] **M6/M29** Search: duplicate sidebar sort removed; single top-bar sort + explicit "Apply Filters" for filter set
+- [x] **M8** Location select: `<optgroup>` by province — `Select` now supports `group`, shared `getLocationOptions()` in `helpers.ts` (5 call sites)
+- [x] **M9** Offers page: Accept/Decline buttons for pending received offers (reuse thread API) + "Conversation" link via `conversationId`
+- [x] **M10** Thread: messages + offers merged into one chronological timeline
+- [x] **M11** Quick prompts: two-tap confirm chip ("Send? Tap again", 3s auto-reset)
+- [x] **M12** Notifications: mark read on click (optimistic, single-ID PUT), 30s poll, 401 → login, error toasts
+- [x] **M32** Polling paused when `document.hidden` (chat 5s, navbar 60s, notifications 30s)
+- [x] **M21** Profile phone privacy: `User.phonePublic` schema field (db pushed to Neon), API hides phone from non-owners when off, edit-modal toggle
+- [x] **M20** Favorites tab only shown to profile owner
+- [x] **M22** Profile listings fetched via `?sellerId=` param (added to `GET /api/listings`)
+- [x] **M23** localStorage drafts: sell wizard (incl. step), edit form (restored w/ toast, cleared on save/cancel), register (never passwords)
+- [x] **M27** "Member for N days" → "Member since {Mon Year}"; buyer "Days Active" → "Member Since"
+- [x] **M28** Canonical `lib/condition.ts` `getConditionVariant()` (ProductCard + ListingClient)
+- [x] **M30** `viewCount` skipped when requester is the owner (edit-page fetch)
 
-**Exit criteria:** Offers actionable; notifications clickable; drafts survive refresh; one condition map.
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live root/search/login 200, /offers 307→login ✅
 
 ---
 
