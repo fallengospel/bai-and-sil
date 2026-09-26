@@ -93,7 +93,7 @@ function ListingCard({
           </span>
         </div>
         <PriceTag price={card.price} className="mt-1.5" />
-        <p className="text-[10px] text-gray-400 mt-1">{card.city}</p>
+        <p className="text-[10px] text-gray-500 mt-1">{card.city}</p>
       </div>
     </div>
   );

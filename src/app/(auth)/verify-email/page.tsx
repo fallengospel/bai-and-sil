@@ -161,8 +161,11 @@ export default function VerifyEmailPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
           <p className="text-gray-500">Please register first, then verify your email.</p>
-          <Link href="/register">
-            <Button fullWidth>Register</Button>
+          <Link
+            href="/register"
+            className="btn-primary w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium gap-2"
+          >
+            Register
           </Link>
         </div>
       </div>
@@ -191,13 +194,15 @@ export default function VerifyEmailPage() {
           </div>
         )}
 
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-3" role="group" aria-label="6-digit verification code">
           {otp.map((digit, i) => (
             <input
               key={i}
               ref={(el) => { inputRefs.current[i] = el; }}
               type="text"
               inputMode="numeric"
+              autoComplete={i === 0 ? "one-time-code" : "off"}
+              aria-label={`Digit ${i + 1} of 6`}
               maxLength={1}
               value={digit}
               onChange={(e) => handleOtpChange(i, e.target.value)}

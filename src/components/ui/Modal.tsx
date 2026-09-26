@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from "react";
+﻿import React, { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
 
@@ -11,6 +11,9 @@ interface ModalProps {
   className?: string;
 }
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 const Modal: React.FC<ModalProps> = ({
   open,
   onClose,
@@ -19,6 +22,9 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   className = "",
 }) => {
+  const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -36,6 +42,39 @@ const Modal: React.FC<ModalProps> = ({
     return () => window.removeEventListener("keydown", handleEscape);
   }, [open, onClose]);
 
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.activeElement as HTMLElement | null;
+    panelRef.current?.focus();
+    return () => previous?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusables = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (focusables.length === 0) {
+        e.preventDefault();
+        panel.focus();
+        return;
+      }
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", handleTab);
+    return () => window.removeEventListener("keydown", handleTab);
+  }, [open]);
+
   if (!open) return null;
 
   return createPortal(
@@ -43,15 +82,22 @@ const Modal: React.FC<ModalProps> = ({
       <div
         className="absolute inset-0 bg-black/50 transition-opacity"
         onClick={onClose}
+        aria-hidden="true"
       />
       <div
-        className={`relative bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] flex flex-col ${className}`}
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+        className={`relative bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] flex flex-col focus:outline-none ${className}`}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <h2 id={titleId} className="text-lg font-semibold text-gray-900">{title}</h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            aria-label="Close dialog"
+            className="p-1 rounded-lg text-gray-500 hover:text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <FiX className="w-5 h-5" />
           </button>

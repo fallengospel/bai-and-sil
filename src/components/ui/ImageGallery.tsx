@@ -39,8 +39,17 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
   return (
     <div className={`space-y-3 ${className}`}>
       <div
-        className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-zoom-in"
+        role="button"
+        tabIndex={0}
+        aria-label={isZoomed ? "Zoom out of image" : "Zoom in on image"}
+        className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2"
         onClick={() => setIsZoomed(!isZoomed)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsZoomed(!isZoomed);
+          }
+        }}
       >
         <img
           src={getSrc(selectedIndex)}
@@ -58,6 +67,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
             <button
               key={index}
               onClick={() => setSelectedIndex(index)}
+              aria-label={`View image ${index + 1} of ${displayImages.length}`}
               className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
                 selectedIndex === index
                   ? "border-bai-blue"

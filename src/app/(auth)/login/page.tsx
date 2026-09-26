@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -114,7 +114,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-gray-200" />
           </div>
           <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-4 text-gray-400">or</span>
+          <span className="bg-white px-4 text-gray-500">or</span>
           </div>
         </div>
 

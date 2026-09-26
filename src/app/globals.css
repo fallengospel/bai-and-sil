@@ -175,3 +175,20 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-pulse-ring,
+  .animate-count-up,
+  .page-transition {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+

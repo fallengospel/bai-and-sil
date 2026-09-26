@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Logo from "@/components/brand/Logo";
 
 const Footer: React.FC = () => {
@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <Logo tone="reverse" size={28} asLink />
-            <p className="mt-3 text-sm text-gray-400">
+            <p className="mt-3 text-sm text-gray-500">
               Ang marketplace ng Pinas. Benta, hanap, loop lang. Walang hassle, promise.
             </p>
           </div>
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 pt-8 border-t border-gray-800">
-          <p className="text-sm text-gray-400 text-center">
+          <p className="text-sm text-gray-500 text-center">
             &copy; {new Date().getFullYear()} BAI &amp; SIL. Gawang Pinas, para sa Pinas. All rights reserved.
           </p>
         </div>

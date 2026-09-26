@@ -391,8 +391,10 @@ export default function AdminTestingPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit">
+      <div className="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit" role="tablist" aria-label="Testing mode">
         <button
+          role="tab"
+          aria-selected={tab === 'qa'}
           onClick={() => setTab('qa')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             tab === 'qa' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
@@ -402,6 +404,8 @@ export default function AdminTestingPage() {
           QA Testing
         </button>
         <button
+          role="tab"
+          aria-selected={tab === 'dev'}
           onClick={() => setTab('dev')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             tab === 'dev' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
@@ -436,7 +440,7 @@ export default function AdminTestingPage() {
       )}
 
       {/* Suites */}
-      <div className="space-y-4">
+      <div className="space-y-4" role="tabpanel" aria-label={tab === 'qa' ? 'QA testing suites' : 'Developer testing suites'}>
         {suites.map((suite, si) => (
           <div key={si} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
             <div className="flex items-center justify-between p-4 border-b border-gray-50">
@@ -450,7 +454,7 @@ export default function AdminTestingPage() {
                     <FiCheckCircle className="w-5 h-5 text-green-500" />
                   )
                 ) : (
-                  <FiClock className="w-5 h-5 text-gray-400" />
+                  <FiClock className="w-5 h-5 text-gray-500" />
                 )}
                 <h3 className="font-bold text-gray-900">{suite.name}</h3>
               </div>
@@ -469,11 +473,11 @@ export default function AdminTestingPage() {
                     ) : t.status === 'fail' ? (
                       <FiXCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
                     ) : (
-                      <FiClock className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <FiClock className="w-4 h-4 text-gray-500 flex-shrink-0" />
                     )}
                     <span className="flex-1 text-gray-700">{t.name}</span>
                     {t.error && <span className="text-xs text-red-500 max-w-xs truncate">{t.error}</span>}
-                    <span className="text-xs text-gray-400">{t.duration}ms</span>
+                    <span className="text-xs text-gray-500">{t.duration}ms</span>
                   </div>
                 ))}
               </div>

@@ -64,8 +64,11 @@ export default function ResetPasswordPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Password Reset!</h1>
           <p className="text-gray-500">Your password has been updated. You can now log in.</p>
-          <Link href="/login">
-            <Button fullWidth>Log In</Button>
+          <Link
+            href="/login"
+            className="btn-primary w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium gap-2"
+          >
+            Log In
           </Link>
         </div>
       </div>
@@ -83,8 +86,11 @@ export default function ResetPasswordPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Invalid Link</h1>
           <p className="text-gray-500">This password reset link is invalid or has expired.</p>
-          <Link href="/forgot-password">
-            <Button fullWidth>Request New Link</Button>
+          <Link
+            href="/forgot-password"
+            className="btn-primary w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium gap-2"
+          >
+            Request New Link
           </Link>
         </div>
       </div>

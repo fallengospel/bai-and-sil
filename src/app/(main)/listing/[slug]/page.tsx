@@ -1,10 +1,46 @@
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import ListingClient from "./ListingClient";
 
 interface PageProps {
   params: { slug: string };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const listing = await prisma.listing.findUnique({
+    where: { slug: params.slug },
+    select: {
+      title: true,
+      description: true,
+      price: true,
+      location: true,
+      images: { orderBy: { sortOrder: "asc" }, take: 1 },
+    },
+  });
+
+  if (!listing) {
+    return { title: "Listing not found | BAI AND SIL" };
+  }
+
+  const image = listing.images[0]?.imageUrl;
+  const title = `${listing.title} - ₱${Number(listing.price).toLocaleString("en-PH")} | BAI AND SIL`;
+  const description =
+    listing.description.length > 160
+      ? `${listing.description.slice(0, 157)}...`
+      : listing.description;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      ...(image ? { images: [{ url: image }] } : {}),
+    },
+  };
 }
 
 export default async function ListingPage({ params }: PageProps) {

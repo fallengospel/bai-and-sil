@@ -179,11 +179,11 @@ export default function OffersPage() {
                     <span className="text-sm font-bold text-bai-blue">
                       {formatPrice(offer.amount)}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-gray-500">
                       (Listed: {formatPrice(offer.listing.price)})
                     </span>
                   </div>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-500 mt-1">
                     {offer.role === "buyer" ? `To: ${offer.seller?.name}` : `From: ${offer.buyer?.name}`} â€¢ {timeAgo(offer.createdAt)}
                   </p>
                 </div>

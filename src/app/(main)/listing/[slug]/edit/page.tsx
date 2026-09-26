@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -103,7 +103,7 @@ export default function EditListingPage() {
           if (draft.condition !== undefined) setCondition(draft.condition);
           if (draft.location !== undefined) setLocation(draft.location);
           if (draft.images !== undefined) setImages(draft.images);
-          toast("Restored your unsaved draft", { icon: "📝" });
+          toast("Restored your unsaved draft", { icon: "ðŸ“" });
         }
       })
       .catch(() => {
@@ -245,11 +245,20 @@ export default function EditListingPage() {
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={() => setDragOver(false)}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors ${
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Upload photos: drag and drop, or press Enter to browse"
+            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2 ${
               dragOver ? "border-bai-blue bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
-            <FiUploadCloud className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+            <FiUploadCloud className="w-8 h-8 text-gray-500 mx-auto mb-2" />
             <p className="text-sm text-gray-600">
               {uploading ? "Uploading..." : "Drag & drop photos here, or click to browse"}
             </p>
@@ -267,9 +276,10 @@ export default function EditListingPage() {
             <div className="grid grid-cols-4 gap-3 mt-3">
               {images.map((img, i) => (
                 <div key={i} className="relative aspect-square rounded-2xl overflow-hidden group">
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={img} alt={`Uploaded image ${i + 1}`} className="w-full h-full object-cover" />
                   <button
                     onClick={() => removeImage(i)}
+                    aria-label={`Remove image ${i + 1}`}
                     className="absolute top-1 right-1 p-1 bg-black/50 rounded-full text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                   >
                     <FiX className="w-3 h-3" />
@@ -324,7 +334,7 @@ export default function EditListingPage() {
             />
 
             <Input
-              label="Price (₱)"
+              label="Price (â‚±)"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}

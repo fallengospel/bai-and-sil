@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useRef, useState } from "react";
 import { FiUploadCloud, FiX } from "react-icons/fi";
@@ -58,7 +58,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   return (
     <div className={className}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+        <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       )}
       <input
         ref={inputRef}
@@ -72,12 +72,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <div className="relative inline-block">
           <img
             src={preview}
-            alt="Preview"
+            alt={label ? `${label} preview` : "Selected image preview"}
             className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
           />
           <button
             type="button"
             onClick={handleRemove}
+            aria-label="Remove image"
             className="absolute -top-1 -right-1 w-6 h-6 bg-coral text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors shadow-cartoon-sm"
           >
             <FiX className="w-3 h-3" />
@@ -88,9 +89,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
           htmlFor="file-upload"
           className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-bai-blue hover:bg-bai-blue-light transition-colors"
         >
-          <FiUploadCloud className="w-8 h-8 text-gray-400 mb-2" />
+          <FiUploadCloud className="w-8 h-8 text-gray-500 mb-2" />
           <span className="text-sm text-gray-500">Click to upload image</span>
-          <span className="text-xs text-gray-400 mt-1">Max {Math.round(maxSize / 1024 / 1024)}MB</span>
+          <span className="text-xs text-gray-500 mt-1">Max {Math.round(maxSize / 1024 / 1024)}MB</span>
         </label>
       )}
       {error && <p className="mt-1 text-xs text-coral font-medium">{error}</p>}

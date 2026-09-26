@@ -354,7 +354,7 @@ export default function ProfilePage() {
                     Edit Profile
                   </Button>
                   {profile.role === "seller" && (
-                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-sil-yellow text-white rounded-2xl hover:bg-yellow-500 transition-all">
+                    <Link href="/seller/dashboard" className="px-4 py-2 text-sm font-medium bg-sil-yellow text-ink rounded-2xl hover:bg-yellow-500 transition-all">
                       Dashboard
                     </Link>
                   )}
@@ -513,7 +513,7 @@ export default function ProfilePage() {
           {/* About Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
             <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FiEdit2 className="w-4 h-4 text-gray-400" />
+              <FiEdit2 className="w-4 h-4 text-gray-500" />
               About
             </h3>
             <div className="space-y-3">
@@ -521,7 +521,7 @@ export default function ProfilePage() {
                 <p className="text-sm text-gray-600">{profile.bio}</p>
               )}
               {!profile.bio && (
-                <p className="text-sm text-gray-400 italic">No bio added yet.</p>
+                <p className="text-sm text-gray-500 italic">No bio added yet.</p>
               )}
             </div>
           </div>
@@ -529,30 +529,30 @@ export default function ProfilePage() {
           {/* Contact Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
             <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FiMail className="w-4 h-4 text-gray-400" />
+              <FiMail className="w-4 h-4 text-gray-500" />
               Contact Information
             </h3>
             <div className="space-y-3">
               {profile.location && (
                 <div className="flex items-center gap-3 text-sm">
-                  <FiMapPin className="w-4 h-4 text-gray-400" />
+                  <FiMapPin className="w-4 h-4 text-gray-500" />
                   <span className="text-gray-600">{profile.location}</span>
                 </div>
               )}
               {profile.phone && (
                 <div className="flex items-center gap-3 text-sm">
-                  <FiPhone className="w-4 h-4 text-gray-400" />
+                  <FiPhone className="w-4 h-4 text-gray-500" />
                   <span className="text-gray-600">{profile.phone}</span>
                 </div>
               )}
               {isOwnProfile && profile.email && (
                 <div className="flex items-center gap-3 text-sm">
-                  <FiMail className="w-4 h-4 text-gray-400" />
+                  <FiMail className="w-4 h-4 text-gray-500" />
                   <span className="text-gray-600">{profile.email}</span>
                 </div>
               )}
               {!profile.phone && !profile.location && (
-                <p className="text-sm text-gray-400 italic">No contact info added.</p>
+                <p className="text-sm text-gray-500 italic">No contact info added.</p>
               )}
             </div>
           </div>
@@ -560,7 +560,7 @@ export default function ProfilePage() {
           {/* Quick Stats Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
             <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FiTrendingUp className="w-4 h-4 text-gray-400" />
+              <FiTrendingUp className="w-4 h-4 text-gray-500" />
               Statistics
             </h3>
             <div className="space-y-3">
@@ -586,7 +586,7 @@ export default function ProfilePage() {
           {/* Activity Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
             <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FiClock className="w-4 h-4 text-gray-400" />
+              <FiClock className="w-4 h-4 text-gray-500" />
               Recent Activity
             </h3>
             <div className="space-y-3">
@@ -594,21 +594,21 @@ export default function ProfilePage() {
                 <div key={listing.id} className="flex items-center gap-3 text-sm">
                   <div className="w-8 h-8 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0">
                     {listing.imageUrl ? (
-                      <img src={listing.imageUrl} alt="" className="w-full h-full object-cover" />
+                      <img src={listing.imageUrl} alt={listing.title} className="w-full h-full object-cover" />
                     ) : (
-                      <FiPackage className="w-4 h-4 text-gray-400 m-auto mt-2" />
+                      <FiPackage className="w-4 h-4 text-gray-500 m-auto mt-2" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <Link href={`/listing/${listing.slug}`} className="text-gray-900 hover:text-bai-blue truncate block">
                       {listing.title}
                     </Link>
-                    <p className="text-xs text-gray-400">{new Date(listing.createdAt).toLocaleDateString()}</p>
+                    <p className="text-xs text-gray-500">{new Date(listing.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
               ))}
               {listings.length === 0 && (
-                <p className="text-sm text-gray-400 italic">No activity yet.</p>
+                <p className="text-sm text-gray-500 italic">No activity yet.</p>
               )}
             </div>
           </div>
@@ -619,7 +619,7 @@ export default function ProfilePage() {
         <>
           {isOwnProfile && profile.role === "seller" && (
             <div className="flex justify-end mb-4">
-              <Link href="/sell" className="px-4 py-2 bg-sil-yellow text-white text-sm font-medium rounded-2xl hover:bg-yellow-500 transition-all">
+              <Link href="/sell" className="px-4 py-2 bg-sil-yellow text-ink text-sm font-medium rounded-2xl hover:bg-yellow-500 transition-all">
                 + New Listing
               </Link>
             </div>
@@ -673,7 +673,7 @@ export default function ProfilePage() {
                     {review.comment && (
                       <p className="text-sm text-gray-600 mt-1">{review.comment}</p>
                     )}
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       {new Date(review.createdAt).toLocaleDateString("en-PH", {
                         month: "short",
                         day: "numeric",

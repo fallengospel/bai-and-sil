@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -249,7 +249,7 @@ export default function ListingClient({
           )}
           {isReserved && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-sil-yellow text-white text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
+              <span className="bg-sil-yellow text-ink text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
                 RESERVED
               </span>
             </div>
@@ -313,7 +313,7 @@ export default function ListingClient({
                 className={`p-3 rounded-2xl border transition-colors ${
                   favorited
                     ? "bg-coral/10 border-coral text-coral"
-                    : "border-gray-200 text-gray-400 hover:text-coral"
+                    : "border-gray-200 text-gray-500 hover:text-coral"
                 }`}
               >
                 {favorited ? <FaHeart className="w-5 h-5" /> : <FiHeart className="w-5 h-5" />}
@@ -322,7 +322,7 @@ export default function ListingClient({
                 onClick={() => setReportModal(true)}
                 aria-label="Report this listing"
                 title="Report this listing"
-                className="p-3 rounded-2xl border border-gray-200 text-gray-400 hover:text-bai-blue hover:border-bai-blue transition-colors"
+                className="p-3 rounded-2xl border border-gray-200 text-gray-500 hover:text-bai-blue hover:border-bai-blue transition-colors"
               >
                 <FiFlag className="w-5 h-5" />
               </button>
@@ -332,8 +332,11 @@ export default function ListingClient({
           {/* Owner management */}
           {isOwner && (
             <div className="flex flex-wrap gap-3">
-              <Link href={`/listing/${listing.slug}/edit`}>
-                <Button variant="outline">Edit</Button>
+              <Link
+                href={`/listing/${listing.slug}/edit`}
+                className="btn-outline inline-flex items-center justify-center px-4 py-2 text-sm font-medium gap-2"
+              >
+                Edit
               </Link>
               {listing.status === "Active" && (
                 <>
@@ -367,7 +370,7 @@ export default function ListingClient({
             </p>
           </div>
 
-          <p className="text-xs text-gray-400">Posted {timeAgo(listing.createdAt)}</p>
+          <p className="text-xs text-gray-500">Posted {timeAgo(listing.createdAt)}</p>
 
           {/* Seller Card */}
           <div className="bg-gray-50 rounded-2xl p-5">
@@ -405,10 +408,10 @@ export default function ListingClient({
               <h3 className="font-bold text-gray-900">Trust Tips</h3>
             </div>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Meet in a public, well-lit place</li>
-              <li>• Inspect the item before paying</li>
-              <li>• Use secure payment methods</li>
-              <li>• If a deal seems too good to be true, it probably is</li>
+              <li>â€¢ Meet in a public, well-lit place</li>
+              <li>â€¢ Inspect the item before paying</li>
+              <li>â€¢ Use secure payment methods</li>
+              <li>â€¢ If a deal seems too good to be true, it probably is</li>
             </ul>
           </div>
 
@@ -442,7 +445,7 @@ export default function ListingClient({
           Listed price: <strong>{formatPrice(listing.price)}</strong>
         </p>
         <Input
-          label="Your offer (₱)"
+          label="Your offer (â‚±)"
           type="number"
           value={offerAmount}
           onChange={(e) => setOfferAmount(e.target.value)}

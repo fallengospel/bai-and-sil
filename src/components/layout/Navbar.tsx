@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
@@ -150,7 +150,7 @@ const Navbar: React.FC = () => {
 
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-lg mx-8">
             <div className="relative w-full group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
@@ -166,7 +166,7 @@ const Navbar: React.FC = () => {
             {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-white text-sm font-bold rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink text-sm font-bold rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
               >
                 <IoAddCircle className="w-4 h-4" />
                 Sell
@@ -187,12 +187,14 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/messages"
+                  aria-label="Messages"
                   className="relative p-2 text-gray-600 hover:text-bai-blue hover:bg-gray-100 rounded-2xl transition-colors"
                 >
                   <FiMessageSquare className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/notifications"
+                  aria-label={notificationCount > 0 ? `Notifications, ${notificationCount} unread` : "Notifications"}
                   className="relative p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200"
                 >
                   <FiBell className="w-5 h-5" />
@@ -225,7 +227,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
-                        <FiUser className="w-4 h-4 text-gray-400" />
+                        <FiUser className="w-4 h-4 text-gray-500" />
                         My Profile
                       </Link>
                       <Link
@@ -233,7 +235,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
-                        <FiSettings className="w-4 h-4 text-gray-400" />
+                        <FiSettings className="w-4 h-4 text-gray-500" />
                         {getDashboardLabel()}
                       </Link>
                       <Link
@@ -241,7 +243,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
-                        <FiMessageSquare className="w-4 h-4 text-gray-400" />
+                        <FiMessageSquare className="w-4 h-4 text-gray-500" />
                         Messages
                       </Link>
                       <Link
@@ -249,7 +251,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
-                        <FiPackage className="w-4 h-4 text-gray-400" />
+                        <FiPackage className="w-4 h-4 text-gray-500" />
                         My Offers
                       </Link>
                       <Link
@@ -257,7 +259,7 @@ const Navbar: React.FC = () => {
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
-                        <FiPackage className="w-4 h-4 text-gray-400" />
+                        <FiPackage className="w-4 h-4 text-gray-500" />
                         My Listings
                       </Link>
                       <div className="border-t border-gray-100 mt-1 pt-1">
@@ -318,7 +320,7 @@ const Navbar: React.FC = () => {
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
           <form onSubmit={handleSearch} className="p-4">
             <div className="relative group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
               <input
                 type="text"
                 autoFocus
@@ -339,7 +341,7 @@ const Navbar: React.FC = () => {
             {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-white font-bold rounded-2xl shadow-cartoon-sm"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink font-bold rounded-2xl shadow-cartoon-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <IoAddCircle className="w-5 h-5" />

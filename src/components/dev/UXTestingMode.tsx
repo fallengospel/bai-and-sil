@@ -190,9 +190,9 @@ export default function UXTestingMode() {
                 <FiEye className="w-5 h-4" />
                 UI/UX Testing Mode
               </h3>
-              <span className="text-caption text-gray-400">Dev Only</span>
+              <span className="text-caption text-gray-500">Dev Only</span>
             </div>
-            <p className="text-caption text-gray-400">
+            <p className="text-caption text-gray-500">
               Analyze from three expert perspectives
             </p>
           </div>

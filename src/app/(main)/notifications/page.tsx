@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -159,7 +159,7 @@ export default function NotificationsPage() {
                 <p className={`text-sm ${notif.read ? "text-gray-600" : "text-gray-900 font-medium"}`}>
                   {notif.message}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">{timeAgo(notif.createdAt)}</p>
+                <p className="text-xs text-gray-500 mt-1">{timeAgo(notif.createdAt)}</p>
               </div>
               {!notif.read && (
                 <div className="w-2 h-2 bg-bai-blue rounded-full flex-shrink-0 mt-2" />

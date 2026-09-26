@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -103,7 +103,7 @@ export default function MessagesPage() {
                       {otherUser.name}
                     </span>
                     {conv.lastMessage && (
-                      <span className="text-xs text-gray-400 flex-shrink-0">
+                      <span className="text-xs text-gray-500 flex-shrink-0">
                         {timeAgo(conv.lastMessage.createdAt)}
                       </span>
                     )}

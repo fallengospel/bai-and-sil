@@ -155,8 +155,12 @@ export default function MyListingsPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">My Listings</h1>
-        <Link href="/sell">
-          <Button leftIcon={<FiPlus className="w-4 h-4" />}>New Listing</Button>
+        <Link
+          href="/sell"
+          className="btn-primary inline-flex items-center justify-center px-4 py-2 text-sm font-medium gap-2"
+        >
+          <FiPlus className="w-4 h-4" />
+          New Listing
         </Link>
       </div>
 

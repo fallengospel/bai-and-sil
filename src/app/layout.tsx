@@ -23,6 +23,7 @@ const hankenGrotesk = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bai-and-sil.vercel.app"),
   title: "BAI AND SIL - Find stuff. Sell stuff. Repeat.",
   description:
     "The Filipino marketplace for buying and selling pre-loved items. Find deals, sell your stuff, repeat.",

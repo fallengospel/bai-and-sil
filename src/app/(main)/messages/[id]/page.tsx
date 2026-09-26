@@ -264,7 +264,7 @@ export default function ConversationPage() {
                 >
                   {msg.message}
                 </div>
-                <p className={`text-[10px] text-gray-400 mt-1 ${isOwn ? "text-right" : ""}`}>
+                <p className={`text-[10px] text-gray-500 mt-1 ${isOwn ? "text-right" : ""}`}>
                   {timeAgo(msg.createdAt)}
                 </p>
               </div>
@@ -309,7 +309,7 @@ export default function ConversationPage() {
                   </button>
                 </div>
               )}
-              <p className="text-[10px] text-gray-400 mt-1">{timeAgo(offer.createdAt)}</p>
+              <p className="text-[10px] text-gray-500 mt-1">{timeAgo(offer.createdAt)}</p>
             </div>
           </div>
         );

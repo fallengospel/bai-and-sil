@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from "react";
 import Link from "next/link";
 import Badge from "./Badge";
@@ -112,7 +112,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
           <svg
-            className="w-3.5 h-3.5 text-gray-400"
+            className="w-3.5 h-3.5 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -155,10 +155,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 e.stopPropagation();
                 onToggleFavorite?.(listing.id);
               }}
-              className={`p-1.5 rounded-2xl transition-all duration-200 ${
+              className={`p-3.5 -m-1.5 rounded-2xl transition-all duration-200 min-w-[44px] min-h-[44px] flex items-center justify-center ${
                 favorited 
                   ? "text-coral bg-coral/10" 
-                  : "text-gray-400 hover:text-coral hover:bg-coral/5"
+                  : "text-gray-500 hover:text-coral hover:bg-coral/5"
               }`}
               aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
             >

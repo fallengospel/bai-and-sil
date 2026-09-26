@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -193,7 +193,7 @@ export default function SearchPage() {
             className="md:hidden w-full flex items-center justify-between px-4 py-2.5 mb-3 bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-700"
           >
             <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
-            <span className="text-bai-blue">{showFilters ? "▲" : "▼"}</span>
+            <span className="text-bai-blue">{showFilters ? "â–²" : "â–¼"}</span>
           </button>
           <div className={`bg-white rounded-2xl border border-gray-100 p-5 space-y-5 md:sticky top-20 ${showFilters ? "" : "hidden md:block"}`}>
             <h2 className="font-bold text-gray-900">Filters</h2>
@@ -201,7 +201,7 @@ export default function SearchPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
               <div className="relative">
-                <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
                 <input
                   type="text"
                   value={q}

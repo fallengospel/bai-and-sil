@@ -113,7 +113,7 @@ export default function PushNotificationManager() {
             {isSubscribed ? (
               <FiBell className="w-5 h-5 text-green-600" />
             ) : (
-              <FiBellOff className="w-5 h-5 text-gray-400" />
+              <FiBellOff className="w-5 h-5 text-gray-500" />
             )}
           </div>
           <div>

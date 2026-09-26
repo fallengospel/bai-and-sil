@@ -115,7 +115,7 @@ export default function SellerDashboard() {
           </button>
           <Link
             href="/sell"
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-white font-medium rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink font-medium rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
           >
             <FiPlusCircle className="w-4 h-4" />
             New Listing
@@ -257,7 +257,7 @@ export default function SellerDashboard() {
                 {listing.imageUrl ? (
                   <img src={listing.imageUrl} alt={listing.title} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  <div className="w-full h-full flex items-center justify-center text-gray-500">
                     <FiPackage className="w-6 h-6" />
                   </div>
                 )}
@@ -267,7 +267,7 @@ export default function SellerDashboard() {
                 <p className="text-sm text-gray-500">â‚±{listing.price?.toLocaleString()}</p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-400 flex items-center gap-1">
+                <span className="text-xs text-gray-500 flex items-center gap-1">
                   <FiEye className="w-3 h-3" /> {listing.views || 0}
                 </span>
                 <span className={`px-2.5 py-1 text-xs font-medium rounded-lg ${
@@ -281,7 +281,7 @@ export default function SellerDashboard() {
           {(stats?.recentListings || []).length === 0 && (
             <div className="p-10 text-center">
               <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <FiPackage className="w-8 h-8 text-gray-400" />
+                <FiPackage className="w-8 h-8 text-gray-500" />
               </div>
               <p className="text-gray-500 mb-2">No listings yet</p>
               <Link href="/sell" className="text-sil-yellow hover:underline font-medium">Create your first listing</Link>

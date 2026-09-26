@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -148,7 +148,7 @@ export default function RegisterPage() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-gray-400">or</span>
+              <span className="bg-white px-4 text-gray-500">or</span>
             </div>
           </div>
 
@@ -183,9 +183,9 @@ export default function RegisterPage() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <button
               onClick={() => setStep(1)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-500 hover:text-gray-600"
             >
-              ← Back
+              â† Back
             </button>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">
@@ -269,7 +269,7 @@ export default function RegisterPage() {
             <div className="w-full border-t border-gray-200" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white px-4 text-gray-400">or</span>
+            <span className="bg-white px-4 text-gray-500">or</span>
           </div>
         </div>
 
