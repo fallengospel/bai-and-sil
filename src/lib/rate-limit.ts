@@ -12,6 +12,7 @@ const DEFAULT_CONFIG: RateLimitConfig = {
 
 const RATE_LIMIT_CONFIGS: Record<string, RateLimitConfig> = {
   auth: { windowMs: 15 * 60 * 1000, maxRequests: 10 },    // 10 attempts per 15 min
+  oauth: { windowMs: 15 * 60 * 1000, maxRequests: 30 },   // Google flow uses 3 requests per attempt (start + callback + complete)
   api: { windowMs: 60 * 1000, maxRequests: 60 },           // 60 requests per min
   upload: { windowMs: 60 * 1000, maxRequests: 10 },        // 10 uploads per min
   search: { windowMs: 60 * 1000, maxRequests: 30 },        // 30 searches per min
@@ -22,6 +23,7 @@ function getRateLimitKey(identifier: string, route: string): string {
 }
 
 function getRouteCategory(pathname: string): string {
+  if (pathname.startsWith('/api/auth/google')) return 'oauth';
   if (pathname.startsWith('/api/auth')) return 'auth';
   if (pathname.startsWith('/api/upload')) return 'upload';
   if (pathname.startsWith('/api/searches') || pathname.startsWith('/api/listings')) return 'search';

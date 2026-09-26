@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import Input from "@/components/ui/Input";
@@ -20,6 +20,7 @@ const roleOptions = [
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -31,6 +32,12 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const draftLoaded = useRef(false);
+
+  useEffect(() => {
+    if (searchParams.get("error") === "no_google_session") {
+      toast.error("Google sign-in session expired. Please try again with Google.");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const draft = loadDraft<{
