@@ -18,7 +18,7 @@
 | 4 | Dead & Misleading Features | ✅ Done | H3, M2, M3, M34, M24, M27b, L5, M31 | ✅ | ✅ |
 | 5 | Error Handling & Feedback | ✅ Done | H11, C5, M15, M25 + inline errors, spinners, empty states | ✅ | ✅ |
 | 6 | Flows & Data Polish | ✅ Done | M6, M8–M12, M20–M23, M27, M28, M30, M32 | ✅ | ✅ |
-| 7 | Visual Consistency | ⬜ Not started | L1–L3, M26, admin/dash unify | ⬜ | ⬜ |
+| 7 | Visual Consistency | ✅ Done | L1–L3, L14, M5, M26, H8 (dark mode removed), StatCard, spinners | ✅ | ✅ |
 | 8 | Accessibility | ⬜ Not started | L6–L9, M13, contrast, keyboard | ⬜ | ⬜ |
 | 9 | Final Verification & Deploy | ⬜ Not started | all | ⬜ | ⬜ |
 
@@ -138,19 +138,21 @@
 
 ---
 
-## Phase 7 — Visual Consistency 🎨
+## Phase 7 — Visual Consistency 🎨 ✅ (2026-09-25)
 **Purpose:** One design system, no drift.
 
-- [ ] **L1/L3** Single blue: make `globals.css` buttons and `LandingPage.tsx` use Tailwind tokens (`jeepney`/`bai-blue` — pick one canonical token); remove double-applied `btn-* bg-*` conflicts in `Button.tsx`
-- [ ] **L2** Radius scale: pick 2 radii (e.g. `rounded-2xl` cards, `rounded-lg` controls) and apply to Button, Modal, admin badges
-- [ ] **Shared `StatCard`** component; replace 13 copy-pasted KPI cards (seller 6, admin 4, buyer 3)
-- [ ] **M26** Admin: adopt card/badge/button tokens so admin matches consumer UI
-- [ ] **Spinner consolidation:** all raw `animate-spin` divs → `LoadingSpinner`
-- [ ] **Toast position:** move below navbar on mobile or use `position: 'top-center'` on small screens (**L14**)
-- [ ] **Landing IA:** categories from API instead of hardcoded slugs (**M5**)
-- [ ] **H8** Dark mode decision: either remove toggle + tokens (recommended, honest) or complete dark styles for cards/nav/tables/modals; also fix provider remount flash (lazy `useState` init in `ThemeProvider`/`I18nProvider`)
+- [x] **L1/L3** Single blue: `bai-blue #023E8A` is canonical — all `#0F3D91` (jeepney) and `#EAF0FB` hexes converted to tokens; `globals.css` btn-* now token-based; `Button.tsx` variants no longer double-apply conflicting classes; `jeepney` token removed; `text-[#101B3A]` → `text-ink`
+- [x] **L2** Radius scale: 2 radii — `rounded-2xl` (surfaces/cards/modal/gallery) + `rounded-lg` (buttons/inputs/badges/tabs/chips); circles (avatars, spinners, progress, dots) stay `rounded-full`
+- [x] **Shared `StatCard`** — `components/ui/StatCard.tsx` (sm/md sizes); replaced seller 6 + admin 4 + buyer 3 KPI cards
+- [x] **M26** Admin tokens: h1 color classes fixed; admin layout/nav/badges already token-based (Phases 3–5)
+- [x] **Spinner consolidation:** raw `animate-spin` divs → `LoadingSpinner` (added `inline` prop for in-button use); FiLoader icon spins + Button internal loader kept
+- [x] **L14** Toast position: `AppToaster` client component — `top-center` + 72px offset on mobile, `top-right` on desktop
+- [x] **M5** Landing categories fetched from `GET /api/categories` (top 6 by listingCount, icons mapped from DB icon field, hardcoded fallback on failure)
+- [x] **H8** Dark mode removed (per user decision): `ThemeProvider` deleted, toggle removed from Navbar, all `dark:` classes + `dark` palette + `darkMode:'class'` stripped, `suppressHydrationWarning` removed
 
-**Exit criteria:** One blue, ≤2 radii, no copy-pasted KPI markup, toggle matches reality.
+**Exit criteria:** One blue ✅, 2 rectangular radii + circles ✅, no copy-pasted KPI markup ✅, no misleading toggle ✅.
+
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live root/search/login 200 ✅.
 
 ---
 

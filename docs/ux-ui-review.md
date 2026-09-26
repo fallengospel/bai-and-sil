@@ -271,3 +271,4 @@
 | 2026-09-25 | opencode | Resolved H3, M2, M3, M24, M27, M27b, L5, M31 (Phase 4, deployed to main); removed dead i18n (I18nProvider deleted), placeholder footer socials |
 | 2026-09-25 | opencode | Resolved H11, M15, M25 (Phase 5, deployed to main); new ConfirmDialog, admin+messages error.tsx, global-error.tsx, inline field errors, spinner escape hatches, empty states |
 | 2026-09-25 | opencode | Resolved M6, M8–M12, M20–M23, M27, M28, M30, M32 (Phase 6, deployed to main); schema: User.phonePublic (db pushed); new lib/condition.ts, lib/drafts.ts, getLocationOptions(), sellerId API param, single-ID notification PUT |
+| 2026-09-25 | opencode | Resolved L1, L2, L3, L14, M5, M26, H8 (Phase 7, deployed to main); dark mode removed (ThemeProvider deleted), jeepney token removed, new StatCard + AppToaster, LoadingSpinner inline prop |
