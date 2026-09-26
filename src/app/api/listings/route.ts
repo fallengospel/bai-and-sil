@@ -87,15 +87,19 @@ export async function POST(request: NextRequest) {
   try {
     const user = await requireAuth();
 
-    const fullUser = await prisma.user.findUnique({
-      where: { id: user.id },
-      select: { emailVerified: true },
-    });
-    if (!fullUser?.emailVerified) {
-      return NextResponse.json(
-        { error: 'Please verify your email before creating listings' },
-        { status: 403 }
-      );
+    // TODO(C6): Re-enable hard gate once RESEND_API_KEY is configured and
+    // verification emails are actually being delivered.
+    if (process.env.RESEND_API_KEY) {
+      const fullUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { emailVerified: true },
+      });
+      if (!fullUser?.emailVerified) {
+        return NextResponse.json(
+          { error: 'Please verify your email before creating listings' },
+          { status: 403 }
+        );
+      }
     }
 
     const body = await request.json();
