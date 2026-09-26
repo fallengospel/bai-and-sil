@@ -8,6 +8,7 @@ import { toggleFavorite } from '@/lib/favorites';
 
 interface BuyerStats {
   totalFavorites: number;
+  activeListings: number;
   recentFavorites: any[];
   recommendedListings: any[];
 }
@@ -55,6 +56,7 @@ export default function BuyerDashboard() {
         totalFavorites: favList.length,
         recentFavorites: favList.slice(0, 4),
         recommendedListings: (listingsData.listings || []).slice(0, 8),
+        activeListings: listingsData.total ?? (listingsData.listings || []).length,
       });
     }).catch(() => {})
     .finally(() => setLoading(false));
@@ -97,8 +99,8 @@ export default function BuyerDashboard() {
               <FiSearch className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-sm text-gray-500">Browsing</p>
-              <p className="text-2xl font-bold text-green-600">Active</p>
+              <p className="text-sm text-gray-500">Items Available</p>
+              <p className="text-2xl font-bold text-bai-blue">{stats?.activeListings ?? 0}</p>
             </div>
           </div>
         </div>

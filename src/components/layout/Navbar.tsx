@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiGlobe, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
 import { IoAddCircle } from "react-icons/io5";
 import Avatar from "@/components/ui/Avatar";
 import { useTheme } from "@/components/layout/ThemeProvider";
-import { useI18n } from "@/components/layout/I18nProvider";
 import Logo from "@/components/brand/Logo";
 
 interface User {
@@ -22,7 +21,6 @@ interface User {
 const Navbar: React.FC = () => {
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
-  const { language, setLanguage, t } = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -204,21 +202,6 @@ const Navbar: React.FC = () => {
                   )}
                 </Link>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200"
-                  title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-                >
-                  {theme === "light" ? <FiMoon className="w-5 h-5" /> : <FiSun className="w-5 h-5" />}
-                </button>
-                <button
-                  onClick={() => setLanguage(language === "en" ? "fil" : "en")}
-                  className="p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200 text-xs font-bold"
-                  title={language === "en" ? "Switch to Filipino" : "Switch to English"}
-                >
-                  <FiGlobe className="w-5 h-5" />
-                </button>
-
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
@@ -305,6 +288,14 @@ const Navbar: React.FC = () => {
                 </Link>
               </div>
             )}
+
+            <button
+              onClick={toggleTheme}
+              className="hidden md:block p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200"
+              title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            >
+              {theme === "light" ? <FiMoon className="w-5 h-5" /> : <FiSun className="w-5 h-5" />}
+            </button>
 
             <button
               onClick={() => {

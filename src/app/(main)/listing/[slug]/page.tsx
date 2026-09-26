@@ -57,6 +57,36 @@ export default async function ListingPage({ params }: PageProps) {
     where: { sellerId: listing.sellerId, status: "Active" },
   });
 
+  const relatedRaw = listing.categoryId
+    ? await prisma.listing.findMany({
+        where: {
+          categoryId: listing.categoryId,
+          status: "Active",
+          id: { not: listing.id },
+        },
+        take: 4,
+        orderBy: { createdAt: "desc" },
+        include: {
+          seller: { select: { id: true, name: true, avatar: true } },
+          category: true,
+          images: { orderBy: { sortOrder: "asc" }, take: 1 },
+        },
+      })
+    : [];
+
+  const relatedListings = relatedRaw.map((l) => ({
+    id: l.id,
+    slug: l.slug,
+    title: l.title,
+    price: l.price,
+    location: l.location,
+    condition: l.condition,
+    status: l.status,
+    imageUrl: l.images[0]?.imageUrl || "",
+    seller: l.seller,
+    category: l.category,
+  }));
+
   return (
     <ListingClient
       listing={JSON.parse(JSON.stringify(listing))}
@@ -65,6 +95,7 @@ export default async function ListingPage({ params }: PageProps) {
       currentUser={session ? JSON.parse(JSON.stringify(session)) : null}
       sellerListingCount={sellerListingCount}
       priceAlerted={priceAlerted}
+      relatedListings={relatedListings}
     />
   );
 }

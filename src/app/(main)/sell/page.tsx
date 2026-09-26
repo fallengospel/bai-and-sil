@@ -328,7 +328,7 @@ export default function SellPage() {
           <p className="text-sm text-gray-500">This is how buyers will see your item.</p>
 
           <div className="max-w-sm mx-auto">
-            <ProductCard listing={previewListing} />
+            <ProductCard listing={previewListing} disableLink />
           </div>
 
           <div className="bg-gray-50 rounded-2xl p-4 space-y-2 text-sm">

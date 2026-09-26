@@ -222,7 +222,12 @@ export default function UXTestingMode() {
             {/* Persona description */}
             <div className="px-6 py-4 border-b border-gray-100">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-body-sm text-gray-600">{currentPersona.description}</p>
+                <p className="text-body-sm text-gray-600">
+                  {currentPersona.description}{" "}
+                  <span className="ml-1 inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 rounded">
+                    Static sample
+                  </span>
+                </p>
                 <ScoreBadge findings={findings} />
               </div>
               
@@ -298,7 +303,7 @@ export default function UXTestingMode() {
               className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
             >
               <FiRefreshCw className="w-4 h-4" />
-              Re-analyze
+              Reload sample
             </button>
           </div>
         </div>

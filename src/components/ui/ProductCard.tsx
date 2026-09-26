@@ -36,6 +36,7 @@ interface ProductCardProps {
   favorited?: boolean;
   onToggleFavorite?: (id: string) => void;
   className?: string;
+  disableLink?: boolean;
 }
 
 function formatPrice(price: number): string {
@@ -71,16 +72,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
   favorited = false,
   onToggleFavorite,
   className = "",
+  disableLink = false,
 }) => {
   const isSold = listing.status === "Sold";
   const [imgError, setImgError] = useState(false);
   const imgSrc = imgError || !listing.imageUrl ? "/placeholder.svg" : listing.imageUrl;
 
+  // Preview cards (sell wizard) are not navigable
+  const LinkOrDiv = (disableLink ? "div" : Link) as any;
+  const linkProps = disableLink ? {} : { href: `/listing/${listing.slug}` };
+
   return (
     <div
       className={`group relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-gray-200 ${className}`}
     >
-      <Link href={`/listing/${listing.slug}`} className="block">
+      <LinkOrDiv {...linkProps} className="block">
         <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
           <img
             src={imgSrc}
@@ -113,14 +119,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
         </div>
-      </Link>
+      </LinkOrDiv>
 
       <div className="p-4">
-        <Link href={`/listing/${listing.slug}`}>
+        <LinkOrDiv {...linkProps}>
           <h3 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 group-hover:text-bai-blue transition-colors leading-relaxed">
             {listing.title}
           </h3>
-        </Link>
+        </LinkOrDiv>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
           <svg

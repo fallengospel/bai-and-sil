@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "@/components/layout/AuthProvider";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { I18nProvider } from "@/components/layout/I18nProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
@@ -62,8 +61,7 @@ export default function RootLayout({
         className={`${gabarito.variable} ${hankenGrotesk.variable} font-sans antialiased bg-white text-[#101B3A] transition-colors duration-200`}
       >
         <ThemeProvider>
-          <I18nProvider>
-            <AuthProvider>
+          <AuthProvider>
               <Toaster position="top-right" />
               <div className="flex flex-col min-h-screen pb-16 md:pb-0">
                 <Navbar />
@@ -74,8 +72,7 @@ export default function RootLayout({
                 <MobileNav />
               </div>
               <UXTestingMode />
-            </AuthProvider>
-          </I18nProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
