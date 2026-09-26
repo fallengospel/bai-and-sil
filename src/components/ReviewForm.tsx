@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -52,7 +52,7 @@ export default function ReviewForm({ listingId, revieweeId, onSuccess }: ReviewF
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-4">
+    <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
       <h3 className="font-semibold text-gray-900">Leave a Review</h3>
 
       <div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -97,14 +97,14 @@ export default function PushNotificationManager() {
 
   if (!supported) {
     return (
-      <div className="bg-gray-50 rounded-xl p-4 text-center text-sm text-gray-500">
+      <div className="bg-gray-50 rounded-2xl p-4 text-center text-sm text-gray-500">
         Push notifications are not supported in this browser
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-4">
+    <div className="bg-white rounded-2xl border border-gray-100 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${

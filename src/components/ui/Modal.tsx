@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { FiX } from "react-icons/fi";
 
@@ -45,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({
         onClick={onClose}
       />
       <div
-        className={`relative bg-white rounded-xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] flex flex-col ${className}`}
+        className={`relative bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] flex flex-col ${className}`}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <h2 className="text-lg font-semibold text-gray-900">{title}</h2>

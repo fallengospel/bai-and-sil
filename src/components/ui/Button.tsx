@@ -33,12 +33,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
 
     const variantStyles: Record<ButtonVariant, string> = {
-      primary: "btn-primary bg-bai-blue text-white hover:bg-bai-blue-hover focus:ring-bai-blue",
-      secondary: "btn-secondary bg-sil-yellow text-gray-900 hover:bg-sil-yellow-hover focus:ring-sil-yellow",
-      outline:
-        "btn-outline border-2 border-bai-blue text-bai-blue hover:bg-bai-blue-light focus:ring-bai-blue",
-      ghost: "btn-ghost text-gray-700 hover:bg-bai-blue-light focus:ring-gray-300",
-      danger: "btn-danger bg-coral text-white hover:bg-red-500 focus:ring-coral",
+      primary: "btn-primary",
+      secondary: "btn-secondary",
+      outline: "btn-outline",
+      ghost: "btn-ghost",
+      danger: "btn-danger",
     };
 
     const sizeStyles: Record<ButtonSize, string> = {

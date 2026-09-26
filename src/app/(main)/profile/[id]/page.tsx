@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -317,7 +317,7 @@ export default function ProfilePage() {
             <div className="flex-1 md:mb-1">
               <div className="flex items-center gap-3 flex-wrap">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{profile.name}</h1>
-                <span className={`inline-flex items-center px-3 py-1 text-xs font-bold rounded-full capitalize ${
+                <span className={`inline-flex items-center px-3 py-1 text-xs font-bold rounded-lg capitalize ${
                   profile.role === "seller" ? "bg-sil-yellow-light text-sil-yellow-dark" :
                   profile.role === "admin" ? "bg-red-100 text-red-700" :
                   "bg-bai-blue-light text-bai-blue"

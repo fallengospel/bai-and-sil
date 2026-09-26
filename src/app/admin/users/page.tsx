@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FiUsers } from 'react-icons/fi';
@@ -74,11 +75,11 @@ export default function AdminUsersPage() {
 
   const filtered = users.filter(u => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()));
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
+  if (loading) return <LoadingSpinner className="h-64" />;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">User Management</h1>
+      <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
       <input type="text" placeholder="Search users..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">

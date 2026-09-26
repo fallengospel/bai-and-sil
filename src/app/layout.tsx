@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Gabarito, Hanken_Grotesk } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import { AuthProvider } from "@/components/layout/AuthProvider";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
-import { Toaster } from "react-hot-toast";
+import AppToaster from "@/components/layout/AppToaster";
 
 const UXTestingMode = dynamic(() => import("@/components/dev/UXTestingMode"), { ssr: false });
 
@@ -53,27 +52,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        <meta name="theme-color" content="#0F3D91" />
+        <meta name="theme-color" content="#023E8A" />
       </head>
       <body
-        className={`${gabarito.variable} ${hankenGrotesk.variable} font-sans antialiased bg-white text-[#101B3A] transition-colors duration-200`}
+        className={`${gabarito.variable} ${hankenGrotesk.variable} font-sans antialiased bg-white text-ink transition-colors duration-200`}
       >
-        <ThemeProvider>
-          <AuthProvider>
-              <Toaster position="top-right" />
-              <div className="flex flex-col min-h-screen pb-16 md:pb-0">
-                <Navbar />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-              <div className="md:hidden">
-                <MobileNav />
-              </div>
-              <UXTestingMode />
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+            <AppToaster />
+            <div className="flex flex-col min-h-screen pb-16 md:pb-0">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <div className="md:hidden">
+              <MobileNav />
+            </div>
+            <UXTestingMode />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FiInbox } from 'react-icons/fi';
@@ -59,11 +60,11 @@ export default function AdminListingsPage() {
     return matchSearch && matchStatus;
   });
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
+  if (loading) return <LoadingSpinner className="h-64" />;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Listing Management</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Listing Management</h1>
       <div className="flex gap-4">
         <input type="text" placeholder="Search listings..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">

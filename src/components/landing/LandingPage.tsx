@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FiSearch, FiMessageCircle, FiHeart, FiTag, FiShield, FiTruck } from "react-icons/fi";
 import { HeroVisual, HeroSearchBar } from "@/components/hero";
 
@@ -38,8 +39,17 @@ const CATS = [
   { name: "Gaming", slug: "gaming", icon: "gamepad", tall: false },
 ];
 
+const DB_ICON_MAP: Record<string, string> = {
+  Smartphone: "phone",
+  Shirt: "shirt",
+  Home: "home",
+  Car: "car",
+  Sparkles: "sparkle",
+  Gamepad2: "gamepad",
+};
+
 function CatIcon({ icon }: { icon: string }) {
-  const cls = "w-7 h-7 text-[#0F3D91]";
+  const cls = "w-7 h-7 text-bai-blue";
   const p = { className: cls, viewBox: "0 0 24 24" as const, fill: "none" as const, stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   switch (icon) {
     case "phone": return <svg {...p}><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></svg>;
@@ -53,10 +63,33 @@ function CatIcon({ icon }: { icon: string }) {
 }
 
 export default function LandingPage() {
+  const [cats, setCats] = useState(CATS);
+
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("failed"))))
+      .then((d: { categories?: { name: string; slug: string; icon?: string; listingCount?: number }[] }) => {
+        const list = d.categories ?? [];
+        if (list.length === 0) return;
+        const top = [...list]
+          .sort((a, b) => (b.listingCount ?? 0) - (a.listingCount ?? 0))
+          .slice(0, 6);
+        setCats(
+          top.map((c, i) => ({
+            name: c.name,
+            slug: c.slug,
+            icon: (c.icon && DB_ICON_MAP[c.icon]) || CATS[i % CATS.length].icon,
+            tall: CATS[i % CATS.length].tall,
+          }))
+        );
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-[#0F3D91] text-white overflow-hidden">
+      <section className="relative bg-bai-blue text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
             <div className="flex flex-col gap-6 lg:gap-8 py-8 lg:py-16">
@@ -75,7 +108,7 @@ export default function LandingPage() {
               <div className="flex items-center gap-4">
                 <Link
                   href="/sell"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFC72C] text-[#101B3A] text-sm font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFC72C] text-ink text-sm font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
                 >
                   Magbenta na
                 </Link>
@@ -89,9 +122,9 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section className="py-16 lg:py-24 bg-[#EAF0FB]">
+      <section className="py-16 lg:py-24 bg-bai-blue-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-[#101B3A] mb-12">
+          <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink mb-12">
             Bakit BAI &amp; SIL?
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -100,14 +133,14 @@ export default function LandingPage() {
                 key={i}
                 className={`bg-white p-6 rounded-2xl ${
                   i === 0
-                    ? "shadow-lg border-2 border-[#0F3D91]/10"
+                    ? "shadow-lg border-2 border-bai-blue/10"
                     : "shadow-sm border border-gray-100"
                 }`}
               >
-                <div className="w-11 h-11 rounded-xl bg-[#EAF0FB] flex items-center justify-center text-[#0F3D91] mb-4">
+                <div className="w-11 h-11 rounded-2xl bg-bai-blue-light flex items-center justify-center text-bai-blue mb-4">
                   {f.icon}
                 </div>
-                <h3 className="font-display text-lg font-bold text-[#101B3A] mb-2">
+                <h3 className="font-display text-lg font-bold text-ink mb-2">
                   {f.title}
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
@@ -120,22 +153,22 @@ export default function LandingPage() {
       {/* How It Works */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-[#101B3A] mb-12">
+          <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink mb-12">
             Paano Gamitin?
           </h2>
           <div className="grid md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-10 left-[16%] right-[16%] h-0.5 bg-[#0F3D91]/10" />
+            <div className="hidden md:block absolute top-10 left-[16%] right-[16%] h-0.5 bg-bai-blue/10" />
             {STEPS.map((s, i) => (
               <div key={i} className="relative text-center">
                 <div className="relative inline-flex mb-5">
-                  <div className="w-16 h-16 rounded-2xl bg-[#0F3D91] text-white flex items-center justify-center shadow-md">
+                  <div className="w-16 h-16 rounded-2xl bg-bai-blue text-white flex items-center justify-center shadow-md">
                     {s.icon}
                   </div>
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-[#FFC72C] text-[#101B3A] rounded-full flex items-center justify-center text-xs font-bold">
+                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-[#FFC72C] text-ink rounded-full flex items-center justify-center text-xs font-bold">
                     {s.num}
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-[#101B3A] mb-2">
+                <h3 className="font-display text-xl font-bold text-ink mb-2">
                   {s.title}
                 </h3>
                 <p className="text-sm text-gray-500 max-w-[200px] mx-auto">{s.desc}</p>
@@ -146,30 +179,30 @@ export default function LandingPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 lg:py-24 bg-[#EAF0FB]">
+      <section className="py-16 lg:py-24 bg-bai-blue-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8">
-            <h2 className="font-display text-3xl lg:text-4xl font-bold text-[#101B3A]">
+            <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink">
               Categories
             </h2>
-            <Link href="/categories" className="text-sm font-bold text-[#0F3D91] hover:underline hidden sm:block">
+            <Link href="/categories" className="text-sm font-bold text-bai-blue hover:underline hidden sm:block">
               Lahat ng categories
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {CATS.map((c) => (
+            {cats.map((c) => (
               <Link
                 key={c.slug}
                 href={`/search?category=${c.slug}`}
                 className={`bg-white p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-shadow border border-gray-100 ${c.tall ? "md:row-span-2 md:p-8" : ""}`}
               >
                 <CatIcon icon={c.icon} />
-                <span className="font-display font-bold text-[#101B3A]">{c.name}</span>
+                <span className="font-display font-bold text-ink">{c.name}</span>
               </Link>
             ))}
           </div>
           <div className="mt-6 text-center sm:hidden">
-            <Link href="/categories" className="text-sm font-bold text-[#0F3D91] hover:underline">
+            <Link href="/categories" className="text-sm font-bold text-bai-blue hover:underline">
               Lahat ng categories
             </Link>
           </div>
@@ -177,7 +210,7 @@ export default function LandingPage() {
       </section>
 
       {/* Seller CTA */}
-      <section className="py-16 lg:py-24 bg-[#0F3D91] text-white">
+      <section className="py-16 lg:py-24 bg-bai-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl">
             <h2 className="font-display text-3xl lg:text-4xl font-bold mb-4 leading-tight">
@@ -190,7 +223,7 @@ export default function LandingPage() {
             </p>
             <Link
               href="/sell"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFC72C] text-[#101B3A] font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFC72C] text-ink font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
             >
               Magbenta na
             </Link>
@@ -201,7 +234,7 @@ export default function LandingPage() {
       {/* Final CTA */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-xl mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl lg:text-4xl font-bold text-[#101B3A] mb-4">
+          <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink mb-4">
             Ready ka na?
           </h2>
           <p className="text-gray-500 mb-8">

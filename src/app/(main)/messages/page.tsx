@@ -90,7 +90,7 @@ export default function MessagesPage() {
               <Link
                 key={conv.id}
                 href={`/messages/${conv.id}`}
-                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card transition-all dark:bg-dark-800 dark:border-dark-700"
+                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 hover:shadow-card transition-all"
               >
                 <Avatar
                   src={otherUser.avatar}
@@ -99,7 +99,7 @@ export default function MessagesPage() {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                    <span className="font-medium text-gray-900 truncate">
                       {otherUser.name}
                     </span>
                     {conv.lastMessage && (
@@ -108,9 +108,9 @@ export default function MessagesPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{conv.listing.title}</p>
+                    <p className="text-xs text-gray-500 truncate">{conv.listing.title}</p>
                   {conv.lastMessage && (
-                    <p className="text-sm text-gray-600 dark:text-gray-300 truncate mt-0.5">
+                    <p className="text-sm text-gray-600 truncate mt-0.5">
                       {conv.lastMessage.message}
                     </p>
                   )}

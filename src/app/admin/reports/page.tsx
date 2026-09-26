@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FiFlag } from 'react-icons/fi';
@@ -89,11 +90,11 @@ export default function AdminReportsPage() {
     return matchSearch && matchStatus;
   });
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
+  if (loading) return <LoadingSpinner className="h-64" />;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Report Management</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Report Management</h1>
       <div className="flex gap-4">
         <input type="text" placeholder="Search reports..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
@@ -111,7 +112,7 @@ export default function AdminReportsPage() {
             {filtered.map(r => (
               <tr key={r.id} className="border-t hover:bg-gray-50">
                 <td className="p-3">{r.reporter.name}</td>
-                <td className="p-3 font-medium">{r.listing?.title || (r.reportedUser ? `${r.reportedUser.name} (user)` : '—')}</td>
+                <td className="p-3 font-medium">{r.listing?.title || (r.reportedUser ? `${r.reportedUser.name} (user)` : 'â€”')}</td>
                 <td className="p-3">{r.reason}</td>
                 <td className="p-3"><span className={`badge ${r.status === 'Pending' ? 'badge-yellow' : r.status === 'Reviewed' ? 'badge-green' : 'badge-gray'}`}>{r.status}</span></td>
                 <td className="p-3">{new Date(r.createdAt).toLocaleDateString()}</td>

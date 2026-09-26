@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiSun, FiMoon, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
+import { FiSearch, FiMenu, FiX, FiMessageSquare, FiBell, FiUser, FiLogOut, FiSettings, FiPackage } from "react-icons/fi";
 import { IoAddCircle } from "react-icons/io5";
 import toast from "react-hot-toast";
 import Avatar from "@/components/ui/Avatar";
-import { useTheme } from "@/components/layout/ThemeProvider";
 import Logo from "@/components/brand/Logo";
 
 interface User {
@@ -21,7 +20,6 @@ interface User {
 
 const Navbar: React.FC = () => {
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -158,7 +156,7 @@ const Navbar: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200 placeholder-gray-400 dark:bg-dark-800 dark:border-dark-600 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-bai-blue/30"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200 placeholder-gray-400"
                 maxLength={200}
               />
             </div>
@@ -218,7 +216,7 @@ const Navbar: React.FC = () => {
                       <div className="px-4 py-3 border-b border-gray-100">
                         <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
                         <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                        <span className={`inline-block mt-1.5 px-2.5 py-0.5 text-xs font-medium rounded-full capitalize ${getRoleColor()}`}>
+                        <span className={`inline-block mt-1.5 px-2.5 py-0.5 text-xs font-medium rounded-lg capitalize ${getRoleColor()}`}>
                           {user.role || "buyer"}
                         </span>
                       </div>
@@ -291,14 +289,6 @@ const Navbar: React.FC = () => {
                 </Link>
               </div>
             )}
-
-            <button
-              onClick={toggleTheme}
-              className="hidden md:block p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200"
-              title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-            >
-              {theme === "light" ? <FiMoon className="w-5 h-5" /> : <FiSun className="w-5 h-5" />}
-            </button>
 
             <button
               onClick={() => {

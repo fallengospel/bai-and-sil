@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -184,7 +184,7 @@ export default function OffersPage() {
                     </span>
                   </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    {offer.role === "buyer" ? `To: ${offer.seller?.name}` : `From: ${offer.buyer?.name}`} • {timeAgo(offer.createdAt)}
+                    {offer.role === "buyer" ? `To: ${offer.seller?.name}` : `From: ${offer.buyer?.name}`} â€¢ {timeAgo(offer.createdAt)}
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
@@ -200,7 +200,7 @@ export default function OffersPage() {
               <div className="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-gray-100">
                 <Link
                   href={`/messages/${offer.conversationId}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   <FiMessageSquare className="w-3.5 h-3.5" /> Conversation
                 </Link>

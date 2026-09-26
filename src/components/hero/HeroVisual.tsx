@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { PhoneIllustration, SneakerIllustration, FanIllustration, ControllerIllustration } from "./ProductIllustrations";
@@ -73,22 +73,22 @@ function ListingCard({
 
   return (
     <div
-      className={`absolute w-[170px] bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-700 ${
+      className={`absolute w-[170px] bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-700 ${
         entering ? "opacity-0 translate-x-8" : "opacity-100"
       } ${sold ? "opacity-40 scale-95" : ""}`}
       style={{
         transform: `rotate(${card.rotation}deg) translate(${card.x}px, ${card.y}px)`,
       }}
     >
-      <div className="h-[90px] bg-[#EAF0FB] flex items-center justify-center p-3">
+      <div className="h-[90px] bg-bai-blue-light flex items-center justify-center p-3">
         <Illustration className="w-full h-full" />
       </div>
       <div className="p-2.5">
         <div className="flex items-start justify-between gap-1">
-          <p className="text-xs font-bold text-[#101B3A] leading-tight truncate">
+          <p className="text-xs font-bold text-ink leading-tight truncate">
             {card.name}
           </p>
-          <span className="shrink-0 text-[10px] font-medium text-[#0F3D91] bg-[#EAF0FB] px-1.5 py-0.5 rounded-full">
+          <span className="shrink-0 text-[10px] font-medium text-bai-blue bg-bai-blue-light px-1.5 py-0.5 rounded-lg">
             {card.condition}
           </span>
         </div>

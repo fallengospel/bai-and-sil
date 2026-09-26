@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 
@@ -22,7 +22,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
 
   if (displayImages.length === 0) {
     return (
-      <div className={`bg-gray-100 rounded-xl aspect-square flex items-center justify-center ${className}`}>
+      <div className={`bg-gray-100 rounded-2xl aspect-square flex items-center justify-center ${className}`}>
         <img src="/placeholder.svg" alt="No image available" className="w-full h-full object-cover" />
       </div>
     );
@@ -39,7 +39,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
   return (
     <div className={`space-y-3 ${className}`}>
       <div
-        className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 cursor-zoom-in"
+        className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-zoom-in"
         onClick={() => setIsZoomed(!isZoomed)}
       >
         <img

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -236,7 +236,7 @@ export default function ConversationPage() {
             href={`/listing/${conversation.listing.slug}`}
             className="text-xs text-bai-blue hover:underline truncate block"
           >
-            {conversation.listing.title} · {formatPrice(conversation.listing.price)}
+            {conversation.listing.title} Â· {formatPrice(conversation.listing.price)}
           </Link>
         </div>
       </div>
@@ -324,7 +324,7 @@ export default function ConversationPage() {
           <button
             key={prompt}
             onClick={() => handleQuickPrompt(prompt)}
-            className={`flex-shrink-0 px-3 py-1.5 text-xs rounded-full transition-colors ${
+            className={`flex-shrink-0 px-3 py-1.5 text-xs rounded-lg transition-colors ${
               pendingPrompt === prompt
                 ? "bg-bai-blue text-white font-bold"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -393,7 +393,7 @@ export default function ConversationPage() {
           Listed price: <strong>{formatPrice(conversation.listing.price)}</strong>
         </p>
         <Input
-          label="Your offer (₱)"
+          label="Your offer (â‚±)"
           type="number"
           value={offerAmount}
           onChange={(e) => setOfferAmount(e.target.value)}

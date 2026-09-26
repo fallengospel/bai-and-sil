@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -383,7 +383,7 @@ export default function AdminTestingPage() {
         <button
           onClick={runAllTests}
           disabled={running}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#0F3D91] text-white rounded-lg font-bold hover:bg-[#0D347A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-5 py-2.5 bg-bai-blue text-white rounded-lg font-bold hover:bg-bai-blue-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {running ? <FiLoader className="w-4 h-4 animate-spin" /> : <FiPlay className="w-4 h-4" />}
           {running ? 'Running...' : 'Run All Tests'}
@@ -394,8 +394,8 @@ export default function AdminTestingPage() {
       <div className="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit">
         <button
           onClick={() => setTab('qa')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            tab === 'qa' ? 'bg-white text-[#0F3D91] shadow-sm' : 'text-gray-600 hover:text-gray-900'
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            tab === 'qa' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           <FiCheckSquare className="w-4 h-4" />
@@ -403,8 +403,8 @@ export default function AdminTestingPage() {
         </button>
         <button
           onClick={() => setTab('dev')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            tab === 'dev' ? 'bg-white text-[#0F3D91] shadow-sm' : 'text-gray-600 hover:text-gray-900'
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            tab === 'dev' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           <FiCode className="w-4 h-4" />
@@ -414,7 +414,7 @@ export default function AdminTestingPage() {
 
       {/* Summary Bar */}
       {total > 0 && (
-        <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100">
+        <div className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100">
           <div className="flex items-center gap-2 text-sm">
             <FiCheckCircle className="w-4 h-4 text-green-500" />
             <span className="font-bold text-green-700">{totalPassed}</span>
@@ -438,11 +438,11 @@ export default function AdminTestingPage() {
       {/* Suites */}
       <div className="space-y-4">
         {suites.map((suite, si) => (
-          <div key={si} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+          <div key={si} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
             <div className="flex items-center justify-between p-4 border-b border-gray-50">
               <div className="flex items-center gap-3">
                 {suite.status === 'running' ? (
-                  <FiLoader className="w-5 h-5 text-[#0F3D91] animate-spin" />
+                  <FiLoader className="w-5 h-5 text-bai-blue animate-spin" />
                 ) : suite.status === 'done' ? (
                   suite.tests.some(t => t.status === 'fail') ? (
                     <FiXCircle className="w-5 h-5 text-red-500" />

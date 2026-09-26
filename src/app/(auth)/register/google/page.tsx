@@ -1,6 +1,7 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
@@ -56,7 +57,7 @@ export default function GoogleRegisterPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F3D91]" />
+        <LoadingSpinner />
       </div>
     );
   }
@@ -78,7 +79,7 @@ export default function GoogleRegisterPage() {
 
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Welcome to BAI &amp; SIL</h1>
-          <p className="text-gray-500 mt-2">One last step — what do you want to do?</p>
+          <p className="text-gray-500 mt-2">One last step â€” what do you want to do?</p>
         </div>
 
         {error && (
@@ -91,11 +92,11 @@ export default function GoogleRegisterPage() {
           <button
             onClick={() => handleRoleSelect('buyer')}
             disabled={submitting}
-            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-[#0F3D91]/30 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-bai-blue/30 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#0F3D91]/10 flex items-center justify-center flex-shrink-0">
-                <FiSearch className="w-6 h-6 text-[#0F3D91]" />
+              <div className="w-12 h-12 rounded-2xl bg-bai-blue/10 flex items-center justify-center flex-shrink-0">
+                <FiSearch className="w-6 h-6 text-bai-blue" />
               </div>
               <div>
                 <h3 className="font-bold text-gray-900">I want to buy</h3>
@@ -110,7 +111,7 @@ export default function GoogleRegisterPage() {
             className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-[#FFC72C]/50 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#FFC72C]/20 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-[#FFC72C]/20 flex items-center justify-center flex-shrink-0">
                 <FiShoppingBag className="w-6 h-6 text-[#E6A800]" />
               </div>
               <div>
@@ -123,7 +124,7 @@ export default function GoogleRegisterPage() {
 
         {submitting && (
           <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-[#0F3D91]" />
+            <LoadingSpinner size="sm" inline />
             Setting up your account...
           </div>
         )}

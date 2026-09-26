@@ -1,6 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import StatCard from "@/components/ui/StatCard";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiUsers, FiPackage, FiStar, FiAlertTriangle, FiTrendingUp, FiShoppingBag, FiUserCheck } from 'react-icons/fi';
@@ -53,7 +55,7 @@ export default function AdminDashboard() {
       .finally(() => setLoading(false));
   }, [router]);
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-bai-blue" /></div>;
+  if (loading) return <LoadingSpinner className="h-64" />;
 
   const maxCategoryCount = Math.max(...(stats?.categoryStats.map(c => c.count) || [1]));
 
@@ -68,50 +70,30 @@ export default function AdminDashboard() {
 
       {/* Main Stats */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-bai-blue to-bai-blue/80 rounded-2xl flex items-center justify-center shadow-sm">
-              <FiUsers className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.totalUsers || 0}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl flex items-center justify-center shadow-sm">
-              <FiPackage className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Active Listings</p>
-              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.activeListings || 0}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-400 rounded-2xl flex items-center justify-center shadow-sm">
-              <FiStar className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Total Sold</p>
-              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.totalSold || 0}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-coral to-red-400 rounded-2xl flex items-center justify-center shadow-sm">
-              <FiAlertTriangle className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Pending Reports</p>
-              <p className="text-2xl font-bold text-gray-900 animate-count-up">{stats?.pendingReports || 0}</p>
-            </div>
-          </div>
-        </div>
+        <StatCard
+          label="Total Users"
+          value={stats?.totalUsers || 0}
+          icon={<FiUsers className="w-6 h-6 text-white" />}
+          iconBg="bg-gradient-to-br from-bai-blue to-bai-blue/80"
+        />
+        <StatCard
+          label="Active Listings"
+          value={stats?.activeListings || 0}
+          icon={<FiPackage className="w-6 h-6 text-white" />}
+          iconBg="bg-gradient-to-br from-green-500 to-green-400"
+        />
+        <StatCard
+          label="Total Sold"
+          value={stats?.totalSold || 0}
+          icon={<FiStar className="w-6 h-6 text-white" />}
+          iconBg="bg-gradient-to-br from-purple-500 to-purple-400"
+        />
+        <StatCard
+          label="Pending Reports"
+          value={stats?.pendingReports || 0}
+          icon={<FiAlertTriangle className="w-6 h-6 text-white" />}
+          iconBg="bg-gradient-to-br from-coral to-red-400"
+        />
       </div>
 
       {/* User Breakdown Chart */}
@@ -208,7 +190,7 @@ export default function AdminDashboard() {
                   <p className="font-medium text-sm truncate text-gray-900">{user.name}</p>
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
-                <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                <span className={`px-2.5 py-1 text-xs font-medium rounded-lg ${
                   user.role === 'seller' ? 'bg-sil-yellow/10 text-sil-yellow-dark' :
                   user.role === 'admin' ? 'bg-red-100 text-red-700' :
                   'bg-bai-blue/10 text-bai-blue'
@@ -235,7 +217,7 @@ export default function AdminDashboard() {
                   <p className="font-medium text-sm truncate text-gray-900">{listing.title}</p>
                   <p className="text-xs text-gray-500">by {listing.seller?.name}</p>
                 </div>
-                <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                <span className={`px-2.5 py-1 text-xs font-medium rounded-lg ${
                   listing.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
                 }`}>
                   {listing.status}

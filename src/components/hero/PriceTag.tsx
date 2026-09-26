@@ -1,4 +1,4 @@
-export default function PriceTag({
+﻿export default function PriceTag({
   price,
   className = "",
 }: {
@@ -10,9 +10,9 @@ export default function PriceTag({
       {/* String */}
       <div className="w-px h-3 bg-[#101B3A]/40" />
       {/* Tag body */}
-      <div className="relative bg-[#FFC72C] px-3 py-1.5 rounded-sm shadow-sm">
+      <div className="relative bg-[#FFC72C] px-3 py-1.5 rounded-lg shadow-sm">
         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#FFC72C] rounded-full" />
-        <span className="text-sm font-bold text-[#101B3A] whitespace-nowrap">
+        <span className="text-sm font-bold text-ink whitespace-nowrap">
           {price}
         </span>
       </div>

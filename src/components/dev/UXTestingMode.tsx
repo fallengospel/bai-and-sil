@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { 
@@ -143,7 +143,7 @@ function ScoreBadge({ findings }: { findings: Finding[] }) {
   else if (score < 85) color = "bg-orange-100 text-orange-700";
   
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${color}`}>
+    <span className={`inline-flex items-center px-3 py-1 rounded-lg text-sm font-bold ${color}`}>
       {score}%
     </span>
   );
@@ -182,7 +182,7 @@ export default function UXTestingMode() {
 
       {/* Panel */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-[420px] max-h-[600px] bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div className="absolute bottom-16 right-0 w-[420px] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
           {/* Header */}
           <div className="bg-gray-900 text-white px-6 py-4">
             <div className="flex items-center justify-between mb-2">
@@ -267,7 +267,7 @@ export default function UXTestingMode() {
                       <p className="text-body-sm text-gray-700">{finding.message}</p>
                       
                       {expandedFinding === finding.id && finding.suggestion && (
-                        <div className="mt-2 p-3 bg-blue-50 rounded-xl">
+                        <div className="mt-2 p-3 bg-blue-50 rounded-2xl">
                           <p className="text-caption text-blue-700">
                             <strong>Suggestion:</strong> {finding.suggestion}
                           </p>
