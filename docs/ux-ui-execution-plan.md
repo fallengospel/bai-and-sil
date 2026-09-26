@@ -14,7 +14,7 @@
 | 0 | Baseline & Setup | ✅ Done | — | ✅ | — |
 | 1 | Critical Fixes | ✅ Done | C1–C6 | ✅ | ✅ |
 | 2 | Core Interaction Fixes | ✅ Done | H2–H7, H9–H12 | ✅ | ✅ |
-| 3 | Mobile & Navigation | ⬜ Not started | C2, H1, M1, M7, M33, L4 | ⬜ | ⬜ |
+| 3 | Mobile & Navigation | ✅ Done | C2, H1, M1, M7, M16, M33, L4 | ✅ | ✅ |
 | 4 | Dead & Misleading Features | ⬜ Not started | H3, M2, M3, M34, M24, M27b, L5 | ⬜ | ⬜ |
 | 5 | Error Handling & Feedback | ⬜ Not started | H11, C5, M16, empty/loading states | ⬜ | ⬜ |
 | 6 | Flows & Data Polish | ⬜ Not started | M6, M8–M12, M21–M23, M28, M30, M32 | ⬜ | ⬜ |
@@ -68,18 +68,19 @@
 
 ---
 
-## Phase 3 — Mobile & Navigation 📱
+## Phase 3 — Mobile & Navigation 📱 ✅ (2026-09-25)
 **Purpose:** Full usability on phones.
 
-- [ ] **H1** Mobile drawer/tabs for admin, seller, buyer layouts (reuse Navbar hamburger pattern or a collapsible top bar)
-- [ ] **C2 continued** Verify chat composer, bottom CTAs, footer clear the bottom nav on all pages; add global `pb-16 md:pb-0` where needed
-- [ ] **M1** Consolidate mobile nav: one system — bottom nav = primary actions, hamburger = secondary links; align link sets
-- [ ] **M33** Surface search in mobile top bar (tap → focused search screen/expand) instead of hamburger-only
-- [ ] **M7** Mobile search: filters behind a "Filters" button/sheet; results first
-- [ ] **L4** Define `safe-area-bottom` (env(safe-area-inset-bottom)) or remove class
-- [ ] **M16** Admin tables: horizontal scroll wrapper (`overflow-x-auto`) on mobile
+- [x] **H1** Mobile chip-nav added to admin, seller, buyer layouts (sticky, horizontally scrollable, correct active states via `usePathname`)
+- [x] **C2** (from Phase 1) chat thread + global bottom padding already fixed
+- [x] **M1** Hamburger de-duplicated vs bottom nav (removed Messages/My Profile links; kept Offers, Notifications, Dashboard, Logout)
+- [x] **M33** Dedicated 1-tap mobile search: search icon in header opens autofocused search row (mutually exclusive with hamburger)
+- [x] **M7** Mobile filters collapsible ("Show/Hide Filters" toggle, default collapsed, `aria-expanded`); results visible immediately
+- [x] **L4** `.safe-area-bottom` defined (`env(safe-area-inset-bottom)`)
+- [x] **M16** Admin tables wrapped in `overflow-x-auto` with `min-w` (3 pages)
+- [x] **M34** (early) Testing link dev-gated in admin nav + middleware redirects `/admin/testing` → `/admin` in production
 
-**Exit criteria:** Every authenticated page navigable on a 375px viewport; no overlap with bottom nav; search reachable in ≤2 taps.
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live: root/search 200, `/admin/testing` 307 → login ✅
 
 ---
 

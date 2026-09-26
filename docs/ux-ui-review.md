@@ -267,3 +267,4 @@
 | 2026-09-25 | opencode | Initial audit: 6 critical, 12 high, ~34 medium, ~14 low |
 | 2026-09-25 | opencode | Resolved C1–C6 (Phase 1, deployed to main) |
 | 2026-09-25 | opencode | Resolved H2, H4, H5, H6, H7, H9, H10, H12 (Phase 2, deployed to main); added `/api/seller/stats`, `/api/users/[id]/report`, `src/lib/favorites.ts`; schema: Report.reportedUserId + nullable listingId |
+| 2026-09-25 | opencode | Resolved C2, H1, M1, M7, M16, M33, L4, M34 (Phase 3, deployed to main) |
