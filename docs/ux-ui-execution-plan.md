@@ -20,7 +20,7 @@
 | 6 | Flows & Data Polish | ✅ Done | M6, M8–M12, M20–M23, M27, M28, M30, M32 | ✅ | ✅ |
 | 7 | Visual Consistency | ✅ Done | L1–L3, L14, M5, M26, H8 (dark mode removed), StatCard, spinners | ✅ | ✅ |
 | 8 | Accessibility | ✅ Done | L6–L9, L11, L13, L14(Phase 7), M13, M14, M18, contrast, keyboard | ✅ | ✅ |
-| 9 | Final Verification & Deploy | ⬜ Not started | all | ⬜ | ⬜ |
+| 9 | Final Verification & Deploy | ✅ Done | all | ✅ (automated; browser manual pass pending) | ✅ |
 
 **Status legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked
 
@@ -177,15 +177,16 @@
 
 ---
 
-## Phase 9 — Final Verification & Deploy 🚀
-- [ ] Full QA: `node scripts/qa-test.js` → 50/50 (update tests if behavior intentionally changed)
-- [ ] Browser tests via `/admin/testing` (dev)
-- [ ] `npx next build` passes (stop dev node processes first)
-- [ ] Manual pass: landing, search+filters, listing detail (SSR clean), sell wizard incl. draft restore, edit, messages on mobile, favorites toggle, offers accept/decline, notifications, seller/buyer/admin on 375px, login/register/OTP, dark toggle behavior
-- [ ] `dev-err.log` reviewed — no `window is not defined`, no new errors
-- [ ] Update `docs/ux-ui-review.md` change log (issues resolved)
-- [ ] Merge `testing` → `staging` → verify → `main` → Vercel deploy
-- [ ] Post-deploy smoke test on https://bai-and-sil.vercel.app/
+## Phase 9 — Final Verification & Deploy 🚀 ✅ (2026-09-26)
+- [x] Full QA: `node scripts/qa-test.js` → 50/50 on testing, staging, and main (Phase 8 runs; no test changes needed)
+- [ ] **Manual (user):** browser suite at `/admin/testing` (no headless browser deps in repo — requires clicking in a browser)
+- [x] `npx next build` passes (no stray dev node processes)
+- [x] Route smoke via dev + live: landing, search, login, register 200; favorites/offers/notifications/messages/sell/my-listings 307→login (auth-gated, correct); listing detail SSR 200 with real `<title>` on dev + Vercel; `/api/listings` live 200
+- [x] `dev-err.log` reviewed — stale (last write 2026-09-04, pre-M18); no `window is not defined`/`ReferenceError`; `metadataBase` now set in `layout.tsx:26` (warning resolved)
+- [x] `docs/ux-ui-review.md` change log updated (Phases 7 + 8)
+- [x] Merge `testing` → `staging` → `main` → Vercel deployed (Phase 8 tip `1abcb18`)
+- [x] Post-deploy smoke: root/listing/login 200; live listing `<title>` = "Celestron PowerSeeker Telescope - ₱5,500 | BAI AND SIL" (M18 verified live)
+- **Note:** dark-mode manual item superseded — dark mode removed by user decision in Phase 7. 375px visual pass + `/admin/testing` browser suite remain for a human in a real browser (qa-test.js is API/SSR-level only).
 
 ---
 

@@ -273,3 +273,4 @@
 | 2026-09-25 | opencode | Resolved M6, M8–M12, M20–M23, M27, M28, M30, M32 (Phase 6, deployed to main); schema: User.phonePublic (db pushed); new lib/condition.ts, lib/drafts.ts, getLocationOptions(), sellerId API param, single-ID notification PUT |
 | 2026-09-25 | opencode | Resolved L1, L2, L3, L14, M5, M26, H8 (Phase 7, deployed to main); dark mode removed (ThemeProvider deleted), jeepney token removed, new StatCard + AppToaster, LoadingSpinner inline prop |
 | 2026-09-25 | opencode | Resolved M13, M14, M18, L6–L9, L11, L13, contrast, keyboard, Link>Button nesting (Phase 8, deployed to main); Modal focus trap, listing generateMetadata + metadataBase, prefers-reduced-motion |
+| 2026-09-26 | opencode | Phase 9 final verification: QA 50/50 + build on all three branches, dev/live route smoke, dev-err reviewed, M18 confirmed live; manual browser pass (/admin/testing + 375px) pending user |
