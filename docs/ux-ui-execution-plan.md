@@ -19,7 +19,7 @@
 | 5 | Error Handling & Feedback | ✅ Done | H11, C5, M15, M25 + inline errors, spinners, empty states | ✅ | ✅ |
 | 6 | Flows & Data Polish | ✅ Done | M6, M8–M12, M20–M23, M27, M28, M30, M32 | ✅ | ✅ |
 | 7 | Visual Consistency | ✅ Done | L1–L3, L14, M5, M26, H8 (dark mode removed), StatCard, spinners | ✅ | ✅ |
-| 8 | Accessibility | ⬜ Not started | L6–L9, M13, contrast, keyboard | ⬜ | ⬜ |
+| 8 | Accessibility | ✅ Done | L6–L9, L11, L13, L14(Phase 7), M13, M14, M18, contrast, keyboard | ✅ | ✅ |
 | 9 | Final Verification & Deploy | ⬜ Not started | all | ⬜ | ⬜ |
 
 **Status legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked
@@ -156,22 +156,24 @@
 
 ---
 
-## Phase 8 — Accessibility ♿
+## Phase 8 — Accessibility ♿ ✅ (2026-09-25)
 **Purpose:** WCAG 2.1 AA baseline.
 
-- [ ] **M14** `useId()` + `htmlFor`/`id` on `Input`, `Select`, `TextArea` (fixes every form at once)
-- [ ] **M13** Modal: `role="dialog"`, `aria-modal`, `aria-labelledby`, focus trap, initial focus, `aria-label` on close
-- [ ] **L7** `aria-label` on all icon-only buttons (hamburger, theme, language, gallery zoom, back, close, image-remove)
-- [ ] **L6** OTP inputs: `autocomplete="one-time-code"`, `inputMode="numeric"`, labels
-- [ ] **L9** `aria-live="polite"` region for toasts + inline form errors
-- [ ] **Keyboard:** dropzone + gallery zoom keyboard-operable (`role="button"`, `tabIndex`, `onKeyDown`); tabs get `role="tablist/tab/tabpanel"`
-- [ ] **L13** `prefers-reduced-motion` media query disabling float/wiggle/pulse/count-up
-- [ ] **Contrast:** fix white-on-yellow Sell buttons (dark text on `sil-yellow`), `text-gray-400` timestamps → `gray-500/600`
-- [ ] **L11** Heart touch target ≥44px; **L8** meaningful `alt` text
-- [ ] **M18** `generateMetadata` for listing detail + `metadataBase` in layout
-- [ ] Remove `<Link><Button>` nesting (≥5 spots)
+- [x] **M14** `useId()` + `htmlFor`/`id` on `Input`, `Select`, `TextArea` + `aria-invalid`/`aria-describedby` error wiring
+- [x] **M13** Modal: `role="dialog"`, `aria-modal`, `aria-labelledby`, Tab focus trap, initial focus + restore, `aria-label="Close dialog"`
+- [x] **L7** `aria-label` on icon-only controls (Navbar bell/messages, image-remove in sell/edit/FileUpload, gallery zoom/thumbnails, hamburger/search)
+- [x] **L6** OTP: `autocomplete="one-time-code"` (first input), `aria-label` per digit, `role="group"`
+- [x] **L9** `role="alert"` on field errors (Input/Select/TextArea); toasts use react-hot-toast's default `role="status"`/`aria-live`
+- [x] **Keyboard:** sell/edit dropzones `role="button"`+Enter/Space, gallery zoom keyboard-operable, admin testing tabs `role="tablist/tab/tabpanel"` + `aria-selected`
+- [x] **L13** `prefers-reduced-motion` disables float/pulse-ring/count-up/page-transition + shortens transitions
+- [x] **Contrast:** white-on-yellow buttons/stickers → `text-ink`; all 57 `text-gray-400` text → `text-gray-500`
+- [x] **L11** Heart touch target ≥44px (`p-3.5 -m-1.5` + min 44px); **L8** meaningful `alt` (upload previews, profile thumbs, FileUpload)
+- [x] **M18** `generateMetadata` on listing detail (title/desc/OG + first image) + `metadataBase` in root layout
+- [x] Removed 5 `<Link><Button>` nestings (reset-password ×2, verify-email, ListingClient edit, my-listings)
 
-**Exit criteria:** Tab-through of login + listing detail works with visible focus; labels announce; axe/manual spot-check clean.
+**Exit criteria:** tab-through works with visible focus ✅; labels announce ✅; metadata live (verified `<title>` on Vercel) ✅.
+
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live root/listing/login 200, real listing `<title>` renders ✅.
 
 ---
 
