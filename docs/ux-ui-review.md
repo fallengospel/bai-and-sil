@@ -265,3 +265,4 @@
 | Date | Reviewer | Findings added / resolved |
 |---|---|---|
 | 2026-09-25 | opencode | Initial audit: 6 critical, 12 high, ~34 medium, ~14 low |
+| 2026-09-25 | opencode | Resolved C1–C6 (Phase 1, deployed to main) |

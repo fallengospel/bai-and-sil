@@ -12,7 +12,7 @@
 | Phase | Name | Status | Issues | Verified | Deployed |
 |---|---|---|---|---|---|
 | 0 | Baseline & Setup | ✅ Done | — | ✅ | — |
-| 1 | Critical Fixes | ⬜ Not started | C1–C6 | ⬜ | ⬜ |
+| 1 | Critical Fixes | ✅ Done | C1–C6 | ✅ | ✅ |
 | 2 | Core Interaction Fixes | ⬜ Not started | H2–H7, H9–H12 | ⬜ | ⬜ |
 | 3 | Mobile & Navigation | ⬜ Not started | C2, H1, M1, M7, M33, L4 | ⬜ | ⬜ |
 | 4 | Dead & Misleading Features | ⬜ Not started | H3, M2, M3, M34, M24, M27b, L5 | ⬜ | ⬜ |
@@ -38,17 +38,17 @@
 
 ---
 
-## Phase 1 — Critical Fixes 🔴
+## Phase 1 — Critical Fixes 🔴 ✅ (2026-09-25)
 **Purpose:** Unblock the broken core tasks.
 
-- [ ] **C1** Move `window.location.href` out of render in `ListingClient.tsx:250` (use `useEffect`/`useState` or `usePathname`) → SSR crash gone, `dev.log` clean
-- [ ] **C2** Add bottom padding so MobileNav clears chat composer: `messages/[id]/page.tsx` + `pb-16 md:pb-0` pattern in `layout.tsx`; also fix general content overlap
-- [ ] **C3** Wire report trigger on listing detail: add flag button → `setReportModal(true)` (`ListingClient.tsx`)
-- [ ] **C4** Profile "Message" creates/opens conversation with that user (use existing conversation API or add a `?user=` start-conversation path), not just `/messages`
-- [ ] **C5** `ReportModal.tsx`: only `setSubmitted(true)` when `res.ok`; show error toast otherwise
-- [ ] **C6** Email delivery: verify Resend config/env; if unverifiable, relax `emailVerified` gate on `POST /api/listings` with clear TODO (product decision: prefer fixing Resend)
+- [x] **C1** Move `window.location.href` out of render in `ListingClient.tsx` (safe `/listing/{slug}` fallback; component uses `window` client-side only) → SSR crash gone, listing detail 200
+- [x] **C2** Chat thread height `h-[calc(100vh-8rem)] md:h-[calc(100vh-4rem)]` + global `pb-16 md:pb-0` on page wrapper → composer/footer clear MobileNav
+- [x] **C3** Report flag button added to listing detail CTAs → opens ReportModal
+- [x] **C4** Profile "Message" now finds existing conversation or creates one via `POST /api/conversations` and navigates to the thread
+- [x] **C5** ReportModal only shows success on `res.ok`; error toasts otherwise
+- [x] **C6** Gate relaxed (user decision): `emailVerified` enforced only when `RESEND_API_KEY` is set; TODO to re-enable when Resend is configured
 
-**Exit criteria:** Listing detail SSR-clean; report reachable + honest; profile message works; mobile chat usable; QA 50/50; build passes.
+**Verified:** testing QA 50/50 + build ✅ → staging QA 50/50 + build ✅ → main QA 50/50 ✅ → live smoke: root 200, listing 200, report button present on https://bai-and-sil.vercel.app/ ✅
 
 ---
 
