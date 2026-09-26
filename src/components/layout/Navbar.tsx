@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [notificationCount, setNotificationCount] = useState(0);
@@ -97,6 +98,7 @@ const Navbar: React.FC = () => {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
       setMobileMenuOpen(false);
+      setMobileSearchOpen(false);
     }
   };
 
@@ -305,7 +307,21 @@ const Navbar: React.FC = () => {
             )}
 
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileSearchOpen(!mobileSearchOpen);
+                setMobileMenuOpen(false);
+              }}
+              aria-label={mobileSearchOpen ? "Close search" : "Open search"}
+              className="md:hidden p-2.5 text-gray-600 hover:bg-gray-100 rounded-2xl transition-all duration-200"
+            >
+              {mobileSearchOpen ? <FiX className="w-5 h-5" /> : <FiSearch className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                setMobileSearchOpen(false);
+              }}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               className="md:hidden p-2.5 text-gray-600 hover:bg-gray-100 rounded-2xl transition-all duration-200"
             >
               {mobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
@@ -314,13 +330,14 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
+      {mobileSearchOpen && (
+        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
           <form onSubmit={handleSearch} className="p-4">
             <div className="relative group">
               <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
               <input
                 type="text"
+                autoFocus
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
@@ -329,7 +346,12 @@ const Navbar: React.FC = () => {
               />
             </div>
           </form>
-          <div className="px-4 pb-4 space-y-2">
+        </div>
+      )}
+
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
+          <div className="px-4 py-4 space-y-2">
             {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
@@ -359,13 +381,6 @@ const Navbar: React.FC = () => {
             {user ? (
               <>
                 <Link
-                  href="/messages"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <FiMessageSquare className="w-4 h-4" /> Messages
-                </Link>
-                <Link
                   href="/offers"
                   className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
@@ -378,13 +393,6 @@ const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiBell className="w-4 h-4" /> Notifications {notificationCount > 0 && `(${notificationCount})`}
-                </Link>
-                <Link
-                  href="/profile/me"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <FiUser className="w-4 h-4" /> My Profile
                 </Link>
                 <Link
                   href={getDashboardLink()}

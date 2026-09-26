@@ -56,7 +56,8 @@ export default function AdminListingsPage() {
         </select>
       </div>
       <div className="card overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left p-3">Image</th><th className="text-left p-3">Title</th><th className="text-left p-3">Seller</th><th className="text-left p-3">Category</th><th className="text-left p-3">Status</th><th className="text-left p-3">Price</th><th className="text-right p-3">Actions</th></tr></thead>
           <tbody>
             {filtered.map(l => (
@@ -72,6 +73,7 @@ export default function AdminListingsPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { FiPackage, FiPlusCircle, FiMessageSquare, FiStar, FiDollarSign } from 'react-icons/fi';
+import { FiPackage, FiPlusCircle, FiMessageSquare } from 'react-icons/fi';
 
 const sidebarLinks = [
-  { title: 'Dashboard', href: '/seller/dashboard', icon: FiPackage },
+  { title: 'Dashboard', href: '/seller/dashboard', icon: FiPackage, exact: true },
   { title: 'My Listings', href: '/my-listings', icon: FiPackage },
-  { title: 'Create Listing', href: '/sell', icon: FiPlusCircle },
+  { title: 'Create Listing', href: '/sell', icon: FiPlusCircle, exact: true },
   { title: 'Messages', href: '/messages', icon: FiMessageSquare },
 ];
 
+const isLinkActive = (pathname: string, link: { href: string; exact?: boolean }) =>
+  link.exact ? pathname === link.href : pathname.startsWith(link.href);
+
 export default function SellerLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -46,14 +50,29 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
           {sidebarLinks.map((link) => (
             <Link key={link.href} href={link.href}
               className={cn('flex items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium transition-colors',
-                link.href === '/seller/dashboard' ? 'bg-sil-yellow-light text-sil-yellow' : 'text-gray-600 hover:bg-gray-100'
+                isLinkActive(pathname, link) ? 'bg-sil-yellow-light text-sil-yellow' : 'text-gray-600 hover:bg-gray-100'
               )}>
               <link.icon className="h-5 w-5" />{link.title}
             </Link>
           ))}
         </nav>
       </aside>
-      <main className="flex-1 p-8">{children}</main>
+      <div className="flex-1 min-w-0">
+        <nav className="md:hidden flex gap-2 overflow-x-auto px-4 py-3 border-b border-gray-100 bg-gray-50 sticky top-16 z-30">
+          {sidebarLinks.map((link) => (
+            <Link key={link.href} href={link.href}
+              className={cn('flex items-center gap-1.5 flex-shrink-0 px-3 py-1.5 rounded-2xl text-xs font-medium transition-colors',
+                isLinkActive(pathname, link)
+                  ? 'bg-sil-yellow-light text-sil-yellow font-bold'
+                  : 'bg-white text-gray-600 border border-gray-200'
+              )}>
+              <link.icon className="h-4 w-4" />
+              {link.title}
+            </Link>
+          ))}
+        </nav>
+        <main className="p-4 md:p-8">{children}</main>
+      </div>
     </div>
   );
 }

@@ -137,6 +137,11 @@ export async function middleware(request: NextRequest) {
     if (isAdmin && payload.role !== 'admin') {
       return addSecurityHeaders(NextResponse.redirect(new URL('/', request.url)), request);
     }
+
+    // Hide the QA testing page outside development
+    if (pathname.startsWith('/admin/testing') && process.env.NODE_ENV === 'production') {
+      return addSecurityHeaders(NextResponse.redirect(new URL('/admin', request.url)), request);
+    }
   }
 
   return addSecurityHeaders(NextResponse.next(), request);

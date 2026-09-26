@@ -175,3 +175,8 @@ body.dark {
 ::selection {
   @apply bg-bai-blue/20 text-bai-blue-dark;
 }
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+

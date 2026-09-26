@@ -51,7 +51,8 @@ export default function AdminUsersPage() {
       <h1 className="text-3xl font-bold">User Management</h1>
       <input type="text" placeholder="Search users..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
       <div className="card overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left p-3">User</th><th className="text-left p-3">Email</th><th className="text-left p-3">Role</th><th className="text-left p-3">Joined</th><th className="text-right p-3">Actions</th></tr></thead>
           <tbody>
             {filtered.map(u => (
@@ -68,6 +69,7 @@ export default function AdminUsersPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

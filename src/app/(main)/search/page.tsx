@@ -100,6 +100,7 @@ export default function SearchPage() {
   const [minPrice, setMinPrice] = useState(initial.minPrice);
   const [maxPrice, setMaxPrice] = useState(initial.maxPrice);
   const [sort, setSort] = useState(initial.sort);
+  const [showFilters, setShowFilters] = useState(false);
 
   const pushParams = useCallback(
     (overrides: Record<string, string> = {}) => {
@@ -191,7 +192,15 @@ export default function SearchPage() {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Filters sidebar */}
         <aside className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-5 sticky top-20">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            aria-expanded={showFilters}
+            className="md:hidden w-full flex items-center justify-between px-4 py-2.5 mb-3 bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-700"
+          >
+            <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
+            <span className="text-bai-blue">{showFilters ? "▲" : "▼"}</span>
+          </button>
+          <div className={`bg-white rounded-2xl border border-gray-100 p-5 space-y-5 md:sticky top-20 ${showFilters ? "" : "hidden md:block"}`}>
             <h2 className="font-bold text-gray-900">Filters</h2>
 
             <div>

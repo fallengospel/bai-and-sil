@@ -70,7 +70,8 @@ export default function AdminReportsPage() {
         </select>
       </div>
       <div className="card overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-gray-50"><tr><th className="text-left p-3">Reporter</th><th className="text-left p-3">Target</th><th className="text-left p-3">Reason</th><th className="text-left p-3">Status</th><th className="text-left p-3">Date</th><th className="text-right p-3">Actions</th></tr></thead>
           <tbody>
             {filtered.map(r => (
@@ -96,6 +97,7 @@ export default function AdminReportsPage() {
             {filtered.length === 0 && <tr><td colSpan={6} className="p-8 text-center text-gray-400">No reports.</td></tr>}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
