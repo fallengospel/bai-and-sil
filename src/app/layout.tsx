@@ -8,6 +8,11 @@ import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
 import AppToaster from "@/components/layout/AppToaster";
 
+const triLensEnabled =
+  process.env.NODE_ENV === "development" ||
+  process.env.NEXT_PUBLIC_ENABLE_TRI_LENS === "true" ||
+  ["testing", "staging"].includes(process.env.VERCEL_GIT_BRANCH ?? "");
+
 const UXTestingMode = dynamic(() => import("@/components/dev/UXTestingMode"), { ssr: false });
 
 const gabarito = Gabarito({
@@ -70,7 +75,7 @@ export default function RootLayout({
             <div className="md:hidden">
               <MobileNav />
             </div>
-            <UXTestingMode />
+            {triLensEnabled && <UXTestingMode />}
         </AuthProvider>
       </body>
     </html>

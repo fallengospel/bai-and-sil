@@ -1,23 +1,19 @@
 ﻿"use client";
 
 import { useState, useEffect } from "react";
-import { 
+import { usePathname } from "next/navigation";
+import {
   FiCheckCircle, FiAlertTriangle, FiXCircle, FiInfo,
   FiEye, FiCode, FiLayout, FiUser, FiShield, FiZap,
   FiChevronDown, FiChevronUp, FiRefreshCw
 } from "react-icons/fi";
-
-type Persona = "qa" | "dev" | "designer";
-type Severity = "pass" | "warn" | "fail" | "info";
-
-interface Finding {
-  id: string;
-  severity: Severity;
-  category: string;
-  message: string;
-  suggestion?: string;
-  element?: string;
-}
+import {
+  installConsoleCapture,
+  runAudits,
+  type Finding,
+  type Persona,
+  type Severity,
+} from "./triLensAudits";
 
 interface PersonaConfig {
   id: Persona;
@@ -79,51 +75,6 @@ const PERSONAS: PersonaConfig[] = [
   },
 ];
 
-function generateFindings(persona: Persona): Finding[] {
-  const findings: Finding[] = [];
-
-  if (persona === "qa") {
-    findings.push(
-      { id: "qa-1", severity: "pass", category: "Accessibility", message: "Focus states are visible on all interactive elements", element: "button, a, input" },
-      { id: "qa-2", severity: "pass", category: "Accessibility", message: "Color contrast meets WCAG AA standards", element: "text-gray-900 on bg-white" },
-      { id: "qa-3", severity: "warn", category: "Forms", message: "Search input should have an aria-label", element: "SearchBar.tsx", suggestion: "Add aria-label='Search listings'" },
-      { id: "qa-4", severity: "pass", category: "Responsive", message: "Mobile layout properly stacks hero content", element: "LandingPage.tsx" },
-      { id: "qa-5", severity: "pass", category: "Navigation", message: "All links have clear hover states", element: "Link components" },
-      { id: "qa-6", severity: "warn", category: "Performance", message: "Hero section uses client-side rendering for animations", element: "LandingPage.tsx", suggestion: "Consider server-side rendering with intersection observer" },
-      { id: "qa-7", severity: "pass", category: "UX", message: "Loading states prevent double submission", element: "Button.tsx" },
-      { id: "qa-8", severity: "info", category: "Testing", message: "Consider adding ARIA live regions for dynamic content", suggestion: "Use aria-live='polite' for status updates" },
-    );
-  }
-
-  if (persona === "dev") {
-    findings.push(
-      { id: "dev-1", severity: "pass", category: "Code Quality", message: "TypeScript types are properly defined", element: "LandingPage.tsx" },
-      { id: "dev-2", severity: "pass", category: "Architecture", message: "Components are properly separated", element: "components/landing/" },
-      { id: "dev-3", severity: "warn", category: "Performance", message: "Static data (FEATURES, STEPS, etc.) could be moved to a separate file", element: "LandingPage.tsx", suggestion: "Create lib/data.ts for constants" },
-      { id: "dev-4", severity: "pass", category: "Styling", message: "Tailwind classes follow consistent patterns", element: "globals.css" },
-      { id: "dev-5", severity: "info", category: "Optimization", message: "Consider lazy loading below-fold sections", suggestion: "Use next/dynamic with ssr: false" },
-      { id: "dev-6", severity: "pass", category: "Security", message: "No sensitive data exposed in client components", element: "LandingPage.tsx" },
-      { id: "dev-7", severity: "warn", category: "Accessibility", message: "Category cards need keyboard navigation", element: "CategoryCard.tsx", suggestion: "Add tabIndex and onKeyDown handler" },
-      { id: "dev-8", severity: "pass", category: "State", message: "Minimal client-side state usage", element: "LandingPage.tsx" },
-    );
-  }
-
-  if (persona === "designer") {
-    findings.push(
-      { id: "des-1", severity: "pass", category: "Hierarchy", message: "Hero headline is immediately visible and readable", element: "h1" },
-      { id: "des-2", severity: "pass", category: "Color", message: "Primary blue is used strategically for CTAs", element: "buttons" },
-      { id: "des-3", severity: "pass", category: "Spacing", message: "Section padding follows the spacing scale", element: "section-padding" },
-      { id: "des-4", severity: "warn", category: "Typography", message: "Hero text size might be too large on smaller desktops", element: "text-hero", suggestion: "Consider responsive sizing: text-hero-sm on md" },
-      { id: "des-5", severity: "pass", category: "Motion", message: "Animations are purposeful (float for emphasis, not decoration)", element: "floating badges" },
-      { id: "des-6", severity: "pass", category: "Consistency", message: "Border radius scale is consistent (rounded-2xl/3xl)", element: "cards, buttons" },
-      { id: "des-7", severity: "info", category: "Brand", message: "Filipino language adds warmth and authenticity", element: "copy" },
-      { id: "des-8", severity: "pass", category: "Layout", message: "One clear CTA per section (Impeccable principle)", element: "hero, features, CTA" },
-    );
-  }
-
-  return findings;
-}
-
 function SeverityIcon({ severity }: { severity: Severity }) {
   switch (severity) {
     case "pass": return <FiCheckCircle className="w-5 h-5 text-emerald-500" />;
@@ -134,9 +85,9 @@ function SeverityIcon({ severity }: { severity: Severity }) {
 }
 
 function ScoreBadge({ findings }: { findings: Finding[] }) {
-  const pass = findings.filter(f => f.severity === "pass").length;
-  const total = findings.length;
-  const score = Math.round((pass / total) * 100);
+  const scored = findings.filter(f => f.severity !== "info");
+  const pass = scored.filter(f => f.severity === "pass").length;
+  const score = scored.length === 0 ? 100 : Math.round((pass / scored.length) * 100);
   
   let color = "bg-emerald-100 text-emerald-700";
   if (score < 70) color = "bg-red-100 text-red-700";
@@ -154,19 +105,22 @@ export default function UXTestingMode() {
   const [activePersona, setActivePersona] = useState<Persona>("qa");
   const [findings, setFindings] = useState<Finding[]>([]);
   const [expandedFinding, setExpandedFinding] = useState<string | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    setFindings(generateFindings(activePersona));
-  }, [activePersona]);
+    installConsoleCapture();
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setFindings(runAudits(activePersona));
+  }, [isOpen, activePersona, pathname]);
 
   const currentPersona = PERSONAS.find(p => p.id === activePersona)!;
   const passCount = findings.filter(f => f.severity === "pass").length;
   const warnCount = findings.filter(f => f.severity === "warn").length;
   const failCount = findings.filter(f => f.severity === "fail").length;
   const infoCount = findings.filter(f => f.severity === "info").length;
-
-  // Only show in development
-  if (process.env.NODE_ENV !== "development") return null;
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -192,7 +146,7 @@ export default function UXTestingMode() {
                 <FiEye className="w-5 h-4" />
                 Tri-Lens Review
               </h3>
-              <span className="text-caption text-gray-500">Dev Only</span>
+              <span className="text-caption text-gray-500">testing / staging only</span>
             </div>
             <p className="text-caption text-gray-500">
               One pass, three lenses: QA, Developer, and UX/UI Designer
@@ -228,8 +182,8 @@ export default function UXTestingMode() {
               <div className="flex items-center justify-between mb-2">
                 <p className="text-body-sm text-gray-600">
                   {currentPersona.description}{" "}
-                  <span className="ml-1 inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 rounded">
-                    Static sample
+                  <span className="ml-1 inline-flex items-center px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide bg-emerald-100 text-emerald-700 rounded">
+                    LIVE · {pathname.length > 24 ? `${pathname.slice(0, 22)}…` : pathname}
                   </span>
                 </p>
                 <ScoreBadge findings={findings} />
@@ -303,11 +257,14 @@ export default function UXTestingMode() {
           {/* Footer */}
           <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
             <button
-              onClick={() => setFindings(generateFindings(activePersona))}
+              onClick={() => {
+                setExpandedFinding(null);
+                setFindings(runAudits(activePersona));
+              }}
               className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
             >
               <FiRefreshCw className="w-4 h-4" />
-              Reload sample
+              Re-run checks
             </button>
           </div>
         </div>
