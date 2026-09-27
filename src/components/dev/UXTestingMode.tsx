@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
 import {
   FiCheckCircle, FiAlertTriangle, FiXCircle, FiInfo,
   FiEye, FiCode, FiLayout, FiUser, FiShield, FiZap,
-  FiChevronDown, FiChevronUp, FiRefreshCw
+  FiChevronDown, FiChevronUp, FiRefreshCw, FiCopy
 } from "react-icons/fi";
 import {
   installConsoleCapture,
   runAudits,
+  highlightElement,
   type Finding,
   type Persona,
   type Severity,
@@ -84,10 +86,16 @@ function SeverityIcon({ severity }: { severity: Severity }) {
   }
 }
 
-function ScoreBadge({ findings }: { findings: Finding[] }) {
+function computeScore(findings: Finding[]): number {
   const scored = findings.filter(f => f.severity !== "info");
+  if (scored.length === 0) return 100;
   const pass = scored.filter(f => f.severity === "pass").length;
-  const score = scored.length === 0 ? 100 : Math.round((pass / scored.length) * 100);
+  const warn = scored.filter(f => f.severity === "warn").length;
+  return Math.round(((pass + 0.5 * warn) / scored.length) * 100);
+}
+
+function ScoreBadge({ findings }: { findings: Finding[] }) {
+  const score = computeScore(findings);
   
   let color = "bg-emerald-100 text-emerald-700";
   if (score < 70) color = "bg-red-100 text-red-700";
@@ -100,15 +108,32 @@ function ScoreBadge({ findings }: { findings: Finding[] }) {
   );
 }
 
+const CHECKLIST_KEY = "trilens-checklist-v1";
+type ChecklistState = Record<string, boolean[]>;
+
+const SEVERITY_ICON: Record<Severity, string> = { pass: "PASS", warn: "WARN", fail: "FAIL", info: "INFO" };
+
+function loadChecklist(): ChecklistState {
+  try {
+    const raw = window.localStorage.getItem(CHECKLIST_KEY);
+    if (raw) return JSON.parse(raw) as ChecklistState;
+  } catch {
+    // ignore corrupted state
+  }
+  return {};
+}
+
 export default function UXTestingMode() {
   const [isOpen, setIsOpen] = useState(false);
   const [activePersona, setActivePersona] = useState<Persona>("qa");
   const [findings, setFindings] = useState<Finding[]>([]);
   const [expandedFinding, setExpandedFinding] = useState<string | null>(null);
+  const [checklist, setChecklist] = useState<ChecklistState>({});
   const pathname = usePathname();
 
   useEffect(() => {
     installConsoleCapture();
+    setChecklist(loadChecklist());
   }, []);
 
   useEffect(() => {
@@ -116,11 +141,64 @@ export default function UXTestingMode() {
     setFindings(runAudits(activePersona));
   }, [isOpen, activePersona, pathname]);
 
+  const toggleCheck = (personaId: Persona, index: number) => {
+    setChecklist((prev) => {
+      const arr = [...(prev[personaId] ?? [])];
+      arr[index] = !arr[index];
+      const next = { ...prev, [personaId]: arr };
+      try {
+        window.localStorage.setItem(CHECKLIST_KEY, JSON.stringify(next));
+      } catch {
+        // storage unavailable — keep in-memory state
+      }
+      return next;
+    });
+  };
+
+  const copyReport = async () => {
+    const lines = [
+      `# Tri-Lens Review — ${pathname}`,
+      `**Lens:** ${currentPersona.name} · **Score:** ${computeScore(findings)}% · **When:** ${new Date().toLocaleString()}`,
+      "",
+      "## Findings",
+      ...findings.map((f) => {
+        const base = `- [${SEVERITY_ICON[f.severity]}] ${f.category} — ${f.message}`;
+        return f.suggestion ? `${base}\n  - suggestion: ${f.suggestion}` : base;
+      }),
+      "",
+      `## ${currentPersona.name} checklist`,
+      ...currentPersona.checklist.map(
+        (item, i) => `- [${checklist[activePersona]?.[i] ? "x" : " "}] ${item}`
+      ),
+    ];
+    const md = lines.join("\n");
+    try {
+      await navigator.clipboard.writeText(md);
+      toast.success("Tri-Lens report copied");
+      return;
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = md;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand("copy");
+        toast.success("Tri-Lens report copied");
+      } catch {
+        toast.error("Could not copy report");
+      }
+      area.remove();
+    }
+  };
+
   const currentPersona = PERSONAS.find(p => p.id === activePersona)!;
   const passCount = findings.filter(f => f.severity === "pass").length;
   const warnCount = findings.filter(f => f.severity === "warn").length;
   const failCount = findings.filter(f => f.severity === "fail").length;
   const infoCount = findings.filter(f => f.severity === "info").length;
+  const checkedCount = currentPersona.checklist.filter((_, i) => checklist[activePersona]?.[i]).length;
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -214,7 +292,10 @@ export default function UXTestingMode() {
                 <div
                   key={finding.id}
                   className="px-6 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
-                  onClick={() => setExpandedFinding(expandedFinding === finding.id ? null : finding.id)}
+                  onClick={() => {
+                    setExpandedFinding(expandedFinding === finding.id ? null : finding.id);
+                    highlightElement(finding.element);
+                  }}
                 >
                   <div className="flex items-start gap-3">
                     <SeverityIcon severity={finding.severity} />
@@ -239,23 +320,52 @@ export default function UXTestingMode() {
 
             {/* Checklist */}
             <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-              <h4 className="text-body-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <FiCheckCircle className="w-4 h-4 text-emerald-500" />
-                {currentPersona.name} Checklist
-              </h4>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-body-sm font-bold text-gray-900 flex items-center gap-2">
+                  <FiCheckCircle className="w-4 h-4 text-emerald-500" />
+                  {currentPersona.name} Checklist
+                </h4>
+                <span className="text-caption text-gray-500">
+                  {checkedCount}/{currentPersona.checklist.length}
+                </span>
+              </div>
+              <div className="h-1.5 bg-gray-200 rounded-full mb-3 overflow-hidden">
+                <div
+                  className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${currentPersona.checklist.length ? (checkedCount / currentPersona.checklist.length) * 100 : 0}%`,
+                  }}
+                />
+              </div>
               <div className="space-y-2">
-                {currentPersona.checklist.map((item, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <FiCheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
-                    <span className="text-caption text-gray-600">{item}</span>
-                  </div>
-                ))}
+                {currentPersona.checklist.map((item, i) => {
+                  const checked = !!checklist[activePersona]?.[i];
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      role="checkbox"
+                      aria-checked={checked}
+                      onClick={() => toggleCheck(activePersona, i)}
+                      className="flex items-start gap-2 text-left w-full group"
+                    >
+                      {checked ? (
+                        <FiCheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
+                      ) : (
+                        <span className="w-4 h-4 mt-0.5 shrink-0 rounded-full border-2 border-gray-300 group-hover:border-emerald-400 transition-colors" />
+                      )}
+                      <span className={`text-caption ${checked ? "text-gray-400 line-through" : "text-gray-600"}`}>
+                        {item}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
+          <div className="px-6 py-3 border-t border-gray-200 bg-gray-50 flex items-center justify-between gap-3">
             <button
               onClick={() => {
                 setExpandedFinding(null);
@@ -264,7 +374,14 @@ export default function UXTestingMode() {
               className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
             >
               <FiRefreshCw className="w-4 h-4" />
-              Re-run checks
+              Re-run
+            </button>
+            <button
+              onClick={copyReport}
+              className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
+            >
+              <FiCopy className="w-4 h-4" />
+              Copy report
             </button>
           </div>
         </div>

@@ -804,6 +804,31 @@ function auditDesigner(): Finding[] {
   return findings;
 }
 
+export function highlightElement(elementField?: string): boolean {
+  if (!elementField || typeof document === "undefined") return false;
+  const raw = elementField.split(",")[0].replace(/\(\+[^)]*\)/g, "").trim();
+  if (!raw) return false;
+  let target: Element | null = null;
+  try {
+    target = document.querySelector(raw);
+  } catch {
+    return false;
+  }
+  if (!target) return false;
+  target.scrollIntoView({ block: "center", behavior: "auto" });
+  const rect = target.getBoundingClientRect();
+  if (rect.width === 0 && rect.height === 0) return false;
+  const box = document.createElement("div");
+  box.setAttribute("aria-hidden", "true");
+  box.style.cssText = `position:fixed;left:${rect.left - 4}px;top:${rect.top - 4}px;width:${rect.width + 8}px;height:${rect.height + 8}px;border:3px solid #F5BD5D;border-radius:10px;box-shadow:0 0 0 4px rgba(245,189,93,.4);pointer-events:none;z-index:60;transition:opacity .45s ease;`;
+  document.body.appendChild(box);
+  window.setTimeout(() => {
+    box.style.opacity = "0";
+  }, 950);
+  window.setTimeout(() => box.remove(), 1450);
+  return true;
+}
+
 export function runAudits(persona: Persona): Finding[] {
   if (typeof document === "undefined") return [];
   try {
