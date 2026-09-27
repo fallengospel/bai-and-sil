@@ -8,6 +8,8 @@ interface User {
   name: string;
   email: string;
   avatar?: string | null;
+  role?: string;
+  isAdmin?: boolean;
 }
 
 interface AuthContextType {

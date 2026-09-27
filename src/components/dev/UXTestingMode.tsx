@@ -20,6 +20,7 @@ import {
   type Persona,
   type Severity,
 } from "./triLensAudits";
+import { useAuth } from "@/components/layout/AuthProvider";
 
 interface PersonaConfig {
   id: Persona;
@@ -146,6 +147,7 @@ export default function UXTestingMode() {
   const [expandedFinding, setExpandedFinding] = useState<string | null>(null);
   const [checklist, setChecklist] = useState<ChecklistState>({});
   const pathname = usePathname();
+  const { user, loading } = useAuth();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -231,6 +233,8 @@ export default function UXTestingMode() {
   const infoCount = findings.filter(f => f.severity === "info").length;
   const checkedCount = currentPersona.checklist.filter((_, i) => checklist[activePersona]?.[i]).length;
 
+  if (loading || !(user?.isAdmin || user?.role === "admin")) return null;
+
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {/* Toggle button */}
@@ -260,7 +264,7 @@ export default function UXTestingMode() {
                 <FiEye className="w-5 h-4" />
                 Tri-Lens Review
               </h3>
-              <span className="text-caption text-gray-500">testing / staging only</span>
+              <span className="text-caption text-gray-500">admin only</span>
             </div>
             <p className="text-caption text-gray-500">
               One pass, three lenses: QA, Developer, and UX/UI Designer
