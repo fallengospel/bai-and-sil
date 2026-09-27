@@ -173,10 +173,12 @@ export default function UXTestingMode() {
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-label="Tri-Lens Review: QA, developer, and design analysis"
         className="bg-gray-900 text-white px-4 py-3 rounded-2xl shadow-cartoon-lg hover:bg-gray-800 transition-all duration-200 flex items-center gap-2 text-sm font-bold"
       >
         <FiEye className="w-4 h-4" />
-        <span className="hidden sm:inline">UI/UX Test</span>
+        <span className="hidden sm:inline">Tri-Lens Review</span>
         {isOpen ? <FiChevronDown className="w-4 h-4" /> : <FiChevronUp className="w-4 h-4" />}
       </button>
 
@@ -188,20 +190,22 @@ export default function UXTestingMode() {
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-body font-bold flex items-center gap-2">
                 <FiEye className="w-5 h-4" />
-                UI/UX Testing Mode
+                Tri-Lens Review
               </h3>
               <span className="text-caption text-gray-500">Dev Only</span>
             </div>
             <p className="text-caption text-gray-500">
-              Analyze from three expert perspectives
+              One pass, three lenses: QA, Developer, and UX/UI Designer
             </p>
           </div>
 
           {/* Persona tabs */}
-          <div className="flex border-b border-gray-200">
+          <div className="flex border-b border-gray-200" role="tablist" aria-label="Review perspectives">
             {PERSONAS.map((persona) => (
               <button
                 key={persona.id}
+                role="tab"
+                aria-selected={activePersona === persona.id}
                 onClick={() => setActivePersona(persona.id)}
                 className={`flex-1 px-4 py-3 text-center transition-all duration-200 ${
                   activePersona === persona.id
