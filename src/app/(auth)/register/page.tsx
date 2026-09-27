@@ -160,7 +160,7 @@ export default function RegisterPage() {
           </div>
 
           <a
-            href="/api/auth/google?role=buyer"
+            href="/api/auth/google?role=buyer&intent=register"
             className="flex items-center justify-center gap-3 w-full px-4 py-3 border-2 border-gray-200 rounded-2xl text-sm font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-cartoon-sm"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -281,7 +281,7 @@ export default function RegisterPage() {
         </div>
 
         <a
-          href={`/api/auth/google?role=${role || 'buyer'}`}
+          href={`/api/auth/google?role=${role || 'buyer'}&intent=register`}
           className="flex items-center justify-center gap-3 w-full px-4 py-3 border-2 border-gray-200 rounded-2xl text-sm font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-cartoon-sm"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">

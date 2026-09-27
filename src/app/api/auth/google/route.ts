@@ -6,11 +6,12 @@ export async function GET(request: NextRequest) {
   const redirectUri = `${origin}/api/auth/google/callback`;
   const scope = 'openid email profile';
   const role = new URL(request.url).searchParams.get('role') || 'buyer';
+  const intent = new URL(request.url).searchParams.get('intent') === 'register' ? 'register' : 'login';
 
   const allowedRoles = ['buyer', 'seller'];
   const safeRole = allowedRoles.includes(role) ? role : 'buyer';
 
-  const state = Buffer.from(JSON.stringify({ role: safeRole, ts: Date.now() })).toString('base64url');
+  const state = Buffer.from(JSON.stringify({ role: safeRole, ts: Date.now(), intent })).toString('base64url');
 
   const url = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   url.searchParams.set('client_id', clientId || '');

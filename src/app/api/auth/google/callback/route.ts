@@ -82,9 +82,11 @@ export async function GET(request: NextRequest) {
   }
 
   let role = 'buyer';
+  let intent = 'login';
   try {
     const stateData = JSON.parse(Buffer.from(stateParam, 'base64url').toString());
     role = stateData.role || 'buyer';
+    intent = stateData.intent === 'register' ? 'register' : 'login';
   } catch {
     return NextResponse.redirect(new URL('/login?error=invalid_state', request.url));
   }
@@ -106,6 +108,11 @@ export async function GET(request: NextRequest) {
       where: { email: googleUser.email },
       select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true, authProvider: true },
     });
+
+    // Sign-up intent + account already exists → do NOT auto-login; send to login with toast
+    if (user && intent === 'register') {
+      return NextResponse.redirect(new URL('/login?error=account_exists', request.url));
+    }
 
     if (user && user.authProvider !== 'google') {
       return NextResponse.redirect(new URL('/login?error=email_exists', request.url));

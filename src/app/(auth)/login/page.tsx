@@ -18,10 +18,11 @@ export default function LoginPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (error === "google_cancelled") toast.error("Google sign-in was cancelled");
-    else if (error === "google_failed") toast.error("Google sign-in failed. Please try again.");
-    else if (error === "no_email") toast.error("Google account has no email. Please use another method.");
-    else if (error === "email_exists") toast.error("Email already registered. Please log in with your password.");
+if (error === "google_cancelled") toast.error("Google sign-in was cancelled");
+else if (error === "google_failed") toast.error("Google sign-in failed. Please try again.");
+else if (error === "no_email") toast.error("Google account has no email. Please use another method.");
+else if (error === "email_exists") toast.error("Email already registered. Please log in with your password.");
+else if (error === "account_exists") toast.error("Account already exists. Please log in.");
   }, [error]);
 
   const handleSubmit = async (e: React.FormEvent) => {
