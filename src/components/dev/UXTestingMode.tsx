@@ -1,17 +1,21 @@
 ﻿"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import {
   FiCheckCircle, FiAlertTriangle, FiXCircle, FiInfo,
   FiEye, FiCode, FiLayout, FiUser, FiShield, FiZap,
-  FiChevronDown, FiChevronUp, FiRefreshCw, FiCopy
+  FiChevronDown, FiChevronUp, FiRefreshCw, FiCopy, FiExternalLink
 } from "react-icons/fi";
 import {
   installConsoleCapture,
   runAudits,
   highlightElement,
+  getNetworkLog,
+  getAssetSummary,
+  formatKb,
   type Finding,
   type Persona,
   type Severity,
@@ -75,6 +79,18 @@ const PERSONAS: PersonaConfig[] = [
       "Animations convey state (not decoration)",
     ],
   },
+  {
+    id: "all",
+    name: "All Lenses",
+    icon: <FiZap className="w-5 h-5" />,
+    color: "bg-amber-100 text-amber-700",
+    description: "Combined pass/fail across QA, Developer, and Design in one pass.",
+    checklist: [
+      "Zero FAIL items before promoting a branch",
+      "Re-run after every fix to watch the score climb",
+      "Copy the report into QA notes or the PR",
+    ],
+  },
 ];
 
 function SeverityIcon({ severity }: { severity: Severity }) {
@@ -130,6 +146,8 @@ export default function UXTestingMode() {
   const [expandedFinding, setExpandedFinding] = useState<string | null>(null);
   const [checklist, setChecklist] = useState<ChecklistState>({});
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     installConsoleCapture();
@@ -140,6 +158,19 @@ export default function UXTestingMode() {
     if (!isOpen) return;
     setFindings(runAudits(activePersona));
   }, [isOpen, activePersona, pathname]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    panelRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
 
   const toggleCheck = (personaId: Persona, index: number) => {
     setChecklist((prev) => {
@@ -204,6 +235,7 @@ export default function UXTestingMode() {
     <div className="fixed bottom-4 right-4 z-50">
       {/* Toggle button */}
       <button
+        ref={toggleRef}
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-label="Tri-Lens Review: QA, developer, and design analysis"
@@ -216,7 +248,11 @@ export default function UXTestingMode() {
 
       {/* Panel */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-[420px] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div
+          ref={panelRef}
+          tabIndex={-1}
+          className="absolute bottom-16 right-0 w-[420px] max-w-[calc(100vw-2rem)] max-h-[70vh] sm:max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden focus:outline-none"
+        >
           {/* Header */}
           <div className="bg-gray-900 text-white px-6 py-4">
             <div className="flex items-center justify-between mb-2">
@@ -254,7 +290,7 @@ export default function UXTestingMode() {
           </div>
 
           {/* Content */}
-          <div className="max-h-[400px] overflow-y-auto">
+          <div className="max-h-[45vh] sm:max-h-[400px] overflow-y-auto">
             {/* Persona description */}
             <div className="px-6 py-4 border-b border-gray-100">
               <div className="flex items-center justify-between mb-2">
@@ -317,6 +353,53 @@ export default function UXTestingMode() {
                 </div>
               ))}
             </div>
+
+            {/* Dev network & assets */}
+            {activePersona === "dev" && (
+              <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                <h4 className="text-body-sm font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  <FiZap className="w-4 h-4 text-amber-500" />
+                  Network &amp; assets
+                </h4>
+                {(() => {
+                  const summary = getAssetSummary();
+                  const log = getNetworkLog();
+                  const statusColor = (status: string) => {
+                    if (status === "ERR") return "bg-red-100 text-red-700";
+                    const code = Number(status);
+                    if (code >= 400) return "bg-red-100 text-red-700";
+                    if (code >= 300) return "bg-amber-100 text-amber-700";
+                    return "bg-emerald-100 text-emerald-700";
+                  };
+                  return (
+                    <>
+                      <p className="text-caption text-gray-600 mb-2">
+                        {formatKb(summary.transfer)} transferred · {summary.count} resources · JS{" "}
+                        {formatKb(summary.js)} in {summary.jsCount} files
+                      </p>
+                      {log.length === 0 ? (
+                        <p className="text-caption text-gray-500">No fetch requests captured yet.</p>
+                      ) : (
+                        <div className="space-y-1 max-h-[132px] overflow-y-auto pr-1">
+                          {[...log].reverse().map((entry, i) => (
+                            <div key={`${entry.url}-${i}`} className="flex items-center gap-2 text-caption">
+                              <span className={`px-1.5 py-0.5 rounded font-bold shrink-0 ${statusColor(entry.status)}`}>
+                                {entry.status}
+                              </span>
+                              <span className="text-gray-500 shrink-0 w-6">{entry.method.slice(0, 4)}</span>
+                              <span className={`shrink-0 w-12 text-right ${entry.ms > 700 ? "text-red-600 font-bold" : "text-gray-600"}`}>
+                                {entry.ms}ms
+                              </span>
+                              <span className="text-gray-500 truncate">{entry.url}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+            )}
 
             {/* Checklist */}
             <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
@@ -383,6 +466,13 @@ export default function UXTestingMode() {
               <FiCopy className="w-4 h-4" />
               Copy report
             </button>
+            <Link
+              href="/admin/testing"
+              className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
+            >
+              <FiExternalLink className="w-4 h-4" />
+              Full QA suite
+            </Link>
           </div>
         </div>
       )}

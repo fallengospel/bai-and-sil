@@ -1,4 +1,4 @@
-export type Persona = "qa" | "dev" | "designer";
+export type Persona = "qa" | "dev" | "designer" | "all";
 export type Severity = "pass" | "warn" | "fail" | "info";
 
 export interface Finding {
@@ -14,6 +14,47 @@ let captureInstalled = false;
 const consoleErrors = new Map<string, number>();
 const consoleWarnings = new Map<string, number>();
 const MAX_CONSOLE_ENTRIES = 30;
+
+export interface NetworkEntry {
+  method: string;
+  url: string;
+  status: string;
+  ms: number;
+}
+const networkLog: NetworkEntry[] = [];
+const MAX_NETWORK = 40;
+
+export function getNetworkLog(): NetworkEntry[] {
+  return [...networkLog];
+}
+
+export interface AssetSummary {
+  count: number;
+  transfer: number;
+  js: number;
+  jsCount: number;
+}
+
+export function getAssetSummary(): AssetSummary {
+  const entries =
+    typeof performance !== "undefined" ? (performance.getEntriesByType("resource") as PerformanceResourceTiming[]) : [];
+  let transfer = 0;
+  let js = 0;
+  let jsCount = 0;
+  for (const entry of entries) {
+    transfer += entry.transferSize || 0;
+    if (entry.name.endsWith(".js")) {
+      js += entry.transferSize || 0;
+      jsCount++;
+    }
+  }
+  return { count: entries.length, transfer, js, jsCount };
+}
+
+export function formatKb(bytes: number): string {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  return `${Math.round(bytes / 1024)} KB`;
+}
 
 function formatArgs(args: unknown[]): string {
   return args
@@ -58,6 +99,30 @@ export function installConsoleCapture() {
   window.addEventListener("unhandledrejection", (e) =>
     record(consoleErrors, `Unhandled rejection: ${String(e.reason)}`)
   );
+
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+    const method = (init?.method ?? (input instanceof Request ? input.method : "GET")).toUpperCase();
+    const start = performance.now();
+    const push = (status: string) => {
+      if (networkLog.length >= MAX_NETWORK) networkLog.shift();
+      networkLog.push({
+        method,
+        url: url.replace(window.location.origin, "").slice(0, 90) || "/",
+        status,
+        ms: Math.round(performance.now() - start),
+      });
+    };
+    try {
+      const response = await originalFetch(input, init);
+      push(String(response.status));
+      return response;
+    } catch (error) {
+      push("ERR");
+      throw error;
+    }
+  };
 }
 
 function visible(el: Element): boolean {
@@ -625,6 +690,45 @@ function auditDev(): Finding[] {
         }
   );
 
+  if (networkLog.length === 0) {
+    findings.push({
+      id: "dev-network",
+      severity: "info",
+      category: "Network",
+      message: "No fetch requests captured yet — navigate or re-run to record traffic",
+      element: "window.fetch",
+    });
+  } else {
+    const slowest = networkLog.reduce((a, b) => (b.ms > a.ms ? b : a));
+    findings.push(
+      slowest.ms > 700
+        ? {
+            id: "dev-network",
+            severity: "warn",
+            category: "Network",
+            message: `${networkLog.length} request(s) captured — slowest: ${slowest.method} ${slowest.url} at ${slowest.ms}ms`,
+            element: "window.fetch",
+            suggestion: "Requests over 700ms need optimization or a visible loading state",
+          }
+        : {
+            id: "dev-network",
+            severity: "pass",
+            category: "Network",
+            message: `${networkLog.length} request(s) captured — none slower than ${slowest.ms}ms (slowest: ${slowest.url})`,
+            element: "window.fetch",
+          }
+    );
+  }
+
+  const assets = getAssetSummary();
+  findings.push({
+    id: "dev-assets",
+    severity: "info",
+    category: "Performance",
+    message: `Page transferred ${formatKb(assets.transfer)} across ${assets.count} resource(s) — JS: ${formatKb(assets.js)} in ${assets.jsCount} file(s)`,
+    element: "performance.getEntriesByType('resource')",
+  });
+
   return findings;
 }
 
@@ -832,6 +936,20 @@ export function highlightElement(elementField?: string): boolean {
 export function runAudits(persona: Persona): Finding[] {
   if (typeof document === "undefined") return [];
   try {
+    if (persona === "all") {
+      const tag: Record<"qa" | "dev" | "designer", string> = {
+        qa: "QA",
+        dev: "DEV",
+        designer: "DESIGN",
+      };
+      const prefixed = (lens: "qa" | "dev" | "designer", findings: Finding[]) =>
+        findings.map((f) => ({ ...f, id: `${lens}-${f.id}`, category: `${tag[lens]} · ${f.category}` }));
+      return [
+        ...prefixed("qa", auditQa()),
+        ...prefixed("dev", auditDev()),
+        ...prefixed("designer", auditDesigner()),
+      ];
+    }
     if (persona === "qa") return auditQa();
     if (persona === "dev") return auditDev();
     return auditDesigner();
