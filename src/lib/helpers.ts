@@ -48,7 +48,7 @@ export const CATEGORY_ICONS: Record<string, string> = {
   other: '📦',
 };
 
-export const PH_LOCATIONS = [
+const PH_LOCATIONS = [
   { province: 'Metro Manila', cities: ['Quezon City', 'Manila', 'Makati', 'Taguig', 'Pasig', 'Mandaluyong', 'Parañaque', 'Las Piñas', 'Muntinlupa', 'Caloocan', 'Malabon', 'Navotas', 'Valenzuela', 'Pasay', 'Marikina', 'San Juan'] },
   { province: 'Cavite', cities: ['Dasmarinas', 'Bacoor', 'Imus', 'Tagaytay', 'Trece Martires'] },
   { province: 'Laguna', cities: ['Calamba', 'San Pedro', 'Biñan', 'Santa Rosa', 'Los Baños'] },

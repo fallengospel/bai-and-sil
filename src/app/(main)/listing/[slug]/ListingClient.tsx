@@ -17,7 +17,7 @@ import ListingShareButtons from "@/components/ui/ListingShareButtons";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import { formatPrice, timeAgo } from "@/lib/helpers";
 import { trackRecentlyViewed } from "@/lib/recently-viewed";
-import { FiMessageSquare, FiHeart, FiShare2, FiFlag, FiShield, FiBell, FiBellOff } from "react-icons/fi";
+import { FiMessageSquare, FiHeart, FiFlag, FiShield, FiBell, FiBellOff } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import ReviewForm from "@/components/ReviewForm";
 import ProductCard from "@/components/ui/ProductCard";
@@ -200,11 +200,6 @@ export default function ListingClient({
     } finally {
       setUpdating(false);
     }
-  };
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("Link copied!");
   };
 
   const handlePriceAlert = async () => {

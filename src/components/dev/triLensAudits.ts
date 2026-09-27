@@ -15,7 +15,7 @@ const consoleErrors = new Map<string, number>();
 const consoleWarnings = new Map<string, number>();
 const MAX_CONSOLE_ENTRIES = 30;
 
-export interface NetworkEntry {
+interface NetworkEntry {
   method: string;
   url: string;
   status: string;
@@ -28,7 +28,7 @@ export function getNetworkLog(): NetworkEntry[] {
   return [...networkLog];
 }
 
-export interface AssetSummary {
+interface AssetSummary {
   count: number;
   transfer: number;
   js: number;

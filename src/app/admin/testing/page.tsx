@@ -1,7 +1,6 @@
 ﻿'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { FiPlay, FiCheckCircle, FiXCircle, FiClock, FiLoader, FiCode, FiCheckSquare } from 'react-icons/fi';
 
 interface TestResult {
@@ -20,7 +19,6 @@ interface TestSuite {
 type Tab = 'qa' | 'dev';
 
 export default function AdminTestingPage() {
-  const router = useRouter();
   const [tab, setTab] = useState<Tab>('qa');
   const [suites, setSuites] = useState<TestSuite[]>([]);
   const [running, setRunning] = useState(false);

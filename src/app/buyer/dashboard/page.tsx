@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Link from 'next/link';
 import StatCard from "@/components/ui/StatCard";
-import { FiHeart, FiSearch, FiMessageSquare, FiPackage, FiShoppingBag, FiStar, FiClock } from 'react-icons/fi';
+import { FiHeart, FiSearch, FiMessageSquare, FiStar } from 'react-icons/fi';
 import ProductCard from '@/components/ui/ProductCard';
 import { toggleFavorite } from '@/lib/favorites';
 

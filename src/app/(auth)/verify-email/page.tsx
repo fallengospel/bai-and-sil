@@ -16,7 +16,6 @@ export default function VerifyEmailPage() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
   const [resending, setResending] = useState(false);
-  const [resendSuccess, setResendSuccess] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -114,7 +113,6 @@ export default function VerifyEmailPage() {
       const data = await res.json();
 
       if (res.ok && data.emailSent) {
-        setResendSuccess(true);
         setCountdown(60);
         toast.success("New verification code sent! Check your inbox.");
         setOtp(["", "", "", "", "", ""]);

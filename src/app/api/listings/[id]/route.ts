@@ -4,7 +4,7 @@ import { requireAuth, getSession } from '@/lib/auth';
 import { slugify } from '@/lib/helpers';
 import { validateUpdateListing, sanitizeInput } from '@/lib/validation';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
   try {
     let listing = await prisma.listing.findUnique({
       where: { id: params.id },
@@ -135,7 +135,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await requireAuth();
 

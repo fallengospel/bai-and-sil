@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import StatCard from "@/components/ui/StatCard";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { FiPackage, FiDollarSign, FiStar, FiMessageSquare, FiPlusCircle, FiTrendingUp, FiEye, FiDownload } from "react-icons/fi";
+import { FiPackage, FiDollarSign, FiMessageSquare, FiPlusCircle, FiTrendingUp, FiEye, FiDownload } from "react-icons/fi";
 
 interface ListingData {
   id: string;

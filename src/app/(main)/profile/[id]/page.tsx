@@ -78,7 +78,6 @@ export default function ProfilePage() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string>("");
-  const [currentUserRole, setCurrentUserRole] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("overview");
   const [editModal, setEditModal] = useState(false);
   const [reportModal, setReportModal] = useState(false);
@@ -102,7 +101,6 @@ export default function ProfilePage() {
       .then((data) => {
         if (data.user) {
           setCurrentUserId(data.user.id);
-          setCurrentUserRole(data.user.role || "buyer");
         }
       })
       .catch(() => {});
@@ -244,7 +242,6 @@ export default function ProfilePage() {
   const activeListings = listings.filter((l) => l.status === "Active");
   const soldListings = listings.filter((l) => l.status === "Sold");
   const totalViews = listings.reduce((sum, l) => sum + (l.views || 0), 0);
-  const avgPrice = activeListings.length > 0 ? activeListings.reduce((sum, l) => sum + l.price, 0) / activeListings.length : 0;
 
   const memberSince = new Date(profile.createdAt).toLocaleDateString("en-PH", {
     month: "long",

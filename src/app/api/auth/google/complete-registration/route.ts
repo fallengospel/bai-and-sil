@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Session expired. Please sign in with Google again.' }, { status: 401 });
     }
 
-    const { name, email, avatar, googleSub } = payload;
+    const { name, email, avatar } = payload;
     if (!email) {
       return NextResponse.json({ error: 'Invalid session data.' }, { status: 400 });
     }

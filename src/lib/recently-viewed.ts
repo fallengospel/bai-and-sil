@@ -1,4 +1,4 @@
-export interface ViewedItem {
+interface ViewedItem {
   id: string;
   slug: string;
   title: string;
@@ -21,15 +21,5 @@ export function trackRecentlyViewed(item: Omit<ViewedItem, "viewedAt">) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered.slice(0, MAX_ITEMS)));
   } catch {
     // ignore
-  }
-}
-
-export function getRecentlyViewed(): ViewedItem[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
   }
 }

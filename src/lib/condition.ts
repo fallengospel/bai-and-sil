@@ -1,4 +1,4 @@
-export type ConditionBadgeVariant = "blue" | "yellow" | "green" | "red" | "gray";
+type ConditionBadgeVariant = "blue" | "yellow" | "green" | "red" | "gray";
 
 /**
  * Canonical condition → badge color map.

@@ -6,7 +6,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import {
   FiCheckCircle, FiAlertTriangle, FiXCircle, FiInfo,
-  FiEye, FiCode, FiLayout, FiUser, FiShield, FiZap,
+  FiEye, FiCode, FiLayout, FiShield, FiZap,
   FiChevronDown, FiChevronUp, FiRefreshCw, FiCopy, FiExternalLink
 } from "react-icons/fi";
 import {

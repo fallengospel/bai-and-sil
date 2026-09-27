@@ -3,10 +3,8 @@
 import Link from 'next/link';
 
 export default function MessagesError({
-  error,
   reset,
 }: {
-  error: Error & { digest?: string };
   reset: () => void;
 }) {
   return (

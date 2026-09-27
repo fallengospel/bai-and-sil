@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { requireAuth, getSession } from '@/lib/auth';
 import { validateUpdateProfile, sanitizeInput } from '@/lib/validation';
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const user = await prisma.user.findUnique({
       where: { id: params.id },

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getSession, requireAuth } from '@/lib/auth';
+import { requireAuth } from '@/lib/auth';
 import { slugify } from '@/lib/helpers';
 import { validateCreateListing, sanitizeInput } from '@/lib/validation';
 

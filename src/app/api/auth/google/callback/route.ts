@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { createSession } from '@/lib/auth';
-import { SignJWT, jwtVerify } from 'jose';
+import { SignJWT } from 'jose';
 
 const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'fallback-secret');
 

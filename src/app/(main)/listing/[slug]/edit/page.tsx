@@ -18,18 +18,6 @@ interface Category {
   slug: string;
 }
 
-interface ListingData {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  price: number;
-  condition: string;
-  location: string;
-  categoryId: string;
-  images: { imageUrl: string }[];
-}
-
 const conditionOptions = CONDITIONS.map((c) => ({ value: c, label: c }));
 const locationOptions = getLocationOptions();
 

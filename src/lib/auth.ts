@@ -5,7 +5,7 @@ import { SignJWT, jwtVerify } from 'jose';
 
 const SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET);
 
-export interface SessionUser {
+interface SessionUser {
   id: string;
   name: string;
   email: string;

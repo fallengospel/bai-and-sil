@@ -13,11 +13,6 @@ import { FiShoppingBag, FiSearch } from "react-icons/fi";
 
 const locationOptions = getLocationOptions();
 
-const roleOptions = [
-  { value: "buyer", label: "Buyer - I want to buy items" },
-  { value: "seller", label: "Seller - I want to sell items" },
-];
-
 export default function RegisterPage() {
   const router = useRouter();
   const searchParams = useSearchParams();

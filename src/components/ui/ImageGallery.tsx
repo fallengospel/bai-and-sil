@@ -63,7 +63,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
 
       {displayImages.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-1">
-          {displayImages.map((image, index) => (
+          {displayImages.map((_image, index) => (
             <button
               key={index}
               onClick={() => setSelectedIndex(index)}
