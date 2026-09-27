@@ -11,7 +11,9 @@ import AppToaster from "@/components/layout/AppToaster";
 const triLensEnabled =
   process.env.NODE_ENV === "development" ||
   process.env.NEXT_PUBLIC_ENABLE_TRI_LENS === "true" ||
-  ["testing", "staging", "main"].includes(process.env.VERCEL_GIT_BRANCH ?? "");
+  ["testing", "staging", "main"].includes(
+    process.env.VERCEL_GIT_COMMIT_REF ?? process.env.VERCEL_GIT_BRANCH ?? ""
+  );
 
 const UXTestingMode = dynamic(() => import("@/components/dev/UXTestingMode"), { ssr: false });
 
