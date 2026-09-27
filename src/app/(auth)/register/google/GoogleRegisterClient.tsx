@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiSearch, FiShoppingBag } from 'react-icons/fi';
@@ -14,7 +13,6 @@ interface GoogleRegisterClientProps {
 }
 
 export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegisterClientProps) {
-  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -39,11 +37,11 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
       }
 
       if (data.isAdmin) {
-        router.push('/admin');
+        window.location.assign('/admin');
       } else if (selectedRole === 'seller') {
-        router.push('/seller/dashboard');
+        window.location.assign('/seller/dashboard');
       } else {
-        router.push('/buyer/dashboard');
+        window.location.assign('/buyer/dashboard');
       }
     } catch {
       setError('Something went wrong. Please try again.');

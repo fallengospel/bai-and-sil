@@ -83,8 +83,10 @@ export async function middleware(request: NextRequest) {
 
   // Rate limiting for API routes
   if (pathname.startsWith('/api/')) {
-    // Skip rate limiting for static assets and notifications count
-    if (pathname === '/api/notifications/count') {
+    // Skip rate limiting for static assets, notifications count, and session identity
+    // (/api/auth/me only reveals the caller's own valid session — no credential guessing vector,
+    // and AuthProvider calls it on every page mount so the auth bucket would starve it)
+    if (pathname === '/api/notifications/count' || pathname === '/api/auth/me') {
       return addSecurityHeaders(NextResponse.next(), request);
     }
 
