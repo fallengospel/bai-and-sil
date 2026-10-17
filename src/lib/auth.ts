@@ -57,7 +57,8 @@ export async function getSession(): Promise<SessionUser | null> {
     });
 
     return user;
-  } catch {
+  } catch (error) {
+    console.error('[auth] getSession failed:', error);
     return null;
   }
 }

@@ -66,13 +66,35 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'Only buyer can create offers' }, { status: 403 });
     }
 
+    const amountNum = parseFloat(amount);
+    if (amountNum > conversation.listing.price) {
+      return NextResponse.json(
+        { error: `Offer cannot exceed the listing price of ₱${conversation.listing.price}` },
+        { status: 400 }
+      );
+    }
+
+    const existingPending = await prisma.offer.findFirst({
+      where: {
+        listingId: conversation.listingId,
+        buyerId: user.id,
+        status: 'Pending',
+      },
+    });
+    if (existingPending) {
+      return NextResponse.json(
+        { error: 'You already have a pending offer on this listing' },
+        { status: 409 }
+      );
+    }
+
     const offer = await prisma.offer.create({
       data: {
         conversationId: params.id,
         listingId: conversation.listingId,
         buyerId: user.id,
         sellerId: conversation.sellerId,
-        amount: parseFloat(amount),
+        amount: amountNum,
       },
       include: {
         buyer: {

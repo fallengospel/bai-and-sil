@@ -9,7 +9,7 @@ import EmptyState from "@/components/ui/EmptyState";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { CONDITIONS, getLocationOptions } from "@/lib/helpers";
 import { toggleFavorite } from "@/lib/favorites";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiBookmark, FiX } from "react-icons/fi";
 
 interface Listing {
   id: string;
@@ -96,6 +96,74 @@ export default function SearchPage() {
   const [maxPrice, setMaxPrice] = useState(initial.maxPrice);
   const [sort, setSort] = useState(initial.sort);
   const [showFilters, setShowFilters] = useState(false);
+
+  interface SavedSearch {
+    id: string;
+    name: string;
+    query: string;
+    category: string | null;
+    location: string | null;
+    condition: string | null;
+    minPrice: string | null;
+    maxPrice: string | null;
+  }
+  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([]);
+  const [saveState, setSaveState] = useState<"" | "saving" | "saved" | "error" | "auth">("");
+
+  useEffect(() => {
+    fetch("/api/searches", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : { searches: [] }))
+      .then((data) => setSavedSearches(data.searches || []))
+      .catch(() => {});
+  }, []);
+
+  const handleSaveSearch = async () => {
+    if (saveState === "saving") return;
+    setSaveState("saving");
+    try {
+      const res = await fetch("/api/searches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          name: q.trim() || category || location || "All listings",
+          query: q.trim(),
+          category: category || null,
+          location: location || null,
+          condition: condition || null,
+          minPrice: minPrice || null,
+          maxPrice: maxPrice || null,
+        }),
+      });
+      if (res.status === 401) { setSaveState("auth"); return; }
+      if (!res.ok) { setSaveState("error"); return; }
+      const data = await res.json();
+      setSavedSearches((prev) => {
+        const next = prev.filter((s) => s.id !== data.search.id);
+        return [data.search, ...next];
+      });
+      setSaveState("saved");
+      setTimeout(() => setSaveState(""), 2500);
+    } catch {
+      setSaveState("error");
+    }
+  };
+
+  const handleApplySavedSearch = (s: SavedSearch) => {
+    const params = new URLSearchParams();
+    if (s.query) params.set("q", s.query);
+    if (s.category) params.set("category", s.category);
+    if (s.location) params.set("location", s.location);
+    if (s.condition) params.set("condition", s.condition);
+    if (s.minPrice) params.set("minPrice", s.minPrice);
+    if (s.maxPrice) params.set("maxPrice", s.maxPrice);
+    router.push(`/search?${params.toString()}`);
+  };
+
+  const handleDeleteSavedSearch = async (id: string) => {
+    const res = await fetch(`/api/searches?id=${id}`, { method: "DELETE", credentials: "include" }).catch(() => null);
+    if (res?.ok) setSavedSearches((prev) => prev.filter((s) => s.id !== id));
+  };
 
   const pushParams = useCallback(
     (overrides: Record<string, string> = {}) => {
@@ -264,17 +332,45 @@ export default function SearchPage() {
 
         {/* Results */}
         <div className="flex-1">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
             <h1 className="text-xl font-bold text-gray-900">
               {q ? `Results for "${q}"` : "All Listings"}
             </h1>
-            <Select
-              options={sortOptions}
-              value={sort}
-              onChange={(e) => handleSortChange(e.target.value)}
-              className="w-48"
-            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleSaveSearch}
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-bai-blue hover:bg-bai-blue-muted rounded-2xl transition-colors"
+              >
+                <FiBookmark className="w-4 h-4" />
+                {saveState === "saving" ? "Saving..." : saveState === "saved" ? "Saved!" : saveState === "error" ? "Failed" : saveState === "auth" ? "Sign in to save" : "Save search"}
+              </button>
+              <Select
+                options={sortOptions}
+                value={sort}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="w-48"
+              />
+            </div>
           </div>
+
+          {savedSearches.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {savedSearches.map((s) => (
+                <span key={s.id} className="inline-flex items-center gap-1 pl-3 pr-1.5 py-1 bg-bai-blue-light text-bai-blue text-sm font-medium rounded-full">
+                  <button onClick={() => handleApplySavedSearch(s)} className="hover:underline">
+                    {s.name}
+                  </button>
+                  <button
+                    onClick={() => handleDeleteSavedSearch(s.id)}
+                    aria-label={`Delete saved search ${s.name}`}
+                    className="p-1 rounded-full hover:bg-bai-blue/10"
+                  >
+                    <FiX className="w-3.5 h-3.5" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
 
           {loading && listings.length === 0 ? (
             <LoadingSpinner text="Searching..." className="py-16" />

@@ -10,6 +10,13 @@ function generateOTP(): string {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: 'Verification emails are unavailable. Please contact support.' },
+        { status: 503 }
+      );
+    }
+
     const { email } = await request.json();
 
     const emailErr = validateEmail(email);

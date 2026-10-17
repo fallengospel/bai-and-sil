@@ -37,9 +37,15 @@ export async function GET(_request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
     }
 
+    const session = await getSession();
+
+    // Removed listings are only visible to their owner and admins
+    if (listing.status === 'Removed' && session?.id !== listing.sellerId && !session?.isAdmin && session?.role !== 'admin') {
+      return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
+    }
+
     // Increment viewCount separately (don't block the response).
     // Owners don't count their own views (edit page fetches this endpoint).
-    const session = await getSession();
     if (session?.id !== listing.sellerId) {
       prisma.listing.update({
         where: { id: listing.id },
@@ -49,6 +55,7 @@ export async function GET(_request: NextRequest, { params }: { params: { id: str
 
     return NextResponse.json({ listing });
   } catch (error) {
+    console.error('[listings] GET detail failed:', error);
     return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
   }
 }
@@ -125,6 +132,27 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         images: { orderBy: { sortOrder: 'asc' } },
       },
     });
+
+    // Fire price-drop alerts when the price goes down to or below a subscriber's target
+    if (updateData.price && updated.price < listing.price) {
+      const alerts = await prisma.priceAlert.findMany({
+        where: { listingId: params.id, active: true, targetPrice: { gte: updated.price } },
+      });
+      for (const alert of alerts) {
+        await prisma.notification.create({
+          data: {
+            userId: alert.userId,
+            type: 'price',
+            message: `Price drop: ${updated.title} is now ₱${updated.price}`,
+            link: `/listing/${updated.slug}`,
+          },
+        });
+        await prisma.priceAlert.update({
+          where: { id: alert.id },
+          data: { active: false },
+        });
+      }
+    }
 
     return NextResponse.json({ listing: updated });
   } catch (error: any) {

@@ -16,6 +16,10 @@ export async function POST(request: NextRequest) {
     const { listingId, revieweeId, rating } = body;
     const comment = body.comment ? sanitizeInput(body.comment) : null;
 
+    if (revieweeId === user.id) {
+      return NextResponse.json({ error: "You cannot review yourself" }, { status: 400 });
+    }
+
     const listing = await prisma.listing.findUnique({ where: { id: listingId } });
     if (!listing) {
       return NextResponse.json({ error: "Listing not found" }, { status: 404 });

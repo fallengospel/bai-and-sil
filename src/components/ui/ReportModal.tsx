@@ -6,15 +6,9 @@ import Modal from "./Modal";
 import Select from "./Select";
 import TextArea from "./TextArea";
 import Button from "./Button";
+import { REPORT_REASON_OPTIONS } from "@/lib/validation";
 
-const reportReasons = [
-  { value: "scam", label: "Scam" },
-  { value: "fake", label: "Fake product" },
-  { value: "prohibited", label: "Prohibited item" },
-  { value: "wrong-info", label: "Wrong information" },
-  { value: "offensive", label: "Offensive content" },
-  { value: "other", label: "Other" },
-];
+const reportReasons = [...REPORT_REASON_OPTIONS];
 
 interface ReportModalProps {
   open: boolean;
@@ -45,7 +39,13 @@ const ReportModal: React.FC<ReportModalProps> = ({ open, onClose, listingId, use
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        toast.error(data?.error || "Failed to submit report. Please try again.");
+        const detail =
+          data?.errors?.reason ||
+          data?.errors?.description ||
+          (data?.errors && typeof data.errors === "object"
+            ? Object.values(data.errors).join(" ")
+            : null);
+        toast.error(detail || data?.error || "Failed to submit report. Please try again.");
         return;
       }
       setSubmitted(true);

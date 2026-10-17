@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, query, category, location, condition, minPrice, maxPrice } = body;
 
-    if (!name || !query) {
+    if (!name || (!query && !category && !location && !condition && !minPrice && !maxPrice)) {
       return NextResponse.json({ error: "Name and query are required" }, { status: 400 });
     }
 

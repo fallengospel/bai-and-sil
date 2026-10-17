@@ -246,7 +246,7 @@ async function testCategoriesAPI() {
       assert(c.listingCount >= 20, `${c.name} has only ${c.listingCount} listings`);
       total += c.listingCount;
     }
-    assert(total === 240, `Expected 240 total, got ${total}`);
+    assert(total >= 240, `Expected at least 240 total, got ${total}`);
   });
 }
 

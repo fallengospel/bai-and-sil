@@ -86,13 +86,13 @@ export default function AdminDashboard() {
           label="Total Sold"
           value={stats?.totalSold || 0}
           icon={<FiStar className="w-6 h-6 text-white" />}
-          iconBg="bg-gradient-to-br from-purple-500 to-purple-400"
+          iconBg="bg-gradient-to-br from-coral to-coral/80"
         />
         <StatCard
           label="Pending Reports"
           value={stats?.pendingReports || 0}
           icon={<FiAlertTriangle className="w-6 h-6 text-white" />}
-          iconBg="bg-gradient-to-br from-coral to-red-400"
+          iconBg="bg-gradient-to-br from-orange-500 to-orange-400"
         />
       </div>
 

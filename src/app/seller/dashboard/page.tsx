@@ -144,7 +144,7 @@ export default function SellerDashboard() {
           label="Sold"
           value={stats?.soldListings || 0}
           icon={<FiDollarSign className="w-5 h-5 text-white" />}
-          iconBg="bg-gradient-to-br from-purple-500 to-purple-400"
+          iconBg="bg-gradient-to-br from-coral to-coral/80"
         />
         <StatCard
           size="sm"
@@ -211,7 +211,7 @@ export default function SellerDashboard() {
             </div>
             <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-purple-500 to-purple-400 h-3 rounded-full transition-all duration-700 ease-out"
+                className="bg-gradient-to-r from-coral to-coral/80 h-3 rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${((stats?.soldListings || 0) / (stats?.totalListings || 1)) * 100}%` }}
               />
             </div>

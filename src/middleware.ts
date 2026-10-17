@@ -56,7 +56,7 @@ function addSecurityHeaders(response: NextResponse, request: NextRequest): NextR
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https://images.pexels.com https://*.pexels.com https://lh3.googleusercontent.com",
-    "connect-src 'self' https://api.resend.com",
+    "connect-src 'self' https://api.resend.com https://vercel.speed-insights.com https://va.vercel-scripts.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -150,18 +150,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/sell/:path*',
-    '/messages/:path*',
-    '/favorites',
-    '/notifications',
-    '/profile/me',
-    '/my-listings',
-    '/offers',
-    '/seller/dashboard',
-    '/buyer/dashboard',
-    '/listing/:slug/edit',
-    '/admin/:path*',
-    '/api/:path*',
-  ],
+  // Run on every route except framework/static assets so security headers
+  // (CSP, X-Frame-Options, etc.) apply to public pages too — not just
+  // protected paths and API routes.
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|uploads).*)'],
 };

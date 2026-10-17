@@ -16,12 +16,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: true,
       price: true,
       location: true,
+      status: true,
+      sellerId: true,
       images: { orderBy: { sortOrder: "asc" }, take: 1 },
     },
   });
 
   if (!listing) {
     return { title: "Listing not found | BAI AND SIL" };
+  }
+
+  // Removed listings should not leak metadata to crawlers or other users
+  if (listing.status === "Removed") {
+    const session = await getSession();
+    const isOwner = session?.id === listing.sellerId;
+    const isAdmin = !!session?.isAdmin || session?.role === "admin";
+    if (!isOwner && !isAdmin) {
+      return { title: "Listing not found | BAI AND SIL" };
+    }
   }
 
   const image = listing.images[0]?.imageUrl;
@@ -69,6 +81,10 @@ export default async function ListingPage({ params }: PageProps) {
 
   const session = await getSession();
   const isOwner = session?.id === listing.sellerId;
+  const isAdmin = !!session?.isAdmin || session?.role === "admin";
+
+  // Removed listings404 for everyone except owner and admins
+  if (listing.status === "Removed" && !isOwner && !isAdmin) notFound();
 
   let isFavorited = false;
   let priceAlerted = false;

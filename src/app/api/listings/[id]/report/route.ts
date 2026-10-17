@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
-import { validateReportReason, sanitizeInput } from '@/lib/validation';
+import { validateReportReason, normalizeReportReason, sanitizeInput } from '@/lib/validation';
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       data: {
         reporterId: user.id,
         listingId: params.id,
-        reason,
+        reason: normalizeReportReason(reason) ?? reason,
         description: description ? sanitizeInput(description) : null,
       },
     });

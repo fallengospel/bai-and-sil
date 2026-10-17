@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
-import { validateReportReason, sanitizeInput } from '@/lib/validation';
+import { validateReportReason, normalizeReportReason, sanitizeInput } from '@/lib/validation';
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -31,10 +31,10 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const report = await prisma.report.create({
       data: {
-        reporterId: user.id,
-        reportedUserId: params.id,
-        reason,
-        description: description ? sanitizeInput(description) : null,
+    reporterId: user.id,
+    reportedUserId: params.id,
+    reason: normalizeReportReason(reason) ?? reason,
+    description: description ? sanitizeInput(description) : null,
       },
     });
 

@@ -69,6 +69,7 @@ export async function PUT(
     if (error.message === "Unauthorized") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    console.error('[offers] PUT failed:', error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

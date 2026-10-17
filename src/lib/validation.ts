@@ -51,7 +51,18 @@ const LISTING_IMAGE_LIMITS = {
 
 const ALLOWED_CONDITIONS = ['Brand New', 'Like New', 'Good', 'Fair', 'For Parts'] as const;
 const ALLOWED_LISTING_STATUSES = ['Active', 'Sold', 'Reserved', 'Removed'] as const;
-export const ALLOWED_REPORT_REASONS = ['Scam', 'Inappropriate', 'Fake', 'Misleading', 'Other'] as const;
+// Single source of truth for report reasons — shared by the ReportModal UI
+// (options) and the report API routes (allowlist). Values are stored as-is.
+export const REPORT_REASON_OPTIONS = [
+  { value: 'Scam', label: 'Scam' },
+  { value: 'Fake', label: 'Fake product' },
+  { value: 'Prohibited', label: 'Prohibited item' },
+  { value: 'Wrong Information', label: 'Wrong information' },
+  { value: 'Offensive', label: 'Offensive content' },
+  { value: 'Other', label: 'Other' },
+] as const;
+
+export const ALLOWED_REPORT_REASONS: readonly string[] = REPORT_REASON_OPTIONS.map((o) => o.value);
 const ALLOWED_ROLES = ['buyer', 'seller'] as const;
 
 // ============================
@@ -196,9 +207,16 @@ function validateListingStatus(status: string): string | null {
   return null;
 }
 
+// Returns the canonical reason value (case-insensitive match) or null.
+export function normalizeReportReason(reason: string): string | null {
+  if (typeof reason !== 'string') return null;
+  const needle = reason.trim().toLowerCase();
+  return REPORT_REASON_OPTIONS.find((o) => o.value.toLowerCase() === needle)?.value ?? null;
+}
+
 export function validateReportReason(reason: string): string | null {
   if (!reason || typeof reason !== 'string') return 'Reason is required';
-  if (!ALLOWED_REPORT_REASONS.includes(reason as any)) return `Invalid report reason`;
+  if (!normalizeReportReason(reason)) return `Invalid report reason`;
   return null;
 }
 

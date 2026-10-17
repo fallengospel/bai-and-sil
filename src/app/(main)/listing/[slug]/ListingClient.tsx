@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -16,7 +16,6 @@ import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import ListingShareButtons from "@/components/ui/ListingShareButtons";
 import VerificationBadge from "@/components/ui/VerificationBadge";
 import { formatPrice, timeAgo } from "@/lib/helpers";
-import { trackRecentlyViewed } from "@/lib/recently-viewed";
 import { FiMessageSquare, FiHeart, FiFlag, FiShield, FiBell, FiBellOff } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import ReviewForm from "@/components/ReviewForm";
@@ -76,19 +75,6 @@ export default function ListingClient({
   const [updating, setUpdating] = useState(false);
   const [priceAlerted, setPriceAlerted] = useState(initialPriceAlerted);
   const [alertProcessing, setAlertProcessing] = useState(false);
-
-  useEffect(() => {
-    if (listing.images.length > 0) {
-      trackRecentlyViewed({
-        id: listing.id,
-        slug: listing.slug,
-        title: listing.title,
-        price: listing.price,
-        imageUrl: listing.images[0]?.imageUrl || "",
-        condition: listing.condition,
-      });
-    }
-  }, [listing]);
 
   const images = listing.images.map((img) => img.imageUrl);
   const isSold = listing.status === "Sold";

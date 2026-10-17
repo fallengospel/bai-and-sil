@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
     if (error.message === 'Unauthorized') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    console.error('[seller/stats] failed:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
