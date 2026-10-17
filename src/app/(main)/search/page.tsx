@@ -267,10 +267,11 @@ export default function SearchPage() {
             <h2 className="font-bold text-gray-900">Filters</h2>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
+              <label htmlFor="search-filter-q" className="block text-sm font-medium text-gray-700 mb-1">Search</label>
               <div className="relative">
                 <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
                 <input
+                  id="search-filter-q"
                   type="text"
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
@@ -312,6 +313,7 @@ export default function SearchPage() {
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
+                  aria-label="Minimum price"
                   className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
                 />
                 <input
@@ -319,6 +321,7 @@ export default function SearchPage() {
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
+                  aria-label="Maximum price"
                   className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
                 />
               </div>

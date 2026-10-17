@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
@@ -66,7 +66,7 @@ export default function AdminListingsPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Listing Management</h1>
       <div className="flex gap-4">
-        <input type="text" placeholder="Search listings..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
+        <input type="text" placeholder="Search listings..." aria-label="Search listings" value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
           <option value="ALL">All Status</option>
           <option value="Active">Active</option>
@@ -82,7 +82,7 @@ export default function AdminListingsPage() {
           <tbody>
             {filtered.map(l => (
               <tr key={l.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">{l.images[0] ? <img src={l.images[0].imageUrl} alt={l.title} className="h-10 w-10 object-cover rounded" /> : <div className="h-10 w-10 bg-gray-200 rounded" />}</td>
+                <td className="p-3">{l.images[0] ?         <img src={l.images[0].imageUrl} alt={l.title} loading="lazy" className="h-10 w-10 object-cover rounded" /> : <div className="h-10 w-10 bg-gray-200 rounded" />}</td>
                 <td className="p-3 font-medium">{l.title}</td>
                 <td className="p-3">{l.seller.name}</td>
                 <td className="p-3">{l.category.name}</td>

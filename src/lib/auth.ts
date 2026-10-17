@@ -42,25 +42,30 @@ export async function createSession(userId: string) {
 }
 
 export async function getSession(): Promise<SessionUser | null> {
+  let userId: string | null = null;
+
+  // Cookie/JWT problems mean "no session" — safe to swallow.
   try {
     const cookieStore = cookies();
     const sessionCookie = (await cookieStore).get('session');
     if (!sessionCookie?.value) return null;
 
     const { payload } = await jwtVerify(sessionCookie.value, SECRET);
-    const userId = payload.userId as string;
-    if (!userId) return null;
-
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true },
-    });
-
-    return user;
+    userId = (payload.userId as string) || null;
   } catch (error) {
-    console.error('[auth] getSession failed:', error);
+    console.error('[auth] getSession: invalid session token:', error);
     return null;
   }
+
+  if (!userId) return null;
+
+  // DB lookup failures propagate so outages surface as 500s instead of
+  // silently logging every user out (findUnique returns null only when the
+  // user truly no longer exists).
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true, name: true, email: true, avatar: true, role: true, isAdmin: true },
+  });
 }
 
 export async function destroySession() {

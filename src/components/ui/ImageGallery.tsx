@@ -75,11 +75,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
               }`}
             >
               <img
-                src={getSrc(index)}
-                alt={`${alt} thumbnail ${index + 1}`}
-                onError={() => handleImgError(index)}
-                className="w-full h-full object-cover"
-              />
+                  src={getSrc(index)}
+                  alt={`${alt} thumbnail ${index + 1}`}
+                  loading="lazy"
+                  onError={() => handleImgError(index)}
+                  className="w-full h-full object-cover"
+                />
             </button>
           ))}
         </div>

@@ -118,11 +118,11 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
           <button
             onClick={() => handleRoleSelect('seller')}
             disabled={submitting}
-            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-[#FFC72C]/50 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-sun/50 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFC72C]/20 flex items-center justify-center flex-shrink-0">
-                <FiShoppingBag className="w-6 h-6 text-[#E6A800]" />
+              <div className="w-12 h-12 rounded-2xl bg-sun/20 flex items-center justify-center flex-shrink-0">
+                <FiShoppingBag className="w-6 h-6 text-sun-deep" />
               </div>
               <div>
                 <h3 className="font-bold text-gray-900">I want to sell</h3>

@@ -158,10 +158,11 @@ export default function OffersPage() {
               <div className="flex items-center gap-4">
                 <Link href={`/listing/${offer.listing.slug}`} className="w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0">
                   <img
-                    src={offer.listing.imageUrl || "/placeholder.svg"}
-                    alt={offer.listing.title}
-                    className="w-full h-full object-cover"
-                  />
+                      src={offer.listing.imageUrl || "/placeholder.svg"}
+                      alt={offer.listing.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
                 </Link>
                 <div className="flex-1 min-w-0">
                   <Link

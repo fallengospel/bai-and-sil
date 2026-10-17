@@ -227,6 +227,11 @@ function validateImages(images: unknown): string | null {
   for (const img of images) {
     if (typeof img !== 'string') return 'Each image must be a URL string';
     if (img.length === 0) return 'Image URLs cannot be empty';
+    // Only http(s) URLs or local absolute paths (/uploads/...) are allowed.
+    // Blocks javascript:, data:, vbscript:, file:, etc.
+    if (!/^(https?:\/\/|\/(?!\/))/i.test(img)) {
+      return 'Image URLs must be http(s) links or local paths';
+    }
   }
   return null;
 }

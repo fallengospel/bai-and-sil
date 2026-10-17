@@ -358,6 +358,7 @@ export default function ConversationPage() {
             }
           }}
           placeholder="Ask the seller something..."
+          aria-label="Message"
           className="flex-1 px-4 py-2.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
           disabled={sending}
           required

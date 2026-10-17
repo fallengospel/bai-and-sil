@@ -102,7 +102,7 @@ export default function PrivacyPage() {
             <li>Withdraw consent at any time</li>
           </ul>
           <p className="mb-4">
-            To exercise these rights, please contact us at privacy@baiandsil.com.
+            To exercise these rights, please contact us at privacy@baiandsil.ph.
           </p>
         </section>
 

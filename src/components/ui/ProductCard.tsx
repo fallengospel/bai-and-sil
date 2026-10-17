@@ -71,9 +71,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <LinkOrDiv {...linkProps} className="block">
         <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
           <img
-            src={imgSrc}
-            alt={listing.title}
-            onError={() => setImgError(true)}
+              src={imgSrc}
+              alt={listing.title}
+              loading="lazy"
+              decoding="async"
+              onError={() => setImgError(true)}
             className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
               isSold ? "brightness-75 grayscale" : ""
             }`}

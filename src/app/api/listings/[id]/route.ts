@@ -56,7 +56,7 @@ export async function GET(_request: NextRequest, { params }: { params: { id: str
     return NextResponse.json({ listing });
   } catch (error) {
     console.error('[listings] GET detail failed:', error);
-    return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 

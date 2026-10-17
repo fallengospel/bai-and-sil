@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
@@ -96,7 +96,7 @@ export default function AdminReportsPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Report Management</h1>
       <div className="flex gap-4">
-        <input type="text" placeholder="Search reports..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
+        <input type="text" placeholder="Search reports..." aria-label="Search reports" value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
           <option value="ALL">All Status</option>
           <option value="Pending">Pending</option>
@@ -112,7 +112,7 @@ export default function AdminReportsPage() {
             {filtered.map(r => (
               <tr key={r.id} className="border-t hover:bg-gray-50">
                 <td className="p-3">{r.reporter.name}</td>
-                <td className="p-3 font-medium">{r.listing?.title || (r.reportedUser ? `${r.reportedUser.name} (user)` : 'â€”')}</td>
+                <td className="p-3 font-medium">{r.listing?.title || (r.reportedUser ? `${r.reportedUser.name} (user)` : '—')}</td>
                 <td className="p-3">{r.reason}</td>
                 <td className="p-3"><span className={`badge ${r.status === 'Pending' ? 'badge-yellow' : r.status === 'Reviewed' ? 'badge-green' : 'badge-gray'}`}>{r.status}</span></td>
                 <td className="p-3">{new Date(r.createdAt).toLocaleDateString()}</td>

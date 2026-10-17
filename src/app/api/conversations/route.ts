@@ -75,10 +75,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Cannot create a conversation with yourself' }, { status: 400 });
     }
 
-    const listing = await prisma.listing.findUnique({ where: { id: listingId } });
-    if (!listing) {
-      return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
-    }
+  const listing = await prisma.listing.findUnique({ where: { id: listingId } });
+  if (!listing) {
+    return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
+  }
+  if (listing.status === 'Removed') {
+    return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
+  }
 
     const existing = await prisma.conversation.findFirst({
       where: {

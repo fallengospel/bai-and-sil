@@ -255,7 +255,7 @@ export default function SellerDashboard() {
             <div key={listing.id} className="p-4 flex items-center gap-4 hover:bg-gray-50/50 transition-colors">
               <div className="w-12 h-12 bg-gray-100 rounded-2xl overflow-hidden flex-shrink-0">
                 {listing.imageUrl ? (
-                  <img src={listing.imageUrl} alt={listing.title} className="w-full h-full object-cover" />
+                  <img src={listing.imageUrl} alt={listing.title} loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-500">
                     <FiPackage className="w-6 h-6" />

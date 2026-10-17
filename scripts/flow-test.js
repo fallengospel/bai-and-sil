@@ -271,7 +271,6 @@ const PASS = "FlowTest123!";
   const upRes = await fetch(BASE + "/api/upload", { method: "POST", headers: { Cookie: buyer.header() }, body: form });
   const upData = await upRes.json().catch(() => null);
   check("image upload works (200/201)", upRes.status === 200 || upRes.status === 201, `got ${upRes.status}: ${JSON.stringify(upData)?.slice(0, 120)}`);
-  note(`upload returns ${upRes.status} (route returns plain 200, not REST-conventional 201)`);
 
   // ── 11. MIDDLEWARE / ACCESS CONTROL ──
   console.log("\n🛡️ ACCESS CONTROL");

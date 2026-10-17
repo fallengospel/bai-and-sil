@@ -49,6 +49,8 @@ module.exports = {
         ink: '#101B3A',
         jeepney: '#0F3D91',
         sun: '#FFC72C',
+        'sun-dark': '#E6B820',
+        'sun-deep': '#E6A800',
         tomato: '#E63B2E',
         mist: '#EAF0FB',
         paper: '#FFFFFF',

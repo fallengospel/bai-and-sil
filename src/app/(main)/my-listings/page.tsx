@@ -248,7 +248,8 @@ export default function MyListingsPage() {
                   type="checkbox"
                   checked={selectedIds.has(listing.id)}
                   onChange={() => toggleSelect(listing.id)}
-                  className="w-4 h-4 rounded border-gray-300 text-bai-blue focus:ring-bai-blue bg-white shadow"
+                  aria-label={`Select ${listing.title}`}
+                  className="w-4 h-4 rounded border-gray-300 text-bai-blue focus:ring-bai-blue/20 bg-white shadow"
                 />
               </label>
               <ProductCard listing={listing} />

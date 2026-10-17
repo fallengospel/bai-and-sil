@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -95,7 +95,7 @@ export default function LandingPage() {
             <div className="flex flex-col gap-6 lg:gap-8 py-8 lg:py-16">
               <h1 className="font-display text-[2.75rem] sm:text-[3.5rem] lg:text-[4rem] leading-[1.05] font-black tracking-tight">
                 Hanap, Benta,{" "}
-                <span className="text-[#FFC72C]">I-repeat!</span>
+                <span className="text-sun">I-repeat!</span>
               </h1>
               <p className="text-lg text-white/80 max-w-md leading-relaxed">
                 Ang marketplace na gawa ng Pinas. Mag-browse, magbenta, mag-deal.
@@ -108,7 +108,7 @@ export default function LandingPage() {
               <div className="flex items-center gap-4">
                 <Link
                   href="/sell"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFC72C] text-ink text-sm font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-sun text-ink text-sm font-bold rounded-lg hover:bg-sun-dark transition-colors"
                 >
                   Magbenta na
                 </Link>
@@ -164,7 +164,7 @@ export default function LandingPage() {
                   <div className="w-16 h-16 rounded-2xl bg-bai-blue text-white flex items-center justify-center shadow-md">
                     {s.icon}
                   </div>
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-[#FFC72C] text-ink rounded-full flex items-center justify-center text-xs font-bold">
+                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-sun text-ink rounded-full flex items-center justify-center text-xs font-bold">
                     {s.num}
                   </span>
                 </div>
@@ -216,14 +216,14 @@ export default function LandingPage() {
             <h2 className="font-display text-3xl lg:text-4xl font-bold mb-4 leading-tight">
               May benta ka ba?
               <br />
-              <span className="text-[#FFC72C]">I-list na, libre.</span>
+              <span className="text-sun">I-list na, libre.</span>
             </h2>
             <p className="text-white/70 mb-8">
               Photo, title, price, post. Ganun lang kadali. Walang commission, walang hidden fees.
             </p>
             <Link
               href="/sell"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFC72C] text-ink font-bold rounded-lg hover:bg-[#E6B820] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-sun text-ink font-bold rounded-lg hover:bg-sun-dark transition-colors"
             >
               Magbenta na
             </Link>

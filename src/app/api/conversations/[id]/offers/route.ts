@@ -66,6 +66,13 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'Only buyer can create offers' }, { status: 403 });
     }
 
+    if (conversation.listing.status !== 'Active') {
+      return NextResponse.json(
+        { error: `This listing is ${conversation.listing.status.toLowerCase()} and is not accepting offers` },
+        { status: 400 }
+      );
+    }
+
     const amountNum = parseFloat(amount);
     if (amountNum > conversation.listing.price) {
       return NextResponse.json(

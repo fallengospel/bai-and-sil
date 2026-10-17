@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
@@ -80,7 +80,7 @@ export default function AdminUsersPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-      <input type="text" placeholder="Search users..." value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
+      <input type="text" placeholder="Search users..." aria-label="Search users" value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full min-w-[640px] text-sm">
