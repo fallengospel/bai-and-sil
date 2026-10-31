@@ -72,7 +72,7 @@ export default function BuyerLayout({ children }: { children: React.ReactNode })
             </Link>
           ))}
         </nav>
-        <main className="p-4 md:p-8">{children}</main>
+        <div className="p-4 md:p-8">{children}</div>
       </div>
     </div>
   );

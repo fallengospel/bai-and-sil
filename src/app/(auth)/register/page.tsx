@@ -121,7 +121,7 @@ export default function RegisterPage() {
                   <FiSearch className="w-6 h-6 text-bai-blue group-hover:text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">I want to buy</h3>
+                  <h2 className="font-bold text-gray-900">I want to buy</h2>
                   <p className="text-sm text-gray-500">Browse and purchase items from sellers</p>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function RegisterPage() {
                   <FiShoppingBag className="w-6 h-6 text-sil-yellow group-hover:text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">I want to sell</h3>
+                  <h2 className="font-bold text-gray-900">I want to sell</h2>
                   <p className="text-sm text-gray-500">List and sell your items to buyers</p>
                 </div>
               </div>

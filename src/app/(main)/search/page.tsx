@@ -348,6 +348,7 @@ export default function SearchPage() {
                 {saveState === "saving" ? "Saving..." : saveState === "saved" ? "Saved!" : saveState === "error" ? "Failed" : saveState === "auth" ? "Sign in to save" : "Save search"}
               </button>
               <Select
+                aria-label="Sort results"
                 options={sortOptions}
                 value={sort}
                 onChange={(e) => handleSortChange(e.target.value)}

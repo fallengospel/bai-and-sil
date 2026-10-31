@@ -67,7 +67,7 @@ export default function AdminListingsPage() {
       <h1 className="text-3xl font-bold text-gray-900">Listing Management</h1>
       <div className="flex gap-4">
         <input type="text" placeholder="Search listings..." aria-label="Search listings" value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
-        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
+        <select aria-label="Filter by status" value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
           <option value="ALL">All Status</option>
           <option value="Active">Active</option>
           <option value="Sold">Sold</option>

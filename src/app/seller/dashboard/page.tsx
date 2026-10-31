@@ -178,7 +178,7 @@ export default function SellerDashboard() {
             <div className="text-sm text-gray-500 mt-1">Total Views</div>
           </div>
           <div className="text-center p-4 bg-sil-yellow-light rounded-2xl">
-            <div className="text-3xl font-bold text-sil-yellow">{stats?.avgViewsPerListing || 0}</div>
+            <div className="text-3xl font-bold text-sil-yellow-dark">{stats?.avgViewsPerListing || 0}</div>
             <div className="text-sm text-gray-500 mt-1">Avg Views/Listing</div>
           </div>
           <div className="text-center p-4 bg-green-50 rounded-2xl">
@@ -223,7 +223,7 @@ export default function SellerDashboard() {
       <div className="grid gap-4 md:grid-cols-3">
         <Link href="/sell" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-sil-yellow/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
           <div className="w-12 h-12 bg-sil-yellow-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-sil-yellow/20 transition-colors">
-            <FiPlusCircle className="w-6 h-6 text-sil-yellow" />
+            <FiPlusCircle className="w-6 h-6 text-sil-yellow-dark" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Create Listing</h3>
           <p className="text-sm text-gray-500">List a new item for sale</p>
@@ -248,7 +248,7 @@ export default function SellerDashboard() {
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Your Recent Listings</h2>
-          <Link href="/my-listings" className="text-sm text-sil-yellow hover:underline font-medium">View all</Link>
+          <Link href="/my-listings" className="inline-block py-1 text-sm text-sil-yellow-dark hover:underline font-medium">View all</Link>
         </div>
         <div className="divide-y divide-gray-50">
           {(stats?.recentListings || []).map((listing: any) => (
@@ -284,7 +284,7 @@ export default function SellerDashboard() {
                 <FiPackage className="w-8 h-8 text-gray-500" />
               </div>
               <p className="text-gray-500 mb-2">No listings yet</p>
-              <Link href="/sell" className="text-sil-yellow hover:underline font-medium">Create your first listing</Link>
+              <Link href="/sell" className="text-sil-yellow-dark hover:underline font-medium">Create your first listing</Link>
             </div>
           )}
         </div>

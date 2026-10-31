@@ -291,6 +291,8 @@ export default function ListingClient({
               </Button>
               <button
                 onClick={handleFavorite}
+                aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+                aria-pressed={favorited}
                 className={`p-3 rounded-2xl border transition-colors ${
                   favorited
                     ? "bg-coral/10 border-coral text-coral"
@@ -345,7 +347,7 @@ export default function ListingClient({
 
           {/* Description */}
           <div>
-            <h3 className="font-bold text-gray-900 mb-2">Description</h3>
+            <h2 className="font-bold text-gray-900 mb-2">Description</h2>
             <p className="text-gray-600 whitespace-pre-wrap text-sm leading-relaxed">
               {listing.description}
             </p>
@@ -376,7 +378,7 @@ export default function ListingClient({
             </div>
             <Link
               href={`/profile/${listing.seller.id}`}
-              className="inline-block mt-3 text-sm font-medium text-bai-blue hover:underline"
+              className="inline-block mt-3 py-1 text-sm font-medium text-bai-blue hover:underline"
             >
               View Seller
             </Link>

@@ -509,10 +509,10 @@ export default function ProfilePage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* About Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiEdit2 className="w-4 h-4 text-gray-500" />
               About
-            </h3>
+            </h2>
             <div className="space-y-3">
               {profile.bio && (
                 <p className="text-sm text-gray-600">{profile.bio}</p>
@@ -525,10 +525,10 @@ export default function ProfilePage() {
 
           {/* Contact Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiMail className="w-4 h-4 text-gray-500" />
               Contact Information
-            </h3>
+            </h2>
             <div className="space-y-3">
               {profile.location && (
                 <div className="flex items-center gap-3 text-sm">
@@ -556,10 +556,10 @@ export default function ProfilePage() {
 
           {/* Quick Stats Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiTrendingUp className="w-4 h-4 text-gray-500" />
               Statistics
-            </h3>
+            </h2>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Member since</span>
@@ -582,10 +582,10 @@ export default function ProfilePage() {
 
           {/* Activity Card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FiClock className="w-4 h-4 text-gray-500" />
               Recent Activity
-            </h3>
+            </h2>
             <div className="space-y-3">
               {listings.slice(0, 3).map((listing) => (
                 <div key={listing.id} className="flex items-center gap-3 text-sm">

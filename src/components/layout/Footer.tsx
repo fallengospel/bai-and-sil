@@ -8,28 +8,28 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <Logo tone="reverse" size={28} asLink />
-            <p className="mt-3 text-sm text-gray-500">
+            <p className="mt-3 text-sm text-gray-400">
               Ang marketplace ng Pinas. Benta, hanap, loop lang. Walang hassle, promise.
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+            <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Marketplace
-            </h3>
+            </h2>
             <ul className="space-y-2">
               <li>
-                <Link href="/categories" className="text-sm hover:text-white transition-colors">
+                <Link href="/categories" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="/search" className="text-sm hover:text-white transition-colors">
+                <Link href="/search" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Search Items
                 </Link>
               </li>
               <li>
-                <Link href="/sell" className="text-sm hover:text-white transition-colors">
+                <Link href="/sell" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Start Selling
                 </Link>
               </li>
@@ -37,22 +37,22 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+            <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
               Help &amp; Legal
-            </h3>
+            </h2>
             <ul className="space-y-2">
               <li>
-                <Link href="/safety" className="text-sm hover:text-white transition-colors">
+                <Link href="/safety" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Safety Tips
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm hover:text-white transition-colors">
+                <Link href="/terms" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-sm hover:text-white transition-colors">
+                <Link href="/privacy" className="inline-block py-1 text-sm hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 pt-8 border-t border-gray-800">
-          <p className="text-sm text-gray-500 text-center">
+          <p className="text-sm text-gray-400 text-center">
             &copy; {new Date().getFullYear()} BAI &amp; SIL. Gawang Pinas, para sa Pinas. All rights reserved.
           </p>
         </div>

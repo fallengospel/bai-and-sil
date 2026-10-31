@@ -115,21 +115,21 @@ export default function BuyerDashboard() {
           <div className="w-12 h-12 bg-bai-blue-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-bai-blue/20 transition-colors">
             <FiSearch className="w-6 h-6 text-bai-blue" />
           </div>
-          <h3 className="font-bold text-gray-900 mb-1">Browse Categories</h3>
+          <h2 className="font-bold text-gray-900 mb-1">Browse Categories</h2>
           <p className="text-sm text-gray-500">Explore all available items</p>
         </Link>
         <Link href="/favorites" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-coral/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
           <div className="w-12 h-12 bg-coral/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-coral/20 transition-colors">
             <FiHeart className="w-6 h-6 text-coral" />
           </div>
-          <h3 className="font-bold text-gray-900 mb-1">My Favorites</h3>
+          <h2 className="font-bold text-gray-900 mb-1">My Favorites</h2>
           <p className="text-sm text-gray-500">View saved items</p>
         </Link>
         <Link href="/messages" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-green-500/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
           <div className="w-12 h-12 bg-green-500/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-green-500/20 transition-colors">
             <FiMessageSquare className="w-6 h-6 text-green-500" />
           </div>
-          <h3 className="font-bold text-gray-900 mb-1">Messages</h3>
+          <h2 className="font-bold text-gray-900 mb-1">Messages</h2>
           <p className="text-sm text-gray-500">Chat with sellers</p>
         </Link>
       </div>
@@ -139,7 +139,7 @@ export default function BuyerDashboard() {
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Your Saved Items</h2>
           {(stats?.recentFavorites || []).length > 0 && (
-            <Link href="/favorites" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/favorites" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
           )}
         </div>
         {(stats?.recentFavorites || []).length === 0 ? (

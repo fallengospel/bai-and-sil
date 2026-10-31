@@ -1,6 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import CategoryCard from "@/components/ui/CategoryCard";
 import { CATEGORY_ICONS } from "@/lib/helpers";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Categories | BAI AND SIL",
+};
 
 export default async function CategoriesPage() {
   const categories = await prisma.category.findMany({

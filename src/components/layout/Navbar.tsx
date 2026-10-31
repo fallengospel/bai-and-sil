@@ -157,7 +157,7 @@ const Navbar: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
                 aria-label="Search listings"
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200 placeholder-gray-400"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200 placeholder-gray-500"
                 maxLength={200}
               />
             </div>

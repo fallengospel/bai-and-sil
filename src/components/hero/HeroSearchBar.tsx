@@ -33,7 +33,7 @@ export default function HeroSearchBar() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Ano hanap mo?"
           aria-label="Search listings"
-          className="w-full pl-12 pr-24 py-3.5 bg-white rounded-lg text-ink placeholder-gray-400 text-base font-medium shadow-lg border-2 border-transparent focus:outline-none focus:border-sun transition-colors"
+          className="w-full pl-12 pr-24 py-3.5 bg-white rounded-lg text-ink placeholder-gray-500 text-base font-medium shadow-lg border-2 border-transparent focus:outline-none focus:border-sun transition-colors"
         />
         <button
           type="submit"

@@ -107,9 +107,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-4">
         <LinkOrDiv {...linkProps}>
-          <h3 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 group-hover:text-bai-blue transition-colors leading-relaxed">
+          <h2 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 group-hover:text-bai-blue transition-colors leading-relaxed">
             {listing.title}
-          </h3>
+          </h2>
         </LinkOrDiv>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
@@ -163,6 +163,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   : "text-gray-500 hover:text-coral hover:bg-coral/5"
               }`}
               aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+              aria-pressed={favorited}
             >
               {favorited ? (
                 <FaHeart className="w-4 h-4" />

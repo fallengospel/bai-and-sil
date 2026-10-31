@@ -109,7 +109,7 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
                 <FiSearch className="w-6 h-6 text-bai-blue" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">I want to buy</h3>
+                <h2 className="font-bold text-gray-900">I want to buy</h2>
                 <p className="text-sm text-gray-500">Browse and find great deals</p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
                 <FiShoppingBag className="w-6 h-6 text-sun-deep" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">I want to sell</h3>
+                <h2 className="font-bold text-gray-900">I want to sell</h2>
                 <p className="text-sm text-gray-500">List your items and earn</p>
               </div>
             </div>

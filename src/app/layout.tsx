@@ -70,8 +70,14 @@ export default function RootLayout({
         <AuthProvider>
             <AppToaster />
             <div className="flex flex-col min-h-screen pb-16 md:pb-0">
+              <a
+                href="#main"
+                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-bai-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-2xl focus:text-sm focus:font-bold focus:shadow-elevated"
+              >
+                Skip to content
+              </a>
               <Navbar />
-              <main className="flex-1">{children}</main>
+              <main id="main" className="flex-1">{children}</main>
               <Footer />
             </div>
             <div className="md:hidden">

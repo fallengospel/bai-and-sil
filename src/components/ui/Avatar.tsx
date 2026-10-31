@@ -34,16 +34,17 @@ function getInitials(name?: string): string {
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 }
 
-function getColorFromName(name?: string): string {
-  if (!name) return "bg-gray-400";
+function getColorFromName(name?: string): { bg: string; text: string } {
+  if (!name) return { bg: "bg-gray-400", text: "text-ink" };
+  // Per-background initials color so every combination meets WCAG AA (4.5:1).
   const colors = [
-    "bg-bai-blue",
-    "bg-sil-yellow",
-    "bg-coral",
-    "bg-emerald-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-teal-500",
+    { bg: "bg-bai-blue", text: "text-white" },
+    { bg: "bg-sil-yellow", text: "text-ink" },
+    { bg: "bg-coral", text: "text-ink" },
+    { bg: "bg-emerald-500", text: "text-ink" },
+    { bg: "bg-purple-600", text: "text-white" },
+    { bg: "bg-pink-500", text: "text-ink" },
+    { bg: "bg-teal-500", text: "text-ink" },
   ];
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
@@ -63,6 +64,7 @@ const Avatar: React.FC<AvatarProps> = ({
   const [imgError, setImgError] = useState(false);
 
   const showImage = src && !imgError;
+  const initialsColor = getColorFromName(name);
 
   return (
     <div
@@ -79,9 +81,7 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       ) : (
         <div
-          className={`w-full h-full rounded-full flex items-center justify-center text-white font-medium ${getColorFromName(
-            name
-          )}`}
+          className={`w-full h-full rounded-full flex items-center justify-center font-medium ${initialsColor.bg} ${initialsColor.text}`}
         >
           {getInitials(name)}
         </div>

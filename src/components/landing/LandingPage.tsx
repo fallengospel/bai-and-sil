@@ -185,7 +185,7 @@ export default function LandingPage() {
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink">
               Categories
             </h2>
-            <Link href="/categories" className="text-sm font-bold text-bai-blue hover:underline hidden sm:block">
+            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-bai-blue hover:underline hidden sm:block">
               Lahat ng categories
             </Link>
           </div>
@@ -202,7 +202,7 @@ export default function LandingPage() {
             ))}
           </div>
           <div className="mt-6 text-center sm:hidden">
-            <Link href="/categories" className="text-sm font-bold text-bai-blue hover:underline">
+            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-bai-blue hover:underline">
               Lahat ng categories
             </Link>
           </div>

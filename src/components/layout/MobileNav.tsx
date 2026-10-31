@@ -31,9 +31,9 @@ const MobileNav: React.FC = () => {
                 className="flex flex-col items-center justify-center -mt-4"
               >
                 <div className="w-14 h-14 rounded-full bg-sil-yellow flex items-center justify-center shadow-cartoon-sm">
-                  <Icon className="w-6 h-6 text-white" />
+                  <Icon className="w-6 h-6 text-ink" />
                 </div>
-                <span className="text-[10px] font-bold text-sil-yellow mt-1">
+                <span className="text-[10px] font-bold text-sil-yellow-dark mt-1">
                   {item.label}
                 </span>
               </Link>

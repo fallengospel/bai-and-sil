@@ -17,7 +17,7 @@ module.exports = {
         },
         sil: {
           yellow: '#FFD581',
-          'yellow-dark': '#FFC233',
+          'yellow-dark': '#A16207',
           'yellow-light': '#FFF9E0',
           'yellow-hover': '#FFE699',
           'yellow-muted': '#FFD58120',

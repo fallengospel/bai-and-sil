@@ -21,9 +21,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <div className="w-14 h-14 bg-bai-blue-light rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-bai-blue/10 transition-colors duration-300 shadow-cartoon-sm">
           <span className="text-3xl">{icon}</span>
         </div>
-        <h3 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-bai-blue transition-colors">
+        <h2 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-bai-blue transition-colors">
           {name}
-        </h3>
+        </h2>
         <p className="text-xs text-gray-500">
           {count} {count === 1 ? "item" : "items"}
         </p>

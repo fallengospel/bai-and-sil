@@ -97,7 +97,7 @@ export default function AdminReportsPage() {
       <h1 className="text-3xl font-bold text-gray-900">Report Management</h1>
       <div className="flex gap-4">
         <input type="text" placeholder="Search reports..." aria-label="Search reports" value={search} onChange={e => setSearch(e.target.value)} className="input-field max-w-sm" />
-        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
+        <select aria-label="Filter by status" value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input-field max-w-[160px]">
           <option value="ALL">All Status</option>
           <option value="Pending">Pending</option>
           <option value="Reviewed">Reviewed</option>

@@ -178,7 +178,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Users</h2>
-            <Link href="/admin/users" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/admin/users" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentUsers || []).map((user: any) => (
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Listings</h2>
-            <Link href="/admin/listings" className="text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/admin/listings" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentListings || []).map((listing: any) => (
