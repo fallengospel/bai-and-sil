@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Safety Tips | Bai and Sil',
-  description: 'Safety tips for buying and selling on Bai and Sil',
+  title: 'Safety Tips | Salpak',
+  description: 'Safety tips for buying and selling on Salpak',
 };
 
 export default function SafetyPage() {
@@ -12,7 +12,7 @@ export default function SafetyPage() {
       
       <div className="prose prose-gray max-w-none">
         <p className="text-lg mb-8">
-          Your safety is our priority. Here are some tips to keep you safe when buying and selling on Bai and Sil.
+          Your safety is our priority. Here are some tips to keep you safe when buying and selling on Salpak.
         </p>
 
         <section className="mb-8">

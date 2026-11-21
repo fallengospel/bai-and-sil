@@ -261,7 +261,7 @@ export default function SearchPage() {
             className="md:hidden w-full flex items-center justify-between px-4 py-2.5 mb-3 bg-white border border-gray-200 rounded-2xl text-sm font-bold text-gray-700"
           >
             <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
-            <span className="text-bai-blue">{showFilters ? "â–²" : "â–¼"}</span>
+            <span className="text-salpak-blue">{showFilters ? "â–²" : "â–¼"}</span>
           </button>
           <div className={`bg-white rounded-2xl border border-gray-100 p-5 space-y-5 md:sticky top-20 ${showFilters ? "" : "hidden md:block"}`}>
             <h2 className="font-bold text-gray-900">Filters</h2>
@@ -277,7 +277,7 @@ export default function SearchPage() {
                   onChange={(e) => setQ(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") handleApplyFilters(); }}
                   placeholder="Search items..."
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue"
                 />
               </div>
             </div>
@@ -314,7 +314,7 @@ export default function SearchPage() {
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
                   aria-label="Minimum price"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue"
                 />
                 <input
                   type="number"
@@ -322,7 +322,7 @@ export default function SearchPage() {
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
                   aria-label="Maximum price"
-                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
+                  className="w-1/2 px-3 py-2 border border-gray-300 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue"
                 />
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function SearchPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleSaveSearch}
-                className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-bai-blue hover:bg-bai-blue-muted rounded-2xl transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-salpak-blue hover:bg-salpak-blue-muted rounded-2xl transition-colors"
               >
                 <FiBookmark className="w-4 h-4" />
                 {saveState === "saving" ? "Saving..." : saveState === "saved" ? "Saved!" : saveState === "error" ? "Failed" : saveState === "auth" ? "Sign in to save" : "Save search"}
@@ -360,14 +360,14 @@ export default function SearchPage() {
           {savedSearches.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-6">
               {savedSearches.map((s) => (
-                <span key={s.id} className="inline-flex items-center gap-1 pl-3 pr-1.5 py-1 bg-bai-blue-light text-bai-blue text-sm font-medium rounded-full">
+                <span key={s.id} className="inline-flex items-center gap-1 pl-3 pr-1.5 py-1 bg-salpak-blue-light text-salpak-blue text-sm font-medium rounded-full">
                   <button onClick={() => handleApplySavedSearch(s)} className="hover:underline">
                     {s.name}
                   </button>
                   <button
                     onClick={() => handleDeleteSavedSearch(s.id)}
                     aria-label={`Delete saved search ${s.name}`}
-                    className="p-1 rounded-full hover:bg-bai-blue/10"
+                    className="p-1 rounded-full hover:bg-salpak-blue/10"
                   >
                     <FiX className="w-3.5 h-3.5" />
                   </button>

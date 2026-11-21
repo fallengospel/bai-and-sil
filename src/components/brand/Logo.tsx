@@ -11,38 +11,35 @@ interface LogoProps {
   className?: string;
 }
 
+// SALPAK mark: a gold arrow landing on a white bar with impact sparks —
+// the moment a deal "salpaks" (lands).
 const NavyMark = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 64 64"
     fill="none"
     role="img"
-    aria-label="BAI & SIL"
+    aria-label="SALPAK"
   >
-    <rect x="6" y="23" width="52" height="35" rx="11" fill="#0A2E6E" />
+    <rect x="4" y="4" width="56" height="56" rx="14" fill="#0A2E6E" />
     <path
-      d="M20 27V21a12 12 0 0 1 22.5-5.8"
+      d="M32 12v26"
       stroke="#F5BD5D"
-      strokeWidth="5.2"
+      strokeWidth="5.4"
       strokeLinecap="round"
     />
     <path
-      d="M36.5 12.5 43.8 14.4 42 21.7"
+      d="M23 29l9 9 9-9"
       stroke="#F5BD5D"
-      strokeWidth="5.2"
+      strokeWidth="5.4"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+    <path d="M16 46h32" stroke="#ffffff" strokeWidth="5" strokeLinecap="round" />
     <path
-      d="M32 33.5v18M25.5 39.5h13M25.5 45h13"
-      stroke="#fff"
-      strokeWidth="3.6"
-      strokeLinecap="round"
-    />
-    <path
-      d="M32 33.5h5.2a5.6 5.6 0 0 1 0 11.2"
-      stroke="#fff"
-      strokeWidth="3.6"
+      d="M14 36l-5.5-5.5M50 36l5.5-5.5"
+      stroke="#F5BD5D"
+      strokeWidth="4"
       strokeLinecap="round"
     />
   </svg>
@@ -54,32 +51,22 @@ const ReverseMark = () => (
     viewBox="0 0 64 64"
     fill="none"
     role="img"
-    aria-label="BAI & SIL"
+    aria-label="SALPAK"
   >
-    <rect x="6" y="23" width="52" height="35" rx="11" fill="#ffffff" />
+    <rect x="4" y="4" width="56" height="56" rx="14" fill="#ffffff" />
+    <path d="M32 12v26" stroke="#F5BD5D" strokeWidth="5.4" strokeLinecap="round" />
     <path
-      d="M20 27V21a12 12 0 0 1 22.5-5.8"
+      d="M23 29l9 9 9-9"
       stroke="#F5BD5D"
-      strokeWidth="5.2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M36.5 12.5 43.8 14.4 42 21.7"
-      stroke="#F5BD5D"
-      strokeWidth="5.2"
+      strokeWidth="5.4"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+    <path d="M16 46h32" stroke="#0A2E6E" strokeWidth="5" strokeLinecap="round" />
     <path
-      d="M32 33.5v18M25.5 39.5h13M25.5 45h13"
-      stroke="#0A2E6E"
-      strokeWidth="3.6"
-      strokeLinecap="round"
-    />
-    <path
-      d="M32 33.5h5.2a5.6 5.6 0 0 1 0 11.2"
-      stroke="#0A2E6E"
-      strokeWidth="3.6"
+      d="M14 36l-5.5-5.5M50 36l5.5-5.5"
+      stroke="#F5BD5D"
+      strokeWidth="4"
       strokeLinecap="round"
     />
   </svg>
@@ -91,32 +78,30 @@ const MonoMark = () => (
     viewBox="0 0 64 64"
     fill="none"
     role="img"
-    aria-label="BAI & SIL"
+    aria-label="SALPAK"
   >
-    <rect x="6" y="23" width="52" height="35" rx="11" fill="currentColor" />
-    <path
-      d="M20 27V21a12 12 0 0 1 22.5-5.8"
+    <rect
+      x="4"
+      y="4"
+      width="56"
+      height="56"
+      rx="14"
       stroke="currentColor"
-      strokeWidth="5.2"
-      strokeLinecap="round"
+      strokeWidth="3.5"
     />
+    <path d="M32 12v26" stroke="currentColor" strokeWidth="5.4" strokeLinecap="round" />
     <path
-      d="M36.5 12.5 43.8 14.4 42 21.7"
+      d="M23 29l9 9 9-9"
       stroke="currentColor"
-      strokeWidth="5.2"
+      strokeWidth="5.4"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+    <path d="M16 46h32" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
     <path
-      d="M32 33.5v18M25.5 39.5h13M25.5 45h13"
+      d="M14 36l-5.5-5.5M50 36l5.5-5.5"
       stroke="currentColor"
-      strokeWidth="3.6"
-      strokeLinecap="round"
-    />
-    <path
-      d="M32 33.5h5.2a5.6 5.6 0 0 1 0 11.2"
-      stroke="currentColor"
-      strokeWidth="3.6"
+      strokeWidth="4"
       strokeLinecap="round"
     />
   </svg>
@@ -144,9 +129,7 @@ function Wordmark({ tone }: { tone: Exclude<Tone, "mono"> }) {
         color: tone === "navy" ? "#0A2E6E" : "#ffffff",
       }}
     >
-      BAI
-      <span className="text-brand-gold">&amp;</span>
-      SIL
+      SALPAK
     </span>
   );
 }
@@ -177,9 +160,7 @@ export default function Logo({
                 color: tone === "navy" ? "#0A2E6E" : "#ffffff",
               }}
             >
-              BAI
-              <span className="text-brand-gold">&amp;</span>
-              SIL
+              SALPAK
             </span>
             <span
               className="font-brand uppercase leading-none"

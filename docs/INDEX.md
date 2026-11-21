@@ -1,4 +1,4 @@
-# BAI & SIL — Documentation Index
+# SALPAK — Documentation Index
 
 > **Version:** 1.0.0  
 > **Last Updated:** September 11, 2026
@@ -61,5 +61,5 @@
 
 ---
 
-**BAI & SIL** — Documentation  
+**SALPAK** — Documentation  
 *Gawang Pinas, para sa Pinas*

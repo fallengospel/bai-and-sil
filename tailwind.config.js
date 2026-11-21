@@ -8,14 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bai: {
+        salpak: {
           blue: '#023E8A',
           'blue-dark': '#012A62',
           'blue-light': '#E8F4FD',
           'blue-hover': '#0356B3',
           'blue-muted': '#023E8A15',
-        },
-        sil: {
           yellow: '#FFD581',
           'yellow-dark': '#A16207',
           'yellow-light': '#FFF9E0',

@@ -87,7 +87,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       ) : (
         <label
           htmlFor="file-upload"
-          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-bai-blue hover:bg-bai-blue-light transition-colors"
+          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-salpak-blue hover:bg-salpak-blue-light transition-colors"
         >
           <FiUploadCloud className="w-8 h-8 text-gray-500 mb-2" />
           <span className="text-sm text-gray-500">Click to upload image</span>

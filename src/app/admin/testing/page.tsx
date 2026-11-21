@@ -198,25 +198,25 @@ export default function AdminTestingPage() {
     if (suiteIdx === 3) {
       // Auth
       results.push(await runTest('Login as admin', async () => {
-        const r = await post('/api/auth/login', { email: 'admin@baiandsil.ph', password: 'password123' });
+        const r = await post('/api/auth/login', { email: 'admin@salpak.ph', password: 'password123' });
         assert(r.status === 200, `Got ${r.status}`);
         const d = JSON.parse(r.body);
         assert(d.user?.isAdmin === true, 'Not admin');
       }));
       results.push(await runTest('Login as seller', async () => {
-        const r = await post('/api/auth/login', { email: 'seller@baiandsil.ph', password: 'password123' });
+        const r = await post('/api/auth/login', { email: 'seller@salpak.ph', password: 'password123' });
         assert(r.status === 200, `Got ${r.status}`);
         const d = JSON.parse(r.body);
-        assert(d.user?.email === 'seller@baiandsil.ph', 'Wrong email');
+        assert(d.user?.email === 'seller@salpak.ph', 'Wrong email');
       }));
       results.push(await runTest('Login as buyer', async () => {
-        const r = await post('/api/auth/login', { email: 'buyer@baiandsil.ph', password: 'password123' });
+        const r = await post('/api/auth/login', { email: 'buyer@salpak.ph', password: 'password123' });
         assert(r.status === 200, `Got ${r.status}`);
         const d = JSON.parse(r.body);
-        assert(d.user?.email === 'buyer@baiandsil.ph', 'Wrong email');
+        assert(d.user?.email === 'buyer@salpak.ph', 'Wrong email');
       }));
       results.push(await runTest('Wrong password rejected (401)', async () => {
-        const r = await post('/api/auth/login', { email: 'admin@baiandsil.ph', password: 'wrong' });
+        const r = await post('/api/auth/login', { email: 'admin@salpak.ph', password: 'wrong' });
         assert(r.status === 401 || r.body.includes('error'), `Should reject: ${r.status}`);
       }));
       results.push(await runTest('Nonexistent user rejected', async () => {
@@ -381,7 +381,7 @@ export default function AdminTestingPage() {
         <button
           onClick={runAllTests}
           disabled={running}
-          className="flex items-center gap-2 px-5 py-2.5 bg-bai-blue text-white rounded-lg font-bold hover:bg-bai-blue-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-5 py-2.5 bg-salpak-blue text-white rounded-lg font-bold hover:bg-salpak-blue-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {running ? <FiLoader className="w-4 h-4 animate-spin" /> : <FiPlay className="w-4 h-4" />}
           {running ? 'Running...' : 'Run All Tests'}
@@ -395,7 +395,7 @@ export default function AdminTestingPage() {
           aria-selected={tab === 'qa'}
           onClick={() => setTab('qa')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            tab === 'qa' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
+            tab === 'qa' ? 'bg-white text-salpak-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           <FiCheckSquare className="w-4 h-4" />
@@ -406,7 +406,7 @@ export default function AdminTestingPage() {
           aria-selected={tab === 'dev'}
           onClick={() => setTab('dev')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            tab === 'dev' ? 'bg-white text-bai-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
+            tab === 'dev' ? 'bg-white text-salpak-blue shadow-sm' : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           <FiCode className="w-4 h-4" />
@@ -444,7 +444,7 @@ export default function AdminTestingPage() {
             <div className="flex items-center justify-between p-4 border-b border-gray-50">
               <div className="flex items-center gap-3">
                 {suite.status === 'running' ? (
-                  <FiLoader className="w-5 h-5 text-bai-blue animate-spin" />
+                  <FiLoader className="w-5 h-5 text-salpak-blue animate-spin" />
                 ) : suite.status === 'done' ? (
                   suite.tests.some(t => t.status === 'fail') ? (
                     <FiXCircle className="w-5 h-5 text-red-500" />

@@ -345,9 +345,9 @@ async function seedBase() {
   const passwordHash = await bcrypt.hash('password123', 10);
 
   const users = [
-    { email: 'admin@baiandsil.ph', name: 'Bai the Admin', isAdmin: true, bio: 'Platform administrator. Keeping the marketplace safe.' },
-    { email: 'seller@baiandsil.ph', name: 'Sil the Seller', isAdmin: false, bio: 'Pro seller since 2024. Fast shipping, fair prices.' },
-    { email: 'buyer@baiandsil.ph', name: 'Bay the Buyer', isAdmin: false, bio: 'Always looking for great deals!' },
+    { email: 'admin@salpak.ph', name: 'Sal the Admin', isAdmin: true, bio: 'Platform administrator. Keeping the marketplace safe.' },
+    { email: 'seller@salpak.ph', name: 'Pia the Seller', isAdmin: false, bio: 'Pro seller since 2024. Fast shipping, fair prices.' },
+    { email: 'buyer@salpak.ph', name: 'Bogs the Buyer', isAdmin: false, bio: 'Always looking for great deals!' },
   ];
 
   for (const u of users) {
@@ -366,7 +366,7 @@ async function main() {
 
   console.log('Seeding listings with images...\n');
 
-  const seller = await prisma.user.findUnique({ where: { email: 'seller@baiandsil.ph' } });
+  const seller = await prisma.user.findUnique({ where: { email: 'seller@salpak.ph' } });
 
   const categoryMap = {};
   const categorySlugs = [

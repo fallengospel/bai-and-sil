@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-10 pt-8 border-t border-gray-800">
           <p className="text-sm text-gray-400 text-center">
-            &copy; {new Date().getFullYear()} BAI &amp; SIL. Gawang Pinas, para sa Pinas. All rights reserved.
+            &copy; {new Date().getFullYear()} SALPAK. Gawang Pinas, para sa Pinas. All rights reserved.
           </p>
         </div>
       </div>

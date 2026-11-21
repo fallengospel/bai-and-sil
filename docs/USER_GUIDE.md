@@ -1,4 +1,4 @@
-# BAI & SIL — User Guide
+# SALPAK — User Guide
 
 > **Version:** 1.0.0  
 > **For:** Buyers, Sellers, and Admins  
@@ -8,7 +8,7 @@
 
 ## Table of Contents
 
-1. [Welcome to BAI & SIL](#1-welcome-to-bai--sil)
+1. [Welcome to SALPAK](#1-welcome-to-salpak)
 2. [Getting Started](#2-getting-started)
 3. [For Buyers](#3-for-buyers)
 4. [For Sellers](#4-for-sellers)
@@ -21,13 +21,13 @@
 
 ---
 
-## 1. Welcome to BAI & SIL
+## 1. Welcome to SALPAK
 
-### What is BAI & SIL?
+### What is SALPAK?
 
-BAI & SIL is a Filipino online marketplace where you can buy and sell pre-loved items. The name represents the buyer-seller relationship in Filipino culture.
+SALPAK is a Filipino online marketplace where you can buy and sell pre-loved items. The name represents the buyer-seller relationship in Filipino culture.
 
-### Why Use BAI & SIL?
+### Why Use SALPAK?
 
 - **Free to list** — No fees for sellers
 - **Local focus** — Meet-up transactions in your area
@@ -430,13 +430,13 @@ Click the bell icon to see:
 
 ### General
 
-**Q: Is BAI & SIL free?**
+**Q: Is SALPAK free?**
 A: Yes! It's free to register, list items, and browse. No hidden fees.
 
 **Q: How do I contact support?**
-A: Email us at support@baiandsil.ph
+A: Email us at support@salpak.ph
 
-**Q: Can I use BAI & SIL on my phone?**
+**Q: Can I use SALPAK on my phone?**
 A: Yes! The website is mobile-friendly and works on all devices.
 
 ### Buying
@@ -467,7 +467,7 @@ A: Go to My Listings and click "Mark as Sold."
 A: Go to Profile → Edit Profile → Change Password.
 
 **Q: Can I delete my account?**
-A: Contact support at support@baiandsil.ph
+A: Contact support at support@salpak.ph
 
 **Q: How do I become a verified seller?**
 A: Submit your government ID through the verification page. Admins will review within 24 hours.
@@ -478,19 +478,19 @@ A: Submit your government ID through the verification page. Admins will review w
 
 ### Email
 
-- **General:** support@baiandsil.ph
-- **Report Abuse:** abuse@baiandsil.ph
-- **Business:** business@baiandsil.ph
+- **General:** support@salpak.ph
+- **Report Abuse:** abuse@salpak.ph
+- **Business:** business@salpak.ph
 
 ### Social Media
 
-- **Facebook:** @baiandsil
-- **Twitter:** @baiandsil
-- **Instagram:** @baiandsil
+- **Facebook:** @salpak
+- **Twitter:** @salpak
+- **Instagram:** @salpak
 
 ### Office Address
 
-BAI & SIL  
+SALPAK  
 Manila, Philippines
 
 ---
@@ -510,5 +510,5 @@ Manila, Philippines
 
 ---
 
-**BAI & SIL** — Hanap, Benta, I-repeat!  
+**SALPAK** — Hanap, Benta, I-repeat!  
 *Gawang Pinas, para sa Pinas.*

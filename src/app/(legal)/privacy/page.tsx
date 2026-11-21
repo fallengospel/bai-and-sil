@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Bai and Sil',
-  description: 'Privacy Policy for Bai and Sil marketplace',
+  title: 'Privacy Policy | Salpak',
+  description: 'Privacy Policy for Salpak marketplace',
 };
 
 export default function PrivacyPage() {
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Information We Collect</h2>
           <p className="mb-4">
-            When you use Bai and Sil, we collect information that you provide directly and information 
+            When you use Salpak, we collect information that you provide directly and information 
             generated through your use of the Platform:
           </p>
           <ul className="list-disc pl-6 mb-4">
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
             <li>Withdraw consent at any time</li>
           </ul>
           <p className="mb-4">
-            To exercise these rights, please contact us at privacy@baiandsil.ph.
+            To exercise these rights, please contact us at privacy@salpak.ph.
           </p>
         </section>
 

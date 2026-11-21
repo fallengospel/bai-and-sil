@@ -1,4 +1,4 @@
-# BAI & SIL — UX/UI Review
+# SALPAK — UX/UI Review
 
 **Date:** 2026-09-25
 **Scope:** Full audit of existing features — UX/UI side only. This document is reusable for future review rounds: check off items as they are fixed, and re-run the review to add new findings.
@@ -145,9 +145,9 @@
 
 ## 6. Low Issues 🟢
 
-- **L1** Two competing brand blues: token `bai-blue #023E8A` vs hardcoded `#0F3D91`/`#101B3A` (landing + `globals.css` buttons).
+- **L1** Two competing brand blues: token `salpak-blue #023E8A` vs hardcoded `#0F3D91`/`#101B3A` (landing + `globals.css` buttons).
 - **L2** Border-radius chaos: `rounded-lg` (Button), `rounded-2xl` (cards/nav/inputs), `rounded-3xl` (`.card`), `rounded-xl` (Modal), `rounded-full` (admin badges).
-- **L3** Button variants double-apply conflicting classes (`btn-primary bg-bai-blue` — two blues in one class list).
+- **L3** Button variants double-apply conflicting classes (`btn-primary bg-salpak-blue` — two blues in one class list).
 - **L4** `safe-area-bottom` referenced in MobileNav but never defined → iPhone home-indicator overlap.
 - **L5** Footer duplicates `/categories` in two columns; social links point to bare `facebook.com` etc.; no Help/Contact/About.
 - **L6** OTP inputs lack `autocomplete="one-time-code"`, `aria-label`, `name`.
@@ -165,7 +165,7 @@
 
 **Loading — mixed quality:**
 - ✅ `LoadingSpinner` + contextual text in search, messages, offers, favorites, my-listings, notifications.
-- ✅ Global `loading.tsx` ("Bai is looking...") — but only at root, none nested.
+- ✅ Global `loading.tsx` ("Sal is looking...") — but only at root, none nested.
 - ⚠ Raw `animate-spin` divs in 9 places (admin/seller/buyer layouts + dashboards) bypass the shared component; some `h-screen` (full-page blank).
 - ⚠ Skeletons exist only on the edit page — nowhere else.
 - ⚠ Infinite spinner risks: `/messages` inbox fetch gated on `currentUserId` (never resolves if `/api/auth/me` fails); `/profile/me` spinner-then-redirect with no escape.
@@ -225,7 +225,7 @@
 **Consistent (keep):** rounded-2xl/3xl card recipe with `shadow-cartoon`, stable color role semantics, Feather icons (`react-icons/fi`), Gabarito + Hanken Grotesk, shared components in `(main)`, custom scrollbar + `::selection`.
 
 **Drifting:**
-- Two blue systems coexist (token `bai-blue` vs hardcoded `#0F3D91` on landing + buttons).
+- Two blue systems coexist (token `salpak-blue` vs hardcoded `#0F3D91` on landing + buttons).
 - Raw Tailwind colors (`green-600`, `purple-500`…) mixed with tokens; 6 different gradient tiles for 6 seller KPIs — color carries no meaning.
 - Five radii for one product (L2); Button double-definition (L3).
 - KPI card markup copy-pasted (6× seller, 4× admin, 3× buyer) — no shared `StatCard`.

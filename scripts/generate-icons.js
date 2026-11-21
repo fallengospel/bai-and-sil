@@ -73,25 +73,13 @@ function crc32(buf) {
 }
 
 function roundedRect(x, y, w, h, r) {
-  // Returns a function that tests if (px, py) is inside the rounded rect
+  // SDF-style test: inside the rect, and within radius of the nearest corner
+  // only when beyond the inner (inset-by-r) box on BOTH axes.
   return (px, py) => {
     if (px < x || px > x + w || py < y || py > y + h) return false;
-    // Check corners
-    const corners = [
-      [x + r, y + r],
-      [x + w - r, y + r],
-      [x + r, y + h - r],
-      [x + w - r, y + h - r],
-    ];
-    for (const [cx, cy] of corners) {
-      const dx = px - cx;
-      const dy = py - cy;
-      if ((dx < 0 && px < x + r) || (dx > 0 && px > x + w - r) ||
-          (dy < 0 && py < y + r) || (dy > 0 && py > y + h - r)) {
-        if (dx * dx + dy * dy > r * r) return false;
-      }
-    }
-    return true;
+    const dx = Math.max(x + r - px, px - (x + w - r), 0);
+    const dy = Math.max(y + r - py, py - (y + h - r), 0);
+    return dx * dx + dy * dy <= r * r;
   };
 }
 
@@ -102,42 +90,18 @@ function generateMarkPixels(markW, markH) {
   const navy = [10, 46, 110, 255];     // #0A2E6E
   const gold = [245, 189, 93, 255];    // #F5BD5D
   const white = [255, 255, 255, 255];
-  const transparent = [0, 0, 0, 0];
 
-  // Scale from 64x64 viewBox to markW x markH
+  // All geometry in 64x64 viewBox units (matches Logo.tsx)
   const sx = markW / 64;
   const sy = markH / 64;
+  const tile = roundedRect(4, 4, 56, 56, 14);
 
-  // Bag body: rect x=6 y=23 width=52 height=35 rx=11
-  const bagBody = roundedRect(6 * sx, 23 * sy, 52 * sx, 35 * sy, 11 * sx);
-
-  // Handle: two line segments
-  function distToSegment(px, py, x1, y1, x2, y2) {
+  function stroke(px, py, x1, y1, x2, y2, halfWidth) {
     const dx = x2 - x1, dy = y2 - y1;
     const lenSq = dx * dx + dy * dy;
-    if (lenSq === 0) return Math.hypot(px - x1, py - y1);
-    let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
-    t = Math.max(0, Math.min(1, t));
-    return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+    const t = lenSq === 0 ? 0 : Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / lenSq));
+    return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy)) <= halfWidth;
   }
-
-  function strokeLine(px, py, x1, y1, x2, y2, width) {
-    return distToSegment(px, py, x1 * sx, y1 * sy, x2 * sx, y2 * sy) <= width * sx;
-  }
-
-  // Handle path: M20 27V21a12 12 0 0 1 22.5-5.8 (arc - approximate with line)
-  const handleLine1 = strokeLine; // M20,27 to 20,21
-  const handleArc = strokeLine;   // Approximate arc as line from 20,21 to 42.5,15.2
-
-  // Arrow tip: M36.5 12.5 L43.8 14.4 L42 21.7
-  const arrowLine1 = strokeLine;
-  const arrowLine2 = strokeLine;
-
-  // Peso strokes
-  const pesoV = strokeLine;       // M32 33.5 v18
-  const pesoH1 = strokeLine;      // M25.5 39.5 h13
-  const pesoH2 = strokeLine;      // M25.5 45 h13
-  const pesoArc = strokeLine;     // M32 33.5 h5.2 a5.6 5.6 0 0 1 0 11.2
 
   for (let y = 0; y < markH; y++) {
     for (let x = 0; x < markW; x++) {
@@ -145,18 +109,12 @@ function generateMarkPixels(markW, markH) {
       const px = x / sx;
       const py = y / sy;
 
-      if (bagBody(x / sx, y / sy)) {
-        pixels[idx] = navy[0];
-        pixels[idx + 1] = navy[1];
-        pixels[idx + 2] = navy[2];
-        pixels[idx + 3] = 255;
-        continue;
-      }
-
-      // Handle (gold) - thick stroke
-      const handleWidth = 5.2;
-      if (handleLine1(px, py, 20, 27, 20, 21, handleWidth) ||
-          handleArc(px, py, 20, 21, 42.5, 15.2, handleWidth)) {
+      // Gold: arrow shaft, arrowhead, impact sparks
+      if (stroke(px, py, 32, 12, 32, 38, 2.7) ||
+          stroke(px, py, 23, 29, 32, 38, 2.7) ||
+          stroke(px, py, 41, 29, 32, 38, 2.7) ||
+          stroke(px, py, 14, 36, 8.5, 30.5, 2) ||
+          stroke(px, py, 50, 36, 55.5, 30.5, 2)) {
         pixels[idx] = gold[0];
         pixels[idx + 1] = gold[1];
         pixels[idx + 2] = gold[2];
@@ -164,28 +122,21 @@ function generateMarkPixels(markW, markH) {
         continue;
       }
 
-      // Arrow (gold)
-      if (arrowLine1(px, py, 36.5, 12.5, 43.8, 14.4, handleWidth) ||
-          arrowLine2(px, py, 43.8, 14.4, 42, 21.7, handleWidth)) {
-        pixels[idx] = gold[0];
-        pixels[idx + 1] = gold[1];
-        pixels[idx + 2] = gold[2];
-        pixels[idx + 3] = 255;
-        continue;
-      }
-
-      // Peso strokes (white)
-      const pesoWidth = 3.6;
-      if (pesoV(px, py, 32, 33.5, 32, 51.5, pesoWidth) ||
-          pesoH1(px, py, 25.5, 39.5, 38.5, 39.5, pesoWidth) ||
-          pesoH2(px, py, 25.5, 45, 38.5, 45, pesoWidth) ||
-          pesoArc(px, py, 32, 33.5, 37.2, 33.5, pesoWidth) ||
-          pesoArc(px, py, 37.2, 33.5, 37.2, 44.7, pesoWidth)) {
+      // White: impact bar
+      if (stroke(px, py, 16, 46, 48, 46, 2.5)) {
         pixels[idx] = white[0];
         pixels[idx + 1] = white[1];
         pixels[idx + 2] = white[2];
         pixels[idx + 3] = 255;
         continue;
+      }
+
+      // Navy tile (behind the glyph)
+      if (tile(px, py)) {
+        pixels[idx] = navy[0];
+        pixels[idx + 1] = navy[1];
+        pixels[idx + 2] = navy[2];
+        pixels[idx + 3] = 255;
       }
     }
   }

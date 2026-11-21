@@ -281,7 +281,7 @@ export default function UXTestingMode() {
                 onClick={() => setActivePersona(persona.id)}
                 className={`flex-1 px-4 py-3 text-center transition-all duration-200 ${
                   activePersona === persona.id
-                    ? "bg-bai-blue text-white"
+                    ? "bg-salpak-blue text-white"
                     : "text-gray-600 hover:bg-gray-50"
                 }`}
               >
@@ -458,21 +458,21 @@ export default function UXTestingMode() {
                 setExpandedFinding(null);
                 setFindings(runAudits(activePersona));
               }}
-              className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
+              className="text-body-sm font-bold text-salpak-blue hover:text-salpak-blue-hover transition-colors flex items-center gap-2"
             >
               <FiRefreshCw className="w-4 h-4" />
               Re-run
             </button>
             <button
               onClick={copyReport}
-              className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
+              className="text-body-sm font-bold text-salpak-blue hover:text-salpak-blue-hover transition-colors flex items-center gap-2"
             >
               <FiCopy className="w-4 h-4" />
               Copy report
             </button>
             <Link
               href="/admin/testing"
-              className="text-body-sm font-bold text-bai-blue hover:text-bai-blue-hover transition-colors flex items-center gap-2"
+              className="text-body-sm font-bold text-salpak-blue hover:text-salpak-blue-hover transition-colors flex items-center gap-2"
             >
               <FiExternalLink className="w-4 h-4" />
               Full QA suite

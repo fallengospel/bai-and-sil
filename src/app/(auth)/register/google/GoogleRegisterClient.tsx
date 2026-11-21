@@ -65,7 +65,7 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
         </div>
 
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Welcome to BAI &amp; SIL</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Welcome to SALPAK</h1>
           <p className="text-gray-500 mt-2">One last step — what do you want to do?</p>
         </div>
 
@@ -81,7 +81,7 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
               className="w-11 h-11 rounded-full object-cover flex-shrink-0"
             />
           ) : (
-            <div className="w-11 h-11 rounded-full bg-bai-blue/10 flex items-center justify-center flex-shrink-0 text-sm font-bold text-bai-blue">
+            <div className="w-11 h-11 rounded-full bg-salpak-blue/10 flex items-center justify-center flex-shrink-0 text-sm font-bold text-salpak-blue">
               {(name || email).charAt(0).toUpperCase()}
             </div>
           )}
@@ -102,11 +102,11 @@ export default function GoogleRegisterClient({ name, email, avatar }: GoogleRegi
           <button
             onClick={() => handleRoleSelect('buyer')}
             disabled={submitting}
-            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-bai-blue/30 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full p-5 rounded-2xl border-2 border-gray-200 bg-white text-left transition-all duration-200 hover:border-salpak-blue/30 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-bai-blue/10 flex items-center justify-center flex-shrink-0">
-                <FiSearch className="w-6 h-6 text-bai-blue" />
+              <div className="w-12 h-12 rounded-2xl bg-salpak-blue/10 flex items-center justify-center flex-shrink-0">
+                <FiSearch className="w-6 h-6 text-salpak-blue" />
               </div>
               <div>
                 <h2 className="font-bold text-gray-900">I want to buy</h2>

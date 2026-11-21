@@ -129,7 +129,7 @@ export default function OffersPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
               activeTab === tab.key
-                ? "border-bai-blue text-bai-blue"
+                ? "border-salpak-blue text-salpak-blue"
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
@@ -167,17 +167,17 @@ export default function OffersPage() {
                 <div className="flex-1 min-w-0">
                   <Link
                     href={`/listing/${offer.listing.slug}`}
-                    className="text-sm font-medium text-gray-900 truncate hover:text-bai-blue transition-colors block"
+                    className="text-sm font-medium text-gray-900 truncate hover:text-salpak-blue transition-colors block"
                   >
                     {offer.listing.title}
                   </Link>
                   <div className="flex items-center gap-2 mt-1">
                     {offer.role === "buyer" ? (
-                      <FiArrowUpRight className="w-3 h-3 text-bai-blue" />
+                      <FiArrowUpRight className="w-3 h-3 text-salpak-blue" />
                     ) : (
-                      <FiArrowDownRight className="w-3 h-3 text-sil-yellow" />
+                      <FiArrowDownRight className="w-3 h-3 text-salpak-yellow" />
                     )}
-                    <span className="text-sm font-bold text-bai-blue">
+                    <span className="text-sm font-bold text-salpak-blue">
                       {formatPrice(offer.amount)}
                     </span>
                     <span className="text-xs text-gray-500">

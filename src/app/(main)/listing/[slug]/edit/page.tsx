@@ -217,7 +217,7 @@ export default function EditListingPage() {
       <div className="mb-6">
         <Link
           href={`/listing/${slug}`}
-          className="text-sm text-bai-blue hover:underline flex items-center gap-1"
+          className="text-sm text-salpak-blue hover:underline flex items-center gap-1"
         >
           <FiChevronLeft className="w-4 h-4" /> Back to listing
         </Link>
@@ -242,8 +242,8 @@ export default function EditListingPage() {
             role="button"
             tabIndex={0}
             aria-label="Upload photos: drag and drop, or press Enter to browse"
-            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2 ${
-              dragOver ? "border-bai-blue bg-blue-50" : "border-gray-300 hover:border-gray-400"
+            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-salpak-blue focus:ring-offset-2 ${
+              dragOver ? "border-salpak-blue bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
             <FiUploadCloud className="w-8 h-8 text-gray-500 mx-auto mb-2" />
@@ -273,7 +273,7 @@ export default function EditListingPage() {
                     <FiX className="w-3 h-3" />
                   </button>
                   {i === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-bai-blue text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 bg-salpak-blue text-white text-[10px] px-1.5 py-0.5 rounded">
                       Cover
                     </span>
                   )}

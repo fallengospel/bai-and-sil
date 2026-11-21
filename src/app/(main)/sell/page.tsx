@@ -208,7 +208,7 @@ export default function SellPage() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                 step >= s
-                  ? "bg-bai-blue text-white"
+                  ? "bg-salpak-blue text-white"
                   : "bg-gray-200 text-gray-500"
               }`}
             >
@@ -242,8 +242,8 @@ export default function SellPage() {
             role="button"
             tabIndex={0}
             aria-label="Upload photos: drag and drop, or press Enter to browse"
-            className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2 ${
-              dragOver ? "border-bai-blue bg-blue-50" : "border-gray-300 hover:border-gray-400"
+            className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-salpak-blue focus:ring-offset-2 ${
+              dragOver ? "border-salpak-blue bg-blue-50" : "border-gray-300 hover:border-gray-400"
             }`}
           >
             <FiUploadCloud className="w-10 h-10 text-gray-500 mx-auto mb-3" />
@@ -273,7 +273,7 @@ export default function SellPage() {
                     <FiX className="w-3 h-3" />
                   </button>
                   {i === 0 && (
-                    <span className="absolute bottom-1 left-1 bg-bai-blue text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 bg-salpak-blue text-white text-[10px] px-1.5 py-0.5 rounded">
                       Cover
                     </span>
                   )}

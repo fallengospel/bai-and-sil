@@ -16,7 +16,7 @@ const StatCard: React.FC<StatCardProps> = ({
   label,
   value,
   icon,
-  iconBg = "bg-gradient-to-br from-bai-blue to-bai-blue/80",
+  iconBg = "bg-gradient-to-br from-salpak-blue to-salpak-blue/80",
   valueClassName = "animate-count-up",
   size = "md",
   className = "",

@@ -74,7 +74,7 @@ export default function AdminDashboard() {
           label="Total Users"
           value={stats?.totalUsers || 0}
           icon={<FiUsers className="w-6 h-6 text-white" />}
-          iconBg="bg-gradient-to-br from-bai-blue to-bai-blue/80"
+          iconBg="bg-gradient-to-br from-salpak-blue to-salpak-blue/80"
         />
         <StatCard
           label="Active Listings"
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
       <div className="grid gap-6 md:grid-cols-2">
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
           <h2 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
-            <FiUserCheck className="w-5 h-5 text-bai-blue" />
+            <FiUserCheck className="w-5 h-5 text-salpak-blue" />
             User Breakdown
           </h2>
           <div className="space-y-4">
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-bai-blue to-bai-blue/80 h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-salpak-blue to-salpak-blue/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalBuyers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-sil-yellow to-sil-yellow/80 h-3 rounded-full transition-all duration-700 ease-out"
+                  className="bg-gradient-to-r from-salpak-yellow to-salpak-yellow/80 h-3 rounded-full transition-all duration-700 ease-out"
                   style={{ width: `${((stats?.totalSellers || 0) / (stats?.totalUsers || 1)) * 100}%` }}
                 />
               </div>
@@ -142,8 +142,8 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="mt-5 pt-4 border-t border-gray-100 flex gap-5 text-sm">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-bai-blue rounded-full" /> Buyer</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-sil-yellow rounded-full" /> Seller</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-salpak-blue rounded-full" /> Buyer</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-salpak-yellow rounded-full" /> Seller</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-coral rounded-full" /> Admin</span>
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-bai-blue to-sil-yellow h-2.5 rounded-full transition-all duration-700 ease-out"
+                    className="bg-gradient-to-r from-salpak-blue to-salpak-yellow h-2.5 rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${(cat.count / maxCategoryCount) * 100}%` }}
                   />
                 </div>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Users</h2>
-            <Link href="/admin/users" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/admin/users" className="inline-block py-1 text-sm text-salpak-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentUsers || []).map((user: any) => (
@@ -191,9 +191,9 @@ export default function AdminDashboard() {
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
                 <span className={`px-2.5 py-1 text-xs font-medium rounded-lg ${
-                  user.role === 'seller' ? 'bg-sil-yellow/10 text-sil-yellow-dark' :
+                  user.role === 'seller' ? 'bg-salpak-yellow/10 text-salpak-yellow-dark' :
                   user.role === 'admin' ? 'bg-red-100 text-red-700' :
-                  'bg-bai-blue/10 text-bai-blue'
+                  'bg-salpak-blue/10 text-salpak-blue'
                 }`}>
                   {user.role || 'buyer'}
                 </span>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
           <div className="p-5 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-lg">Recent Listings</h2>
-            <Link href="/admin/listings" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/admin/listings" className="inline-block py-1 text-sm text-salpak-blue hover:underline font-medium">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {(stats?.recentListings || []).map((listing: any) => (

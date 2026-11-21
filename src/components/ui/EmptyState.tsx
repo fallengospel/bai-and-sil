@@ -28,7 +28,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       {action && (
         <Link
           href={action.href}
-          className="btn-primary inline-flex items-center px-4 py-2 bg-bai-blue text-white text-sm font-medium rounded-2xl hover:bg-bai-blue-hover transition-colors"
+          className="btn-primary inline-flex items-center px-4 py-2 bg-salpak-blue text-white text-sm font-medium rounded-2xl hover:bg-salpak-blue-hover transition-colors"
         >
           {action.label}
         </Link>

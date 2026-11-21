@@ -1,4 +1,4 @@
-// Shared validation utilities for BAI & SIL
+// Shared validation utilities for SALPAK
 // Based on MDN Form Validation best practices:
 // https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation
 

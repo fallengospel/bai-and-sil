@@ -31,7 +31,7 @@ const hankenGrotesk = Hanken_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bai-and-sil.vercel.app"),
-  title: "BAI AND SIL - Find stuff. Sell stuff. Repeat.",
+  title: "SALPAK - Find stuff. Sell stuff. Repeat.",
   description:
     "The Filipino marketplace for buying and selling pre-loved items. Find deals, sell your stuff, repeat.",
   icons: {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "BAI AND SIL - Find stuff. Sell stuff. Repeat.",
+    title: "SALPAK - Find stuff. Sell stuff. Repeat.",
     description:
       "The Filipino marketplace for buying and selling pre-loved items. Find deals, sell your stuff, repeat.",
     type: "website",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "BAI & SIL - Filipino Marketplace",
+        alt: "SALPAK - Filipino Marketplace",
       },
     ],
   },
@@ -72,7 +72,7 @@ export default function RootLayout({
             <div className="flex flex-col min-h-screen pb-16 md:pb-0">
               <a
                 href="#main"
-                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-bai-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-2xl focus:text-sm focus:font-bold focus:shadow-elevated"
+                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-salpak-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-2xl focus:text-sm focus:font-bold focus:shadow-elevated"
               >
                 Skip to content
               </a>

@@ -59,7 +59,7 @@ export function verificationEmailHtml(name: string, code: string): string {
     <head><meta charset="utf-8"></head>
     <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; padding: 30px 0;">
-        <h1 style="color: #023E8A; margin: 0;">BAI & SIL</h1>
+        <h1 style="color: #023E8A; margin: 0;">SALPAK</h1>
         <p style="color: #6b7280; margin-top: 4px;">Filipino Marketplace</p>
       </div>
       <div style="background: #f9fafb; border-radius: 12px; padding: 30px; margin: 20px 0;">
@@ -78,7 +78,7 @@ export function verificationEmailHtml(name: string, code: string): string {
         </p>
       </div>
       <div style="text-align: center; padding: 20px 0; color: #9ca3af; font-size: 12px;">
-        BAI & SIL — Hanap, Benta, I-repeat!
+        SALPAK — Hanap, Benta, I-repeat!
       </div>
     </body>
     </html>
@@ -95,7 +95,7 @@ export function resetPasswordEmailHtml(name: string, token: string): string {
     <head><meta charset="utf-8"></head>
     <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; padding: 30px 0;">
-        <h1 style="color: #023E8A; margin: 0;">BAI & SIL</h1>
+        <h1 style="color: #023E8A; margin: 0;">SALPAK</h1>
         <p style="color: #6b7280; margin-top: 4px;">Filipino Marketplace</p>
       </div>
       <div style="background: #f9fafb; border-radius: 12px; padding: 30px; margin: 20px 0;">
@@ -114,7 +114,7 @@ export function resetPasswordEmailHtml(name: string, token: string): string {
         </p>
       </div>
       <div style="text-align: center; padding: 20px 0; color: #9ca3af; font-size: 12px;">
-        BAI & SIL — Hanap, Benta, I-repeat!
+        SALPAK — Hanap, Benta, I-repeat!
       </div>
     </body>
     </html>

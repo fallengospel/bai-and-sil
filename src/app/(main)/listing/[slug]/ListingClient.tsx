@@ -230,7 +230,7 @@ export default function ListingClient({
           )}
           {isReserved && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-sil-yellow text-ink text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
+              <span className="bg-salpak-yellow text-ink text-2xl font-bold px-8 py-3 rounded-full -rotate-12 shadow-lg">
                 RESERVED
               </span>
             </div>
@@ -250,7 +250,7 @@ export default function ListingClient({
             </div>
 
             <div className="flex items-center gap-3 mt-3">
-              <span className="text-3xl font-bold text-bai-blue">
+              <span className="text-3xl font-bold text-salpak-blue">
                 {formatPrice(listing.price)}
               </span>
               {listing.category && (
@@ -305,7 +305,7 @@ export default function ListingClient({
                 onClick={() => setReportModal(true)}
                 aria-label="Report this listing"
                 title="Report this listing"
-                className="p-3 rounded-2xl border border-gray-200 text-gray-500 hover:text-bai-blue hover:border-bai-blue transition-colors"
+                className="p-3 rounded-2xl border border-gray-200 text-gray-500 hover:text-salpak-blue hover:border-salpak-blue transition-colors"
               >
                 <FiFlag className="w-5 h-5" />
               </button>
@@ -363,7 +363,7 @@ export default function ListingClient({
                 <div className="flex items-center gap-1.5">
                   <Link
                     href={`/profile/${listing.seller.id}`}
-                    className="font-bold text-gray-900 hover:text-bai-blue"
+                    className="font-bold text-gray-900 hover:text-salpak-blue"
                   >
                     {listing.seller.name}
                   </Link>
@@ -378,7 +378,7 @@ export default function ListingClient({
             </div>
             <Link
               href={`/profile/${listing.seller.id}`}
-              className="inline-block mt-3 py-1 text-sm font-medium text-bai-blue hover:underline"
+              className="inline-block mt-3 py-1 text-sm font-medium text-salpak-blue hover:underline"
             >
               View Seller
             </Link>
@@ -387,7 +387,7 @@ export default function ListingClient({
           {/* Trust Tips */}
           <div className="bg-blue-50 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-2">
-              <FiShield className="w-5 h-5 text-bai-blue" />
+              <FiShield className="w-5 h-5 text-salpak-blue" />
               <h3 className="font-bold text-gray-900">Trust Tips</h3>
             </div>
             <ul className="text-sm text-gray-600 space-y-1">

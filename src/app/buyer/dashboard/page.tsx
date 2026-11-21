@@ -75,7 +75,7 @@ export default function BuyerDashboard() {
         </div>
         <Link
           href="/categories"
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-bai-blue to-bai-blue/90 text-white font-medium rounded-2xl hover:from-bai-blue/90 hover:to-bai-blue transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-salpak-blue to-salpak-blue/90 text-white font-medium rounded-2xl hover:from-salpak-blue/90 hover:to-salpak-blue transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
         >
           <FiSearch className="w-4 h-4" />
           Browse Items
@@ -94,7 +94,7 @@ export default function BuyerDashboard() {
           label="Items Available"
           value={stats?.activeListings ?? 0}
           icon={<FiSearch className="w-6 h-6 text-white" />}
-          iconBg="bg-gradient-to-br from-bai-blue to-bai-blue/80"
+          iconBg="bg-gradient-to-br from-salpak-blue to-salpak-blue/80"
         />
         <StatCard
           label="Member Since"
@@ -111,9 +111,9 @@ export default function BuyerDashboard() {
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/categories" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-bai-blue/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-bai-blue-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-bai-blue/20 transition-colors">
-            <FiSearch className="w-6 h-6 text-bai-blue" />
+        <Link href="/categories" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-salpak-blue/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-salpak-blue-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-salpak-blue/20 transition-colors">
+            <FiSearch className="w-6 h-6 text-salpak-blue" />
           </div>
           <h2 className="font-bold text-gray-900 mb-1">Browse Categories</h2>
           <p className="text-sm text-gray-500">Explore all available items</p>
@@ -139,14 +139,14 @@ export default function BuyerDashboard() {
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Your Saved Items</h2>
           {(stats?.recentFavorites || []).length > 0 && (
-            <Link href="/favorites" className="inline-block py-1 text-sm text-bai-blue hover:underline font-medium">View all</Link>
+            <Link href="/favorites" className="inline-block py-1 text-sm text-salpak-blue hover:underline font-medium">View all</Link>
           )}
         </div>
         {(stats?.recentFavorites || []).length === 0 ? (
           <div className="p-8 text-center">
             <FiHeart className="w-8 h-8 text-gray-300 mx-auto mb-3" />
             <p className="text-sm text-gray-500 mb-4">Nothing saved yet. Tap the heart on any listing to save it here.</p>
-            <Link href="/search" className="inline-block px-5 py-2.5 bg-bai-blue text-white text-sm font-bold rounded-2xl hover:bg-bai-blue-hover transition-colors">
+            <Link href="/search" className="inline-block px-5 py-2.5 bg-salpak-blue text-white text-sm font-bold rounded-2xl hover:bg-salpak-blue-hover transition-colors">
               Browse Listings
             </Link>
           </div>
@@ -169,8 +169,8 @@ export default function BuyerDashboard() {
       {/* Latest listings */}
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-bold text-lg">Latest on BAI &amp; SIL</h2>
-          <Link href="/search" className="text-sm text-bai-blue hover:underline font-medium">View more</Link>
+          <h2 className="font-bold text-lg">Latest on SALPAK</h2>
+          <Link href="/search" className="text-sm text-salpak-blue hover:underline font-medium">View more</Link>
         </div>
         <div className="p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">

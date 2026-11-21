@@ -80,7 +80,7 @@ function ListingCard({
         transform: `rotate(${card.rotation}deg) translate(${card.x}px, ${card.y}px)`,
       }}
     >
-      <div className="h-[90px] bg-bai-blue-light flex items-center justify-center p-3">
+      <div className="h-[90px] bg-salpak-blue-light flex items-center justify-center p-3">
         <Illustration className="w-full h-full" />
       </div>
       <div className="p-2.5">
@@ -88,7 +88,7 @@ function ListingCard({
           <p className="text-xs font-bold text-ink leading-tight truncate">
             {card.name}
           </p>
-          <span className="shrink-0 text-[10px] font-medium text-bai-blue bg-bai-blue-light px-1.5 py-0.5 rounded-lg">
+          <span className="shrink-0 text-[10px] font-medium text-salpak-blue bg-salpak-blue-light px-1.5 py-0.5 rounded-lg">
             {card.condition}
           </span>
         </div>

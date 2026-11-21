@@ -1,7 +1,7 @@
-# BAI & SIL - Feature Tracker
+# SALPAK - Feature Tracker
 
 ## 🎯 Overview
-This document tracks all features implemented in the BAI & SIL Filipino marketplace.
+This document tracks all features implemented in the SALPAK Filipino marketplace.
 
 ---
 

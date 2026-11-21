@@ -42,7 +42,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
         role="button"
         tabIndex={0}
         aria-label={isZoomed ? "Zoom out of image" : "Zoom in on image"}
-        className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2"
+        className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-salpak-blue focus:ring-offset-2"
         onClick={() => setIsZoomed(!isZoomed)}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -70,7 +70,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
               aria-label={`View image ${index + 1} of ${displayImages.length}`}
               className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
                 selectedIndex === index
-                  ? "border-bai-blue"
+                  ? "border-salpak-blue"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >

@@ -16,8 +16,8 @@ const Badge: React.FC<BadgeProps> = ({
   className = "",
 }) => {
   const variantStyles: Record<BadgeVariant, string> = {
-    blue: "badge-blue bg-bai-blue-light text-bai-blue",
-    yellow: "badge-yellow bg-sil-yellow-light text-sil-yellow-dark",
+    blue: "badge-blue bg-salpak-blue-light text-salpak-blue",
+    yellow: "badge-yellow bg-salpak-yellow-light text-salpak-yellow-dark",
     green: "badge-green bg-emerald-100 text-emerald-700",
     red: "badge-red bg-red-100 text-coral",
     gray: "badge-gray bg-gray-100 text-gray-600",

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   if (!listing) {
-    return { title: "Listing not found | BAI AND SIL" };
+    return { title: "Listing not found | SALPAK" };
   }
 
   // Removed listings should not leak metadata to crawlers or other users
@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const isOwner = session?.id === listing.sellerId;
     const isAdmin = !!session?.isAdmin || session?.role === "admin";
     if (!isOwner && !isAdmin) {
-      return { title: "Listing not found | BAI AND SIL" };
+      return { title: "Listing not found | SALPAK" };
     }
   }
 
   const image = listing.images[0]?.imageUrl;
-  const title = `${listing.title} - ₱${Number(listing.price).toLocaleString("en-PH")} | BAI AND SIL`;
+  const title = `${listing.title} - ₱${Number(listing.price).toLocaleString("en-PH")} | SALPAK`;
   const description =
     listing.description.length > 160
       ? `${listing.description.slice(0, 157)}...`

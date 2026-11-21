@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const html = resetPasswordEmailHtml(user.name, token);
     await sendEmail({
       to: user.email,
-      subject: 'Reset your BAI & SIL password',
+      subject: 'Reset your SALPAK password',
       html,
     });
 

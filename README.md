@@ -1,4 +1,4 @@
-# BAI & SIL
+# SALPAK
 
 > **Find stuff. Sell stuff. Repeat.**
 
@@ -370,9 +370,9 @@ All passwords: `password123`
 
 | Email | Role | Description |
 |-------|------|-------------|
-| `admin@baiandsil.ph` | Admin | Full platform access |
-| `seller@baiandsil.ph` | Seller | Can create/edit/delete listings |
-| `buyer@baiandsil.ph` | Buyer | Can browse, favorite, message |
+| `admin@salpak.ph` | Admin | Full platform access |
+| `seller@salpak.ph` | Seller | Can create/edit/delete listings |
+| `buyer@salpak.ph` | Buyer | Can browse, favorite, message |
 
 ---
 
@@ -469,4 +469,4 @@ Private project — All rights reserved.
 
 ---
 
-**BAI & SIL** — Built with love for the Filipino marketplace.
+**SALPAK** — Built with love for the Filipino marketplace.

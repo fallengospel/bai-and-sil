@@ -1,7 +1,7 @@
-# BAI & SIL — Developer Guide
+# SALPAK — Developer Guide
 
 > **Version:** 1.0.0  
-> **For:** Developers working on BAI & SIL  
+> **For:** Developers working on SALPAK  
 > **Last Updated:** September 11, 2026
 
 ---

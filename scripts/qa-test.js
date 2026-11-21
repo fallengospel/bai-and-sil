@@ -96,7 +96,7 @@ async function testPublicPages() {
 
   await test('Home page shows redesigned sections', async () => {
     const r = await get('/');
-    assert(r.body.includes('Bakit BAI') || r.body.includes('Paano Gamitin') || r.body.includes('Categories'), 'Missing redesigned sections');
+    assert(r.body.includes('Bakit SALPAK') || r.body.includes('Paano Gamitin') || r.body.includes('Categories'), 'Missing redesigned sections');
   });
 
   await test('Home page has hero visual (SVG)', async () => {
@@ -257,11 +257,11 @@ async function testAuth() {
   let sessionCookie = null;
 
   await test('Login as seller', async () => {
-    const r = await post('/api/auth/login', { email: 'seller@baiandsil.ph', password: 'password123' });
+    const r = await post('/api/auth/login', { email: 'seller@salpak.ph', password: 'password123' });
     assert(r.status === 200, `Got ${r.status}`);
     const d = JSON.parse(r.body);
-    assert(d.user.email === 'seller@baiandsil.ph');
-    assert(d.user.name === 'Sil the Seller');
+    assert(d.user.email === 'seller@salpak.ph');
+    assert(d.user.name === 'Pia the Seller');
     const sc = r.headers['set-cookie'];
     if (sc) {
       const arr = Array.isArray(sc) ? sc : [sc];
@@ -270,21 +270,21 @@ async function testAuth() {
   });
 
   await test('Login as buyer', async () => {
-    const r = await post('/api/auth/login', { email: 'buyer@baiandsil.ph', password: 'password123' });
+    const r = await post('/api/auth/login', { email: 'buyer@salpak.ph', password: 'password123' });
     assert(r.status === 200, `Got ${r.status}`);
     const d = JSON.parse(r.body);
-    assert(d.user.email === 'buyer@baiandsil.ph');
+    assert(d.user.email === 'buyer@salpak.ph');
   });
 
   await test('Login as admin', async () => {
-    const r = await post('/api/auth/login', { email: 'admin@baiandsil.ph', password: 'password123' });
+    const r = await post('/api/auth/login', { email: 'admin@salpak.ph', password: 'password123' });
     assert(r.status === 200, `Got ${r.status}`);
     const d = JSON.parse(r.body);
     assert(d.user.isAdmin === true);
   });
 
   await test('Wrong password rejected', async () => {
-    const r = await post('/api/auth/login', { email: 'seller@baiandsil.ph', password: 'wrong' });
+    const r = await post('/api/auth/login', { email: 'seller@salpak.ph', password: 'wrong' });
     assert(r.status === 401 || r.body.includes('error'), `Should reject: ${r.status}`);
   });
 
@@ -363,7 +363,7 @@ async function testProductDetail() {
   await test('Detail page shows seller info', async () => {
     if (!testSlug) return;
     const r = await get(`/listing/${testSlug}`);
-    assert(r.body.includes('Sil the Seller') || r.body.includes('seller'), 'No seller info');
+    assert(r.body.includes('Pia the Seller') || r.body.includes('seller'), 'No seller info');
   });
 
   await test('Nonexistent listing shows not-found', async () => {
@@ -424,7 +424,7 @@ async function testCategoryFiltering() {
 
 // ============ RUN ALL ============
 async function main() {
-  console.log('🧪 BAI & SIL - Automated QA Tests');
+  console.log('🧪 SALPAK - Automated QA Tests');
   console.log('='.repeat(50));
   console.log(`Target: ${BASE}`);
   console.log(`Time: ${new Date().toISOString()}`);

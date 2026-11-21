@@ -127,9 +127,9 @@ const Navbar: React.FC = () => {
   };
 
   const getRoleColor = () => {
-    if (user?.role === "seller") return "bg-sil-yellow-light text-sil-yellow-dark";
+    if (user?.role === "seller") return "bg-salpak-yellow-light text-salpak-yellow-dark";
     if (user?.isAdmin || user?.role === "admin") return "bg-red-100 text-red-700";
-    return "bg-bai-blue-light text-bai-blue";
+    return "bg-salpak-blue-light text-salpak-blue";
   };
 
   return (
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href="/categories"
-                className="text-sm font-bold text-gray-700 hover:text-bai-blue transition-all duration-200 hover:bg-bai-blue-light px-3 py-1.5 rounded-2xl"
+                className="text-sm font-bold text-gray-700 hover:text-salpak-blue transition-all duration-200 hover:bg-salpak-blue-light px-3 py-1.5 rounded-2xl"
               >
                 Categories
               </Link>
@@ -150,14 +150,14 @@ const Navbar: React.FC = () => {
 
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-lg mx-8">
             <div className="relative w-full group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-salpak-blue transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
                 aria-label="Search listings"
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200 placeholder-gray-500"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue focus:bg-white transition-all duration-200 placeholder-gray-500"
                 maxLength={200}
               />
             </div>
@@ -167,7 +167,7 @@ const Navbar: React.FC = () => {
             {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink text-sm font-bold rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-salpak-yellow to-salpak-yellow/90 text-ink text-sm font-bold rounded-2xl hover:from-salpak-yellow/90 hover:to-salpak-yellow transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 shadow-cartoon-sm"
               >
                 <IoAddCircle className="w-4 h-4" />
                 Sell
@@ -189,14 +189,14 @@ const Navbar: React.FC = () => {
                 <Link
                   href="/messages"
                   aria-label="Messages"
-                  className="relative p-2 text-gray-600 hover:text-bai-blue hover:bg-gray-100 rounded-2xl transition-colors"
+                  className="relative p-2 text-gray-600 hover:text-salpak-blue hover:bg-gray-100 rounded-2xl transition-colors"
                 >
                   <FiMessageSquare className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/notifications"
                   aria-label={notificationCount > 0 ? `Notifications, ${notificationCount} unread` : "Notifications"}
-                  className="relative p-2.5 text-gray-600 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl transition-all duration-200"
+                  className="relative p-2.5 text-gray-600 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl transition-all duration-200"
                 >
                   <FiBell className="w-5 h-5" />
                   {notificationCount > 0 && (
@@ -280,13 +280,13 @@ const Navbar: React.FC = () => {
               <div className="hidden md:flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="px-4 py-2 text-sm font-bold text-bai-blue border border-bai-blue/30 rounded-2xl hover:bg-bai-blue-light transition-all duration-200"
+                  className="px-4 py-2 text-sm font-bold text-salpak-blue border border-salpak-blue/30 rounded-2xl hover:bg-salpak-blue-light transition-all duration-200"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-bai-blue to-bai-blue/90 rounded-2xl hover:from-bai-blue/90 hover:to-bai-blue transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-salpak-blue to-salpak-blue/90 rounded-2xl hover:from-salpak-blue/90 hover:to-salpak-blue transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   Register
                 </Link>
@@ -321,7 +321,7 @@ const Navbar: React.FC = () => {
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl">
           <form onSubmit={handleSearch} className="p-4">
             <div className="relative group">
-              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-bai-blue transition-colors" />
+              <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 group-focus-within:text-salpak-blue transition-colors" />
               <input
                 type="text"
                 autoFocus
@@ -329,7 +329,7 @@ const Navbar: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for items..."
                 aria-label="Search listings"
-                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue focus:bg-white transition-all duration-200"
+                className="w-full pl-11 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue focus:bg-white transition-all duration-200"
                 maxLength={200}
               />
             </div>
@@ -343,7 +343,7 @@ const Navbar: React.FC = () => {
             {user && !(user.isAdmin || user.role === "admin") && (
               <Link
                 href="/sell"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink font-bold rounded-2xl shadow-cartoon-sm"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-salpak-yellow to-salpak-yellow/90 text-ink font-bold rounded-2xl shadow-cartoon-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <IoAddCircle className="w-5 h-5" />
@@ -361,7 +361,7 @@ const Navbar: React.FC = () => {
             )}
             <Link
               href="/categories"
-              className="block py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3 transition-all duration-200"
+              className="block py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3 transition-all duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               Categories
@@ -370,21 +370,21 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/offers"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiPackage className="w-4 h-4" /> My Offers
                 </Link>
                 <Link
                   href="/notifications"
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiBell className="w-4 h-4" /> Notifications {notificationCount > 0 && `(${notificationCount})`}
                 </Link>
                 <Link
                   href={getDashboardLink()}
-                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3"
+                  className="flex items-center gap-2 py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <FiSettings className="w-4 h-4" /> {getDashboardLabel()}
@@ -400,14 +400,14 @@ const Navbar: React.FC = () => {
               <>
                 <Link
                   href="/login"
-                  className="block py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3 transition-all duration-200"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="block py-2.5 text-sm text-gray-700 hover:text-bai-blue hover:bg-bai-blue-light rounded-2xl px-3 transition-all duration-200"
+                  className="block py-2.5 text-sm text-gray-700 hover:text-salpak-blue hover:bg-salpak-blue-light rounded-2xl px-3 transition-all duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Register

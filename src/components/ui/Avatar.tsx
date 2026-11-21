@@ -38,8 +38,8 @@ function getColorFromName(name?: string): { bg: string; text: string } {
   if (!name) return { bg: "bg-gray-400", text: "text-ink" };
   // Per-background initials color so every combination meets WCAG AA (4.5:1).
   const colors = [
-    { bg: "bg-bai-blue", text: "text-white" },
-    { bg: "bg-sil-yellow", text: "text-ink" },
+    { bg: "bg-salpak-blue", text: "text-white" },
+    { bg: "bg-salpak-yellow", text: "text-ink" },
     { bg: "bg-coral", text: "text-ink" },
     { bg: "bg-emerald-500", text: "text-ink" },
     { bg: "bg-purple-600", text: "text-white" },

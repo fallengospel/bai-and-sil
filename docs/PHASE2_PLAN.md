@@ -1,4 +1,4 @@
-# BAI & SIL — Phase 2 Implementation Plan
+# SALPAK — Phase 2 Implementation Plan
 
 > **Version:** 1.0.0  
 > **Date:** September 11, 2026  
@@ -864,5 +864,5 @@ node scripts/qa-test.js --verbose
 
 ---
 
-**BAI & SIL** — Phase 2 Implementation Plan  
+**SALPAK** — Phase 2 Implementation Plan  
 *Gawang Pinas, para sa Pinas*

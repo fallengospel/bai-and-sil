@@ -44,7 +44,7 @@ const StarRating: React.FC<StarRatingProps> = ({
       return (
         <FaStar
           key={index}
-          className={`${iconSize} text-sil-yellow ${
+          className={`${iconSize} text-salpak-yellow ${
             interactive ? "cursor-pointer" : ""
           }`}
           onClick={() => handleClick(value)}
@@ -57,7 +57,7 @@ const StarRating: React.FC<StarRatingProps> = ({
       return (
         <FaStarHalfAlt
           key={index}
-          className={`${iconSize} text-sil-yellow ${
+          className={`${iconSize} text-salpak-yellow ${
             interactive ? "cursor-pointer" : ""
           }`}
           onClick={() => handleClick(value)}

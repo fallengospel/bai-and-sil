@@ -61,11 +61,11 @@ const PASS = "FlowTest123!";
   check("login as new buyer (200 + cookie)", r.status === 200 && Object.keys(buyer.map).length > 0, `got ${r.status}`);
   const buyerRole = r.data?.user?.role;
 
-  r = await call(seller, "POST", "/api/auth/login", { email: "seller@baiandsil.ph", password: "password123" });
+  r = await call(seller, "POST", "/api/auth/login", { email: "seller@salpak.ph", password: "password123" });
   check("login seed seller", r.status === 200, `got ${r.status}`);
   const sellerId = r.data?.user?.id;
 
-  r = await call(admin, "POST", "/api/auth/login", { email: "admin@baiandsil.ph", password: "password123" });
+  r = await call(admin, "POST", "/api/auth/login", { email: "admin@salpak.ph", password: "password123" });
   check("login seed admin", r.status === 200, `got ${r.status}`);
   check("admin flag set", r.data?.user?.isAdmin === true || r.data?.user?.role === "admin");
 

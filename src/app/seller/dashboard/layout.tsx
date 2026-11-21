@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Seller Dashboard | BAI AND SIL",
+  title: "Seller Dashboard | SALPAK",
 };
 
 export default function SellerDashboardLayout({ children }: { children: React.ReactNode }) {

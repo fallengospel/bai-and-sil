@@ -17,11 +17,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   return (
     <Link href={`/search?category=${slug}`} className={`block group ${className}`}>
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:border-bai-blue/20 group">
-        <div className="w-14 h-14 bg-bai-blue-light rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-bai-blue/10 transition-colors duration-300 shadow-cartoon-sm">
+      <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:border-salpak-blue/20 group">
+        <div className="w-14 h-14 bg-salpak-blue-light rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-salpak-blue/10 transition-colors duration-300 shadow-cartoon-sm">
           <span className="text-3xl">{icon}</span>
         </div>
-        <h2 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-bai-blue transition-colors">
+        <h2 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-salpak-blue transition-colors">
           {name}
         </h2>
         <p className="text-xs text-gray-500">

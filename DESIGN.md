@@ -1,10 +1,10 @@
-# BAI & SIL Design System
+# SALPAK Design System
 
 > A Filipino marketplace design system inspired by Impeccable. Modern, a little bit cartoonish but professional.
 
 ## Overview
 
-BAI & SIL uses a design language that blends Filipino warmth with modern web aesthetics. The system prioritizes clarity, purposeful motion, and visual hierarchy while maintaining a playful, approachable character.
+SALPAK uses a design language that blends Filipino warmth with modern web aesthetics. The system prioritizes clarity, purposeful motion, and visual hierarchy while maintaining a playful, approachable character.
 
 ### Design Principles
 1. **Calm by default** — Clean whitespace, breathing room, no visual noise
@@ -20,14 +20,14 @@ BAI & SIL uses a design language that blends Filipino warmth with modern web aes
 ### Brand Anchors
 | Token | Value | Usage |
 |-------|-------|-------|
-| `bai-blue` | `#023E8A` | Primary brand, CTAs, links |
-| `bai-blue-dark` | `#012A62` | Dark variant, text on light |
-| `bai-blue-hover` | `#0356B3` | Hover states |
-| `bai-blue-light` | `#E8F4FD` | Backgrounds, subtle accents |
-| `sil-yellow` | `#FFD581` | Secondary accent, highlights |
-| `sil-yellow-dark` | `#FFC233` | Hover, active states |
-| `sil-yellow-light` | `#FFF9E0` | Backgrounds |
-| `sil-yellow-hover` | `#FFE699` | Hover states |
+| `salpak-blue` | `#023E8A` | Primary brand, CTAs, links |
+| `salpak-blue-dark` | `#012A62` | Dark variant, text on light |
+| `salpak-blue-hover` | `#0356B3` | Hover states |
+| `salpak-blue-light` | `#E8F4FD` | Backgrounds, subtle accents |
+| `salpak-yellow` | `#FFD581` | Secondary accent, highlights |
+| `salpak-yellow-dark` | `#FFC233` | Hover, active states |
+| `salpak-yellow-light` | `#FFF9E0` | Backgrounds |
+| `salpak-yellow-hover` | `#FFE699` | Hover states |
 
 ### Semantic Colors
 | Token | Value | Usage |
@@ -117,9 +117,9 @@ Based on 4px grid: `4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128`
 ## Components
 
 ### Buttons
-- **Primary**: bai-blue bg, white text, cartoon shadow, lift on hover
-- **Secondary**: sil-yellow bg, dark text, cartoon shadow, lift on hover
-- **Outline**: bai-blue border, blue text, fill on hover
+- **Primary**: salpak-blue bg, white text, cartoon shadow, lift on hover
+- **Secondary**: salpak-yellow bg, dark text, cartoon shadow, lift on hover
+- **Outline**: salpak-blue border, blue text, fill on hover
 - **Ghost**: transparent, subtle fill on hover
 - **Danger**: coral bg, white text
 

@@ -30,6 +30,21 @@ const STEPS = [
   { num: "03", title: "Meet-up", desc: "Check item, pay directly. Done!", icon: <FiHeart className="w-6 h-6" /> },
 ];
 
+const STORY = [
+  {
+    title: "Bakit SALPAK ang pangalan?",
+    desc: "Salpak ang tama ang tira — 'yung hagis o suntok na tiyak na tiyak. Ganoon din dito: isang pindot at salpak na ang deal. Walang paligoy-ligoy, walang gitnang tao na nakaharang.",
+  },
+  {
+    title: "Bakit arrow at bar ang logo?",
+    desc: "Bumabagsak ang arrow, tumatama sa bar — 'yan ang sandaling salpak: nag-meet ang buyer at seller, nagkasundo sa presyo, tapos na. Navy at gold, gawa ng Pinas.",
+  },
+  {
+    title: "Paano kumita dito?",
+    desc: "C2C ang model: buyer at seller ang magkausap nang direkta. Libre mag-list, zero commission, meet-up sa public place. Ang benta mo, sa'yo lang ang kita.",
+  },
+];
+
 const CATS = [
   { name: "Electronics", slug: "electronics", icon: "phone", tall: true },
   { name: "Fashion", slug: "fashion", icon: "shirt", tall: false },
@@ -49,7 +64,7 @@ const DB_ICON_MAP: Record<string, string> = {
 };
 
 function CatIcon({ icon }: { icon: string }) {
-  const cls = "w-7 h-7 text-bai-blue";
+  const cls = "w-7 h-7 text-salpak-blue";
   const p = { className: cls, viewBox: "0 0 24 24" as const, fill: "none" as const, stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   switch (icon) {
     case "phone": return <svg {...p}><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></svg>;
@@ -89,7 +104,7 @@ export default function LandingPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative bg-bai-blue text-white overflow-hidden">
+      <section className="relative bg-salpak-blue text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
             <div className="flex flex-col gap-6 lg:gap-8 py-8 lg:py-16">
@@ -98,8 +113,8 @@ export default function LandingPage() {
                 <span className="text-sun">I-repeat!</span>
               </h1>
               <p className="text-lg text-white/80 max-w-md leading-relaxed">
-                Ang marketplace na gawa ng Pinas. Mag-browse, magbenta, mag-deal.
-                Walang patong.
+                SALPAK — ang marketplace na gawa ng Pinas. Mag-browse, magbenta,
+                mag-deal. Walang patong.
               </p>
               <HeroSearchBar />
               <p className="text-sm text-white/60">
@@ -121,11 +136,51 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Brand story: what SALPAK is, why the name, how the model works */}
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div>
+            <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink mb-6">
+              Ano ang SALPAK?
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              SALPAK ang Pinoy marketplace para sa pre-loved na gamit — parang
+              palengke sa bulsa mo. Hanap, benta, meet-up: walang gitnang tao,
+              walang komisyon, walang patong.
+            </p>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              <strong className="text-ink">Bakit SALPAK ang pangalan?</strong>{" "}
+              Salpak ang tama ang tira — 'yung hagis o suntok na tiyak na
+              tiyak. Dito, salpak 'yung sandali na nag-meet ang buyer at seller
+              at nagkasundo sa presyo. Isang pindot, salpak.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              Ganoon din ang model nito: C2C nang direkta — ikaw ang benta, ikaw
+              ang bili. Libre mag-list, zero commission, meet-up sa public
+              place. Ang kita? Sa'yo lang. Post. Usap. SALPAK.
+            </p>
+          </div>
+          <div className="grid gap-4">
+            {STORY.map((s, i) => (
+              <div
+                key={i}
+                className="bg-salpak-blue-light p-6 rounded-2xl border border-salpak-blue/10"
+              >
+                <h3 className="font-display text-lg font-bold text-ink mb-2">
+                  {s.title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
-      <section className="py-16 lg:py-24 bg-bai-blue-light">
+      <section className="py-16 lg:py-24 bg-salpak-blue-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink mb-12">
-            Bakit BAI &amp; SIL?
+            Bakit SALPAK?
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {FEATURES.map((f, i) => (
@@ -133,11 +188,11 @@ export default function LandingPage() {
                 key={i}
                 className={`bg-white p-6 rounded-2xl ${
                   i === 0
-                    ? "shadow-lg border-2 border-bai-blue/10"
+                    ? "shadow-lg border-2 border-salpak-blue/10"
                     : "shadow-sm border border-gray-100"
                 }`}
               >
-                <div className="w-11 h-11 rounded-2xl bg-bai-blue-light flex items-center justify-center text-bai-blue mb-4">
+                <div className="w-11 h-11 rounded-2xl bg-salpak-blue-light flex items-center justify-center text-salpak-blue mb-4">
                   {f.icon}
                 </div>
                 <h3 className="font-display text-lg font-bold text-ink mb-2">
@@ -157,11 +212,11 @@ export default function LandingPage() {
             Paano Gamitin?
           </h2>
           <div className="grid md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-10 left-[16%] right-[16%] h-0.5 bg-bai-blue/10" />
+            <div className="hidden md:block absolute top-10 left-[16%] right-[16%] h-0.5 bg-salpak-blue/10" />
             {STEPS.map((s, i) => (
               <div key={i} className="relative text-center">
                 <div className="relative inline-flex mb-5">
-                  <div className="w-16 h-16 rounded-2xl bg-bai-blue text-white flex items-center justify-center shadow-md">
+                  <div className="w-16 h-16 rounded-2xl bg-salpak-blue text-white flex items-center justify-center shadow-md">
                     {s.icon}
                   </div>
                   <span className="absolute -top-2 -right-2 w-7 h-7 bg-sun text-ink rounded-full flex items-center justify-center text-xs font-bold">
@@ -179,13 +234,13 @@ export default function LandingPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 lg:py-24 bg-bai-blue-light">
+      <section className="py-16 lg:py-24 bg-salpak-blue-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8">
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-ink">
               Categories
             </h2>
-            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-bai-blue hover:underline hidden sm:block">
+            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-salpak-blue hover:underline hidden sm:block">
               Lahat ng categories
             </Link>
           </div>
@@ -202,7 +257,7 @@ export default function LandingPage() {
             ))}
           </div>
           <div className="mt-6 text-center sm:hidden">
-            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-bai-blue hover:underline">
+            <Link href="/categories" className="inline-block py-1 text-sm font-bold text-salpak-blue hover:underline">
               Lahat ng categories
             </Link>
           </div>
@@ -210,7 +265,7 @@ export default function LandingPage() {
       </section>
 
       {/* Seller CTA */}
-      <section className="py-16 lg:py-24 bg-bai-blue text-white">
+      <section className="py-16 lg:py-24 bg-salpak-blue text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl">
             <h2 className="font-display text-3xl lg:text-4xl font-bold mb-4 leading-tight">

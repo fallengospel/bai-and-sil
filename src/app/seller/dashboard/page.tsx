@@ -115,7 +115,7 @@ export default function SellerDashboard() {
           </button>
           <Link
             href="/sell"
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-sil-yellow to-sil-yellow/90 text-ink font-medium rounded-2xl hover:from-sil-yellow/90 hover:to-sil-yellow transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-salpak-yellow to-salpak-yellow/90 text-ink font-medium rounded-2xl hover:from-salpak-yellow/90 hover:to-salpak-yellow transition-all duration-200 shadow-card hover:shadow-card-hover shadow-cartoon hover:-translate-y-0.5"
           >
             <FiPlusCircle className="w-4 h-4" />
             New Listing
@@ -130,7 +130,7 @@ export default function SellerDashboard() {
           label="Total"
           value={stats?.totalListings || 0}
           icon={<FiPackage className="w-5 h-5 text-white" />}
-          iconBg="bg-gradient-to-br from-sil-yellow to-sil-yellow/80"
+          iconBg="bg-gradient-to-br from-salpak-yellow to-salpak-yellow/80"
         />
         <StatCard
           size="sm"
@@ -151,7 +151,7 @@ export default function SellerDashboard() {
           label="Views"
           value={stats?.totalViews || 0}
           icon={<FiEye className="w-5 h-5 text-white" />}
-          iconBg="bg-gradient-to-br from-bai-blue to-bai-blue/80"
+          iconBg="bg-gradient-to-br from-salpak-blue to-salpak-blue/80"
         />
         <StatCard
           size="sm"
@@ -173,12 +173,12 @@ export default function SellerDashboard() {
       <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-card">
         <h2 className="text-lg font-bold text-gray-900 mb-5">Analytics Overview</h2>
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-bai-blue-light rounded-2xl">
-            <div className="text-3xl font-bold text-bai-blue">{stats?.totalViews || 0}</div>
+          <div className="text-center p-4 bg-salpak-blue-light rounded-2xl">
+            <div className="text-3xl font-bold text-salpak-blue">{stats?.totalViews || 0}</div>
             <div className="text-sm text-gray-500 mt-1">Total Views</div>
           </div>
-          <div className="text-center p-4 bg-sil-yellow-light rounded-2xl">
-            <div className="text-3xl font-bold text-sil-yellow-dark">{stats?.avgViewsPerListing || 0}</div>
+          <div className="text-center p-4 bg-salpak-yellow-light rounded-2xl">
+            <div className="text-3xl font-bold text-salpak-yellow-dark">{stats?.avgViewsPerListing || 0}</div>
             <div className="text-sm text-gray-500 mt-1">Avg Views/Listing</div>
           </div>
           <div className="text-center p-4 bg-green-50 rounded-2xl">
@@ -221,16 +221,16 @@ export default function SellerDashboard() {
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/sell" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-sil-yellow/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-sil-yellow-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-sil-yellow/20 transition-colors">
-            <FiPlusCircle className="w-6 h-6 text-sil-yellow-dark" />
+        <Link href="/sell" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-salpak-yellow/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-salpak-yellow-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-salpak-yellow/20 transition-colors">
+            <FiPlusCircle className="w-6 h-6 text-salpak-yellow-dark" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Create Listing</h3>
           <p className="text-sm text-gray-500">List a new item for sale</p>
         </Link>
-        <Link href="/my-listings" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-bai-blue/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
-          <div className="w-12 h-12 bg-bai-blue-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-bai-blue/20 transition-colors">
-            <FiPackage className="w-6 h-6 text-bai-blue" />
+        <Link href="/my-listings" className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-salpak-blue/50 hover:shadow-card-hover transition-all duration-300 hover:-translate-y-0.5 group">
+          <div className="w-12 h-12 bg-salpak-blue-light rounded-2xl flex items-center justify-center mb-4 group-hover:bg-salpak-blue/20 transition-colors">
+            <FiPackage className="w-6 h-6 text-salpak-blue" />
           </div>
           <h3 className="font-bold text-gray-900 mb-1">Manage Listings</h3>
           <p className="text-sm text-gray-500">View and edit your listings</p>
@@ -248,7 +248,7 @@ export default function SellerDashboard() {
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-card">
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <h2 className="font-bold text-lg">Your Recent Listings</h2>
-          <Link href="/my-listings" className="inline-block py-1 text-sm text-sil-yellow-dark hover:underline font-medium">View all</Link>
+          <Link href="/my-listings" className="inline-block py-1 text-sm text-salpak-yellow-dark hover:underline font-medium">View all</Link>
         </div>
         <div className="divide-y divide-gray-50">
           {(stats?.recentListings || []).map((listing: any) => (
@@ -284,7 +284,7 @@ export default function SellerDashboard() {
                 <FiPackage className="w-8 h-8 text-gray-500" />
               </div>
               <p className="text-gray-500 mb-2">No listings yet</p>
-              <Link href="/sell" className="text-sil-yellow-dark hover:underline font-medium">Create your first listing</Link>
+              <Link href="/sell" className="text-salpak-yellow-dark hover:underline font-medium">Create your first listing</Link>
             </div>
           )}
         </div>

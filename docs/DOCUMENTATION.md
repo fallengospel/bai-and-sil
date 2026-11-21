@@ -1,4 +1,4 @@
-# BAI & SIL — Complete Documentation
+# SALPAK — Complete Documentation
 
 > **Version:** 1.0.0  
 > **Last Updated:** September 11, 2026  
@@ -27,9 +27,9 @@
 
 ## 1. Project Overview
 
-### 1.1 What is BAI & SIL?
+### 1.1 What is SALPAK?
 
-BAI & SIL is a Filipino-focused online marketplace platform designed for buying and selling pre-loved items. The name combines Filipino words to represent the buyer-seller relationship. The platform enables users to browse, buy, and sell items with a focus on face-to-face meet-up transactions common in the Philippines.
+SALPAK is a Filipino-focused online marketplace platform designed for buying and selling pre-loved items. The name combines Filipino words to represent the buyer-seller relationship. The platform enables users to browse, buy, and sell items with a focus on face-to-face meet-up transactions common in the Philippines.
 
 ### 1.2 Key Features
 
@@ -168,9 +168,9 @@ Visit http://localhost:3000
 
 | Email | Password | Role |
 |-------|----------|------|
-| admin@baiandsil.ph | password123 | Admin |
-| seller@baiandsil.ph | password123 | Seller |
-| buyer@baiandsil.ph | password123 | Buyer |
+| admin@salpak.ph | password123 | Admin |
+| seller@salpak.ph | password123 | Seller |
+| buyer@salpak.ph | password123 | Buyer |
 
 ---
 
@@ -956,6 +956,6 @@ Private project — All rights reserved.
 
 ---
 
-**BAI & SIL** — Built with love for the Filipino marketplace.
+**SALPAK** — Built with love for the Filipino marketplace.
 
 *Gawang Pinas, para sa Pinas.*

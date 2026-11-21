@@ -90,7 +90,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
           {listing.category && (
             <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-2xl text-xs font-bold bg-white/90 backdrop-blur-sm text-bai-blue shadow-sm">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-2xl text-xs font-bold bg-white/90 backdrop-blur-sm text-salpak-blue shadow-sm">
                 {listing.category.name}
               </span>
             </div>
@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           
           {/* Price badge */}
           <div className="absolute bottom-3 right-3">
-            <span className="inline-flex items-center px-3 py-1.5 rounded-2xl text-sm font-bold bg-white/95 backdrop-blur-sm text-bai-blue shadow-cartoon">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-2xl text-sm font-bold bg-white/95 backdrop-blur-sm text-salpak-blue shadow-cartoon">
               {formatPrice(listing.price)}
             </span>
           </div>
@@ -107,7 +107,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-4">
         <LinkOrDiv {...linkProps}>
-          <h2 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 group-hover:text-bai-blue transition-colors leading-relaxed">
+          <h2 className="text-sm font-bold text-gray-900 line-clamp-2 mb-2 group-hover:text-salpak-blue transition-colors leading-relaxed">
             {listing.title}
           </h2>
         </LinkOrDiv>

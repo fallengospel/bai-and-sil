@@ -42,7 +42,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           id={selectId}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
-          className={`w-full px-3 py-2 border-2 rounded-2xl text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue bg-white ${
+          className={`w-full px-3 py-2 border-2 rounded-2xl text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue bg-white ${
             error ? "border-coral" : "border-gray-200"
           } ${className}`}
           {...props}

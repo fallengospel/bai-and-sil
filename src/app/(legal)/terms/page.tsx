@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Bai and Sil',
-  description: 'Terms of Service for Bai and Sil marketplace',
+  title: 'Terms of Service | Salpak',
+  description: 'Terms of Service for Salpak marketplace',
 };
 
 export default function TermsPage() {
@@ -14,7 +14,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
           <p className="mb-4">
-            By accessing or using Bai and Sil ("the Platform"), you agree to be bound by these Terms of Service. 
+            By accessing or using Salpak ("the Platform"), you agree to be bound by these Terms of Service. 
             If you do not agree to these terms, please do not use the Platform. We reserve the right to modify 
             these terms at any time, and your continued use of the Platform constitutes acceptance of any changes.
           </p>
@@ -57,7 +57,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">4. Transactions</h2>
           <p className="mb-4">
-            Bai and Sil is a platform that connects buyers and sellers. We are not a party to any transaction 
+            Salpak is a platform that connects buyers and sellers. We are not a party to any transaction 
             between users. You agree that:
           </p>
           <ul className="list-disc pl-6 mb-4">
@@ -89,7 +89,7 @@ export default function TermsPage() {
           <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
           <p className="mb-4">
             All content on the Platform, including logos, text, graphics, and software, is the property of 
-            Bai and Sil or its licensors and is protected by intellectual property laws. You may not:
+            Salpak or its licensors and is protected by intellectual property laws. You may not:
           </p>
           <ul className="list-disc pl-6 mb-4">
             <li>Copy, modify, or distribute any content without permission</li>
@@ -101,7 +101,7 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">7. Limitation of Liability</h2>
           <p className="mb-4">
-            To the maximum extent permitted by law, Bai and Sil shall not be liable for any indirect, 
+            To the maximum extent permitted by law, Salpak shall not be liable for any indirect, 
             incidental, special, consequential, or punitive damages arising from your use of the Platform. 
             We do not warrant that the Platform will be uninterrupted or error-free.
           </p>

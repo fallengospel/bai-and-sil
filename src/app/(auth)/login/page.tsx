@@ -75,7 +75,7 @@ else if (error === "account_exists") toast.error("Account already exists. Please
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
-          <p className="text-gray-500 mt-1">Log in to your BAI & SIL account</p>
+          <p className="text-gray-500 mt-1">Log in to your SALPAK account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,7 +101,7 @@ else if (error === "account_exists") toast.error("Account already exists. Please
             error={fieldErrors.password}
           />
           <div className="flex justify-end">
-            <Link href="/forgot-password" className="text-sm text-bai-blue hover:underline">
+            <Link href="/forgot-password" className="text-sm text-salpak-blue hover:underline">
               Forgot password?
             </Link>
           </div>
@@ -134,7 +134,7 @@ else if (error === "account_exists") toast.error("Account already exists. Please
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-bai-blue font-medium hover:underline">
+          <Link href="/register" className="text-salpak-blue font-medium hover:underline">
             Register
           </Link>
         </p>

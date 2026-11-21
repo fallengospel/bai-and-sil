@@ -1,4 +1,4 @@
-# BAI & SIL Landing Page Redesign Plan
+# SALPAK Landing Page Redesign Plan
 
 ## Design Principles
 
@@ -21,7 +21,7 @@
 | mist | `#EAF0FB` | Panel/section backgrounds |
 | paper | `#FFFFFF` | Page background, cards |
 
-**Relationship to existing brand:** The logo's navy `#0A2E6E` maps closely to jeepney-blue `#0F3D91`. The logo gold `#F5BD5D` maps to sun-yellow `#FFC72C`. Existing `sil-yellow` and `bai-blue` tokens stay for backward compatibility.
+**Relationship to existing brand:** The logo's navy `#0A2E6E` maps closely to jeepney-blue `#0F3D91`. The logo gold `#F5BD5D` maps to sun-yellow `#FFC72C`. Existing `salpak-yellow` and `salpak-blue` tokens stay for backward compatibility.
 
 ---
 
@@ -105,7 +105,7 @@ Loaded via `next/font/google`. Replaces Space Grotesk and Inter as primary.
 - Sticky, compact. Logo left, search center on desktop (hidden on homepage while hero search is in view via IntersectionObserver), "Magbenta" as filled button, login/profile right.
 - Mobile: keep existing bottom nav. Make Sell the visually distinct center action.
 
-### Features ("Bakit BAI & SIL?")
+### Features ("Bakit SALPAK?")
 - Drop four identical cards. Use asymmetric layout: one large panel showing a static Direct Chat mock, and a compact list for the other three. Different radii/shadows per card.
 - No eyebrow label.
 

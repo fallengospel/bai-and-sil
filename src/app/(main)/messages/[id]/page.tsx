@@ -234,7 +234,7 @@ export default function ConversationPage() {
           <p className="font-medium text-gray-900 truncate">{otherUser.name}</p>
           <Link
             href={`/listing/${conversation.listing.slug}`}
-            className="text-xs text-bai-blue hover:underline truncate block"
+            className="text-xs text-salpak-blue hover:underline truncate block"
           >
             {conversation.listing.title} Â· {formatPrice(conversation.listing.price)}
           </Link>
@@ -258,7 +258,7 @@ export default function ConversationPage() {
                 <div
                   className={`px-4 py-2.5 rounded-2xl text-sm ${
                     isOwn
-                      ? "bg-bai-blue text-white rounded-br-md"
+                      ? "bg-salpak-blue text-white rounded-br-md"
                       : "bg-gray-100 text-gray-900 rounded-bl-md"
                   }`}
                 >
@@ -277,7 +277,7 @@ export default function ConversationPage() {
         return (
           <div key={offer.id} className="flex justify-center">
             <div className="bg-white border border-gray-200 rounded-2xl p-3 text-center max-w-xs">
-              <FiDollarSign className="w-5 h-5 text-sil-yellow mx-auto mb-1" />
+              <FiDollarSign className="w-5 h-5 text-salpak-yellow mx-auto mb-1" />
               <p className="text-sm font-bold text-gray-900">
                 {formatPrice(offer.amount)} offer
               </p>
@@ -326,7 +326,7 @@ export default function ConversationPage() {
             onClick={() => handleQuickPrompt(prompt)}
             className={`flex-shrink-0 px-3 py-1.5 text-xs rounded-lg transition-colors ${
               pendingPrompt === prompt
-                ? "bg-bai-blue text-white font-bold"
+                ? "bg-salpak-blue text-white font-bold"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
@@ -359,7 +359,7 @@ export default function ConversationPage() {
           }}
           placeholder="Ask the seller something..."
           aria-label="Message"
-          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue"
+          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue"
           disabled={sending}
           required
           maxLength={5000}

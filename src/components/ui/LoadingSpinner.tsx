@@ -22,7 +22,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 }) => {
   const spinner = (
     <svg
-      className={`animate-spin text-bai-blue ${sizeMap[size]} ${className}`}
+      className={`animate-spin text-salpak-blue ${sizeMap[size]} ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

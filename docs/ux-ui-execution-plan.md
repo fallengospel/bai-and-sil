@@ -1,4 +1,4 @@
-# BAI & SIL — UX/UI Improvement Execution Plan
+# SALPAK — UX/UI Improvement Execution Plan
 
 **Goal:** Improve the UX/UI experience of existing features, start to finish.
 **Source:** `docs/ux-ui-review.md` (issue IDs C1–C6, H1–H12, M1–M34, L1–L14).
@@ -92,7 +92,7 @@
 - [x] **M34** Dev-gate `/admin/testing`: hide sidebar link unless `NODE_ENV !== 'production'` (+ middleware block)
 - [x] **H3** Related Items: pass `relatedListings` (same category, exclude current) from `listing/[slug]/page.tsx`
 - [x] **M24** Fix sell preview card dead link (`/listing/preview`) — render non-link preview
-- [x] **M27b** Buyer dashboard: remove fabricated "Browsing: Active"; rename "Recommended" → "Latest on BAI & SIL" or compute real recommendations
+- [x] **M27b** Buyer dashboard: remove fabricated "Browsing: Active"; rename "Recommended" → "Latest on SALPAK" or compute real recommendations
 - [x] **L5** Footer: de-dupe `/categories`, add Help/Contact/About or Safety/Report; fix social URLs (remove if placeholder)
 - [x] **M31** UXTestingMode: label hardcoded results as static or remove "Re-analyze" (dev-only, low priority)
 
@@ -141,7 +141,7 @@
 ## Phase 7 — Visual Consistency 🎨 ✅ (2026-09-25)
 **Purpose:** One design system, no drift.
 
-- [x] **L1/L3** Single blue: `bai-blue #023E8A` is canonical — all `#0F3D91` (jeepney) and `#EAF0FB` hexes converted to tokens; `globals.css` btn-* now token-based; `Button.tsx` variants no longer double-apply conflicting classes; `jeepney` token removed; `text-[#101B3A]` → `text-ink`
+- [x] **L1/L3** Single blue: `salpak-blue #023E8A` is canonical — all `#0F3D91` (jeepney) and `#EAF0FB` hexes converted to tokens; `globals.css` btn-* now token-based; `Button.tsx` variants no longer double-apply conflicting classes; `jeepney` token removed; `text-[#101B3A]` → `text-ink`
 - [x] **L2** Radius scale: 2 radii — `rounded-2xl` (surfaces/cards/modal/gallery) + `rounded-lg` (buttons/inputs/badges/tabs/chips); circles (avatars, spinners, progress, dots) stay `rounded-full`
 - [x] **Shared `StatCard`** — `components/ui/StatCard.tsx` (sm/md sizes); replaced seller 6 + admin 4 + buyer 3 KPI cards
 - [x] **M26** Admin tokens: h1 color classes fixed; admin layout/nav/badges already token-based (Phases 3–5)
@@ -185,7 +185,7 @@
 - [x] `dev-err.log` reviewed — stale (last write 2026-09-04, pre-M18); no `window is not defined`/`ReferenceError`; `metadataBase` now set in `layout.tsx:26` (warning resolved)
 - [x] `docs/ux-ui-review.md` change log updated (Phases 7 + 8)
 - [x] Merge `testing` → `staging` → `main` → Vercel deployed (Phase 8 tip `1abcb18`)
-- [x] Post-deploy smoke: root/listing/login 200; live listing `<title>` = "Celestron PowerSeeker Telescope - ₱5,500 | BAI AND SIL" (M18 verified live)
+- [x] Post-deploy smoke: root/listing/login 200; live listing `<title>` = "Celestron PowerSeeker Telescope - ₱5,500 | SALPAK" (M18 verified live)
 - **Note:** dark-mode manual item superseded — dark mode removed by user decision in Phase 7. 375px visual pass + `/admin/testing` browser suite remain for a human in a real browser (qa-test.js is API/SSR-level only).
 
 ---

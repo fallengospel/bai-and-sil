@@ -16,28 +16,28 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply bg-bai-blue text-white px-6 py-3 rounded-lg font-bold
-    hover:bg-bai-blue-hover transition-all duration-200
-    focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2
+    @apply bg-salpak-blue text-white px-6 py-3 rounded-lg font-bold
+    hover:bg-salpak-blue-hover transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-salpak-blue focus:ring-offset-2
     active:scale-[0.97];
   }
 
   .btn-secondary {
-    @apply bg-sil-yellow text-ink px-6 py-3 rounded-lg font-bold
-    hover:bg-sil-yellow-hover transition-all duration-200
-    focus:outline-none focus:ring-2 focus:ring-sil-yellow focus:ring-offset-2
+    @apply bg-salpak-yellow text-ink px-6 py-3 rounded-lg font-bold
+    hover:bg-salpak-yellow-hover transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-salpak-yellow focus:ring-offset-2
     active:scale-[0.97];
   }
 
   .btn-outline {
-    @apply border-2 border-bai-blue text-bai-blue px-6 py-3 rounded-lg font-bold
-    hover:bg-bai-blue-light transition-all duration-200
-    focus:outline-none focus:ring-2 focus:ring-bai-blue focus:ring-offset-2;
+    @apply border-2 border-salpak-blue text-salpak-blue px-6 py-3 rounded-lg font-bold
+    hover:bg-salpak-blue-light transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-salpak-blue focus:ring-offset-2;
   }
 
   .btn-ghost {
     @apply text-gray-600 px-4 py-2 rounded-lg font-medium
-    hover:bg-bai-blue-light transition-all duration-200;
+    hover:bg-salpak-blue-light transition-all duration-200;
   }
 
   .btn-danger {
@@ -49,7 +49,7 @@ body {
   .input-field {
     @apply w-full px-4 py-3 rounded-2xl border-2 border-gray-200 bg-white
     text-gray-900 placeholder-gray-500
-    focus:outline-none focus:ring-2 focus:ring-bai-blue/20 focus:border-bai-blue
+    focus:outline-none focus:ring-2 focus:ring-salpak-blue/20 focus:border-salpak-blue
     transition-all duration-200 shadow-sm;
   }
 
@@ -63,11 +63,11 @@ body {
   }
 
   .badge-blue {
-    @apply badge bg-bai-blue-light text-bai-blue;
+    @apply badge bg-salpak-blue-light text-salpak-blue;
   }
 
   .badge-yellow {
-    @apply badge bg-sil-yellow-light text-sil-yellow-dark;
+    @apply badge bg-salpak-yellow-light text-salpak-yellow-dark;
   }
 
   .badge-green {
@@ -117,10 +117,10 @@ body {
   @apply bg-gray-100 rounded-full;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-bai-blue/30 rounded-full hover:bg-bai-blue/50 transition-colors;
+  @apply bg-salpak-blue/30 rounded-full hover:bg-salpak-blue/50 transition-colors;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-bai-blue/50;
+  @apply bg-salpak-blue/50;
 }
 
 * {
@@ -164,11 +164,11 @@ body {
 }
 
 :focus-visible {
-  @apply outline-2 outline-offset-2 outline-bai-blue;
+  @apply outline-2 outline-offset-2 outline-salpak-blue;
 }
 
 ::selection {
-  @apply bg-bai-blue/20 text-bai-blue-dark;
+  @apply bg-salpak-blue/20 text-salpak-blue-dark;
 }
 
 .safe-area-bottom {

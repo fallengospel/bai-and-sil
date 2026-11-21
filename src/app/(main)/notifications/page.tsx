@@ -145,7 +145,7 @@ export default function NotificationsPage() {
             >
               <div
                 className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  notif.read ? "bg-gray-100 text-gray-500" : "bg-bai-blue-light text-bai-blue"
+                  notif.read ? "bg-gray-100 text-gray-500" : "bg-salpak-blue-light text-salpak-blue"
                 }`}
               >
                 {iconMap[notif.type] || iconMap.default}
@@ -157,7 +157,7 @@ export default function NotificationsPage() {
                 <p className="text-xs text-gray-500 mt-1">{timeAgo(notif.createdAt)}</p>
               </div>
               {!notif.read && (
-                <div className="w-2 h-2 bg-bai-blue rounded-full flex-shrink-0 mt-2" />
+                <div className="w-2 h-2 bg-salpak-blue rounded-full flex-shrink-0 mt-2" />
               )}
             </Link>
           ))}

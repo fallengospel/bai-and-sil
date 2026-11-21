@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     const html = verificationEmailHtml(user.name, code);
     const emailSent = await sendEmail({
       to: user.email,
-      subject: 'Your BAI & SIL verification code',
+      subject: 'Your SALPAK verification code',
       html,
     });
 

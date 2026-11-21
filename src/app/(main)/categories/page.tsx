@@ -4,7 +4,7 @@ import { CATEGORY_ICONS } from "@/lib/helpers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Categories | BAI AND SIL",
+  title: "Categories | SALPAK",
 };
 
 export default async function CategoriesPage() {
